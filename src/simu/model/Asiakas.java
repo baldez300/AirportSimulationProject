@@ -4,6 +4,7 @@ import simu.framework.*;
 
 // TODO:
 // Asiakas koodataan simulointimallin edellyttämällä tavalla (data!)
+
 public class Asiakas {
 	private double saapumisaika;
 	private double poistumisaika;
@@ -11,9 +12,13 @@ public class Asiakas {
 	private static int i = 1;
 	private static long sum = 0;
 	
+	// TODO BALDE:
+	// Arvotaan asiakkaalle ominaisuus joka määrää onko asiakas
+	// ulkomaan vai kotimaanlennon asiakas (Asiakasluokan sisällä)
+
 	public Asiakas(){
 	    id = i++;
-	    
+
 		saapumisaika = Kello.getInstance().getAika();
 		Trace.out(Trace.Level.INFO, "Uusi asiakas nro " + id + " saapui klo "+saapumisaika);
 	}

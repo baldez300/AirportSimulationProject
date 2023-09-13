@@ -12,6 +12,9 @@ public class OmaMoottori extends Moottori{
 
 	public OmaMoottori(){
 
+		// TODO:
+		// Määritä palvelupisteille jotain järkeviä paveluaikoja ?
+
 		palvelupisteet = new Palvelupiste[3];
 
 		palvelupisteet[0]=new Palvelupiste(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.DEP1);
@@ -30,6 +33,10 @@ public class OmaMoottori extends Moottori{
 
 	@Override
 	protected void suoritaTapahtuma(Tapahtuma t){  // B-vaiheen tapahtumat
+
+		// TODO: 
+		// Tehdään ehdot tapahtumatyyppien mukaan eli meneekö asiakas
+		// passintarkistukseen vai
 
 		Asiakas a;
 		switch ((TapahtumanTyyppi)t.getTyyppi()){
