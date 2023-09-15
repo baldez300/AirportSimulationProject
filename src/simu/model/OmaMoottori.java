@@ -15,16 +15,22 @@ public class OmaMoottori extends Moottori{
 		// TODO:
 		// Määritä palvelupisteille jotain järkeviä paveluaikoja ?
 
-		palvelupisteet = new Palvelupiste[3];
+		palvelupisteet = new Palvelupiste[5];
 
-		palvelupisteet[0]=new Palvelupiste(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.DEP1);
-		palvelupisteet[1]=new Palvelupiste(new Normal(10,10), tapahtumalista, TapahtumanTyyppi.DEP2);
-		palvelupisteet[2]=new Palvelupiste(new Normal(5,3), tapahtumalista, TapahtumanTyyppi.DEP3);
-
+		// Lähtöselvitys
+		palvelupisteet[0] = new Palvelupiste(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.DEP1);
+		// Turvatarkastus
+		palvelupisteet[1] = new Palvelupiste(new Normal(10,10), tapahtumalista, TapahtumanTyyppi.DEP2);
+		// Passintarkistus
+		palvelupisteet[2] = new Palvelupiste(new Normal(5,3), tapahtumalista, TapahtumanTyyppi.DEP3);
+		// Lähtöportti ulkomaat
+		palvelupisteet[3] = new Palvelupiste(new Normal(5,3), tapahtumalista, TapahtumanTyyppi.DEP4);
+		// Lähtöportti kotimaa
+		palvelupisteet[4] = new Palvelupiste(new Normal(5,3), tapahtumalista, TapahtumanTyyppi.DEP5);
+		// Saapumisprosessi
 		saapumisprosessi = new Saapumisprosessi(new Negexp(15,5), tapahtumalista, TapahtumanTyyppi.ARR1);
 
 	}
-
 
 	@Override
 	protected void alustukset() {
@@ -33,10 +39,6 @@ public class OmaMoottori extends Moottori{
 
 	@Override
 	protected void suoritaTapahtuma(Tapahtuma t){  // B-vaiheen tapahtumat
-
-		// TODO: 
-		// Tehdään ehdot tapahtumatyyppien mukaan eli meneekö asiakas
-		// passintarkistukseen vai
 
 		Asiakas a;
 		switch ((TapahtumanTyyppi)t.getTyyppi()){
@@ -48,12 +50,26 @@ public class OmaMoottori extends Moottori{
 				   	   palvelupisteet[1].lisaaJonoon(a);
 				break;
 			case DEP2: a = (Asiakas)palvelupisteet[1].otaJonosta();
-				   	   palvelupisteet[2].lisaaJonoon(a);
+					   if (a.isUlkomaanlento()) {
+						   palvelupisteet[2].lisaaJonoon(a);
+					   } else {
+						   palvelupisteet[4].lisaaJonoon(a);
+					   }	
 				break;
 			case DEP3:
 				       a = (Asiakas)palvelupisteet[2].otaJonosta();
+					   palvelupisteet[3].lisaaJonoon(a);
+				break;
+			case DEP4:
+					   a = (Asiakas)palvelupisteet[3].otaJonosta();
 					   a.setPoistumisaika(Kello.getInstance().getAika());
 			           a.raportti();
+				break;
+			case DEP5:
+					   a = (Asiakas)palvelupisteet[4].otaJonosta();
+					   a.setPoistumisaika(Kello.getInstance().getAika());
+			           a.raportti();
+				break;
 		}
 	}
 
@@ -71,6 +87,4 @@ public class OmaMoottori extends Moottori{
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
 		System.out.println("Tulokset ... puuttuvat vielä");
 	}
-
-	
 }
