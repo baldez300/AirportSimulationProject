@@ -20,7 +20,7 @@ public class OmaMoottori extends Moottori{
 		// Lähtöselvitys
 		palvelupisteet[0] = new Palvelupiste(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.DEP1);
 		// Turvatarkastus
-		palvelupisteet[1] = new Palvelupiste(new Normal(10,10), tapahtumalista, TapahtumanTyyppi.DEP2);
+		palvelupisteet[1] = new Palvelupiste(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.DEP2);
 		// Passintarkistus
 		palvelupisteet[2] = new Palvelupiste(new Normal(5,3), tapahtumalista, TapahtumanTyyppi.DEP3);
 		// Lähtöportti ulkomaat
