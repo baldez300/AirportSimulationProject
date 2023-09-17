@@ -86,11 +86,11 @@ public class OmaMoottori extends Moottori{
 	protected void tulokset() {
 		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
 		//System.out.println("Tulokset ... puuttuvat vielä");
-		System.out.println("Koko järjestelmässä palvellut asiakkaat: " + Palvelupiste.getPalvellutAsiakkaatTotal());
+		System.out.println("Koko järjestelmässä palvellut asiakkaat: " + (palvelupisteet[3].getPalvelupisteessaPalvellutAsiakkaat()+palvelupisteet[4].getPalvelupisteessaPalvellutAsiakkaat()));
 		System.out.println("Koko järjestelmän palveluaika: " + Palvelupiste.getKokoJärjstelmäPalveluAika());
 		for (int i = 0; i < palvelupisteet.length; i++) {
-			System.out.println("Palvelupiste " + i + " palvellut asiakkaat: " + palvelupisteet[i].getPalvelupisteessaPalvellutAsiakkaat());
-			System.out.println("Palvelupiste " + i + " palveluaika: " + palvelupisteet[i].getPalvelupisteenPalveluAika());
+			System.out.println("Palvelupiste " + (i+1) + " palvellut asiakkaat: " + palvelupisteet[i].getPalvelupisteessaPalvellutAsiakkaat());
+			System.out.println("Palvelupiste " + (i+1)+ " palveluaika: " + palvelupisteet[i].getPalvelupisteenPalveluAika());
 		}
 	}
 }
