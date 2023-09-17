@@ -15,7 +15,7 @@ public class Palvelupiste {
 	
 	//JonoStartegia strategia; //optio: asiakkaiden järjestys
 
-	// Laskutoimitukset
+	// Laskutoimituksien tarvitsemat muuttujat
 	private static double kokoJärjstelmäPalveluAika = 0;
 	private double palvelupisteenPalveluAika;
 	private static int palvellutAsiakkaatTotal = 0;
@@ -69,7 +69,7 @@ public class Palvelupiste {
 		return jono.size() != 0;
 	}
 
-
+	// Laskutoimitukset
 	public int getPalvelupisteessaPalvellutAsiakkaat(){
 		return palvelupisteessaPalvellutAsiakkaat;
 	}
