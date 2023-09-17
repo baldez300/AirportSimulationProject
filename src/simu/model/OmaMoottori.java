@@ -20,7 +20,7 @@ public class OmaMoottori extends Moottori{
 		// Lähtöselvitys
 		palvelupisteet[0] = new Palvelupiste(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.DEP1);
 		// Turvatarkastus
-		palvelupisteet[1] = new Palvelupiste(new Normal(10,10), tapahtumalista, TapahtumanTyyppi.DEP2);
+		palvelupisteet[1] = new Palvelupiste(new Normal(10,6), tapahtumalista, TapahtumanTyyppi.DEP2);
 		// Passintarkistus
 		palvelupisteet[2] = new Palvelupiste(new Normal(5,3), tapahtumalista, TapahtumanTyyppi.DEP3);
 		// Lähtöportti ulkomaat
@@ -54,7 +54,7 @@ public class OmaMoottori extends Moottori{
 						   palvelupisteet[2].lisaaJonoon(a);
 					   } else {
 						   palvelupisteet[4].lisaaJonoon(a);
-					   }	
+					   }
 				break;
 			case DEP3:
 				       a = (Asiakas)palvelupisteet[2].otaJonosta();
@@ -84,13 +84,7 @@ public class OmaMoottori extends Moottori{
 
 	@Override
 	protected void tulokset() {
-		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
-		//System.out.println("Tulokset ... puuttuvat vielä");
-		System.out.println("Koko järjestelmässä palvellut asiakkaat: " + Palvelupiste.getPalvellutAsiakkaatTotal());
-		System.out.println("Koko järjestelmän palveluaika: " + Palvelupiste.getKokoJärjstelmäPalveluAika());
-		for (int i = 0; i < palvelupisteet.length; i++) {
-			System.out.println("Palvelupiste " + i + " palvellut asiakkaat: " + palvelupisteet[i].getPalvelupisteessaPalvellutAsiakkaat());
-			System.out.println("Palvelupiste " + i + " palveluaika: " + palvelupisteet[i].getPalvelupisteenPalveluAika());
-		}
+		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
+		System.out.println("Tulokset ... puuttuvat vielä");
 	}
 }
