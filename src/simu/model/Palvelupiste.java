@@ -14,7 +14,13 @@ public class Palvelupiste {
 	private final TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
 	
 	//JonoStartegia strategia; //optio: asiakkaiden järjestys
-	
+
+	// Laskutoimitukset
+	private static double kokoJärjstelmäPalveluAika = 0;
+	private double palvelupisteenPalveluAika;
+	private static int palvellutAsiakkaatTotal = 0;
+	private int palvelupisteessaPalvellutAsiakkaat;
+
 	private boolean varattu = false;
 
 
@@ -22,6 +28,8 @@ public class Palvelupiste {
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
 		this.skeduloitavanTapahtumanTyyppi = tyyppi;
+		this.palvelupisteenPalveluAika = 0;
+		this.palvelupisteessaPalvellutAsiakkaat = 0;
 				
 	}
 
@@ -34,6 +42,8 @@ public class Palvelupiste {
 
 	public Asiakas otaJonosta(){  // Poistetaan palvelussa ollut
 		varattu = false;
+		palvellutAsiakkaatTotal++;
+		palvelupisteessaPalvellutAsiakkaat++;
 		return jono.poll();
 	}
 
@@ -43,8 +53,10 @@ public class Palvelupiste {
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
 		
 		varattu = true;
-		double palveluaika = generator.sample();
-		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi,Kello.getInstance().getAika()+palveluaika));
+		double palveluAika = generator.sample();
+		palvelupisteenPalveluAika += palveluAika;
+		kokoJärjstelmäPalveluAika += palveluAika;
+		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi,Kello.getInstance().getAika()+palveluAika));
 	}
 
 
@@ -53,10 +65,24 @@ public class Palvelupiste {
 		return varattu;
 	}
 
-
-
 	public boolean onJonossa(){
 		return jono.size() != 0;
 	}
+
+
+	public int getPalvelupisteessaPalvellutAsiakkaat(){
+		return palvelupisteessaPalvellutAsiakkaat;
+	}
+	public static int getPalvellutAsiakkaatTotal(){
+		return palvellutAsiakkaatTotal;
+	}
+	public double getPalvelupisteenPalveluAika(){
+		return palvelupisteenPalveluAika;
+	}
+	public static double getKokoJärjstelmäPalveluAika(){
+		return kokoJärjstelmäPalveluAika;
+	}
+
+
 
 }
