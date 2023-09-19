@@ -4,13 +4,13 @@ import simu.framework.*;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 
-public class OmaMoottori extends Moottori{
-	
+public class OmaMoottori extends Moottori {
+
 	private Saapumisprosessi saapumisprosessi;
-
 	private Palvelupiste[] palvelupisteet;
+	private boolean kaikkiAsiakkaatValmiit = false; // Lisätty lippu seuraamaan, ovatko kaikki asiakkaat valmiita
 
-	public OmaMoottori(){
+	public OmaMoottori() {
 
 		// TODO:
 		// Määritä palvelupisteille jotain järkeviä paveluaikoja ?
@@ -34,49 +34,66 @@ public class OmaMoottori extends Moottori{
 
 	@Override
 	protected void alustukset() {
-		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
+		saapumisprosessi.generoiSeuraava(); // Asetetaan ensimmäinen saapuminen järjestelmään
 	}
 
 	@Override
-	protected void suoritaTapahtuma(Tapahtuma t){  // B-vaiheen tapahtumat
-
+	protected void suoritaTapahtuma(Tapahtuma t) {
 		Asiakas a;
-		switch ((TapahtumanTyyppi)t.getTyyppi()){
-
-			case ARR1: palvelupisteet[0].lisaaJonoon(new Asiakas());
-				       saapumisprosessi.generoiSeuraava();
+		switch ((TapahtumanTyyppi) t.getTyyppi()) {
+			case ARR1:
+				palvelupisteet[0].lisaaJonoon(new Asiakas());
+				saapumisprosessi.generoiSeuraava();
 				break;
-			case DEP1: a = (Asiakas)palvelupisteet[0].otaJonosta();
-				   	   palvelupisteet[1].lisaaJonoon(a);
+			case DEP1:
+				a = (Asiakas) palvelupisteet[0].otaJonosta();
+				palvelupisteet[1].lisaaJonoon(a);
 				break;
-			case DEP2: a = (Asiakas)palvelupisteet[1].otaJonosta();
-					   if (a.isUlkomaanlento()) {
-						   palvelupisteet[2].lisaaJonoon(a);
-					   } else {
-						   palvelupisteet[4].lisaaJonoon(a);
-					   }	
+			case DEP2:
+				a = (Asiakas) palvelupisteet[1].otaJonosta();
+				if (a.isUlkomaanlento()) {
+					palvelupisteet[2].lisaaJonoon(a);
+				} else {
+					palvelupisteet[4].lisaaJonoon(a);
+				}
 				break;
 			case DEP3:
-				       a = (Asiakas)palvelupisteet[2].otaJonosta();
-					   palvelupisteet[3].lisaaJonoon(a);
+				a = (Asiakas) palvelupisteet[2].otaJonosta();
+				palvelupisteet[3].lisaaJonoon(a);
 				break;
 			case DEP4:
-					   a = (Asiakas)palvelupisteet[3].otaJonosta();
-					   a.setPoistumisaika(Kello.getInstance().getAika());
-			           a.raportti();
+				a = (Asiakas) palvelupisteet[3].otaJonosta();
+				a.setPoistumisaika(Kello.getInstance().getAika());
+				a.raportti();
+				tarkistaKaikkiAsiakkaatValmiit(); // Tarkista, ovatko kaikki asiakkaat valmiita
 				break;
 			case DEP5:
-					   a = (Asiakas)palvelupisteet[4].otaJonosta();
-					   a.setPoistumisaika(Kello.getInstance().getAika());
-			           a.raportti();
+				a = (Asiakas) palvelupisteet[4].otaJonosta();
+				a.setPoistumisaika(Kello.getInstance().getAika());
+				a.raportti();
+				tarkistaKaikkiAsiakkaatValmiit(); // Tarkista, ovatko kaikki asiakkaat valmiita
 				break;
 		}
 	}
 
+	private void tarkistaKaikkiAsiakkaatValmiit() {
+		// Tarkista, ovatko kaikki asiakkaat valmiita
+		boolean kaikkiValmiit = true;
+		for (Palvelupiste p : palvelupisteet) {
+			if (p.onVarattu() || p.onJonossa()) {
+				kaikkiValmiit = false;
+				break;
+			}
+		}
+		if (kaikkiValmiit) {
+			kaikkiAsiakkaatValmiit = true;
+		}
+	}
+
 	@Override
-	protected void yritaCTapahtumat(){
-		for (Palvelupiste p: palvelupisteet){
-			if (!p.onVarattu() && p.onJonossa()){
+	protected void yritaCTapahtumat() {
+		for (Palvelupiste p : palvelupisteet) {
+			if (!p.onVarattu() && p.onJonossa()) {
 				p.aloitaPalvelu();
 			}
 		}
@@ -84,6 +101,7 @@ public class OmaMoottori extends Moottori{
 
 	@Override
 	protected void tulokset() {
+
 		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
 		//System.out.println("Tulokset ... puuttuvat vielä");
 		System.out.println("Koko järjestelmässä palvellut asiakkaat: " + (palvelupisteet[3].getPalvelupisteessaPalvellutAsiakkaat()+palvelupisteet[4].getPalvelupisteessaPalvellutAsiakkaat()));
@@ -91,6 +109,11 @@ public class OmaMoottori extends Moottori{
 		for (int i = 0; i < palvelupisteet.length; i++) {
 			System.out.println("Palvelupiste " + (i+1) + " palvellut asiakkaat: " + palvelupisteet[i].getPalvelupisteessaPalvellutAsiakkaat());
 			System.out.println("Palvelupiste " + (i+1)+ " palveluaika: " + palvelupisteet[i].getPalvelupisteenPalveluAika());
+		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
+		if (kaikkiAsiakkaatValmiit) {
+			System.out.println("Kaikki asiakkaat ovat kulkeneet läpi.");
+		} else {
+			System.out.println("Kaikki asiakkaat eivät ole vielä kulkeneet läpi.");
 		}
 	}
 }
