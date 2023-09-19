@@ -17,13 +17,12 @@ public class Palvelupiste {
 
 
 	// Laskutoimituksien tarvitsemat muuttujat
-	private static double kokoJärjstelmäPalveluAika = 0;
+	private static double kokoJarjestelmanPalveluaika = 0;
 	private double palvelupisteenPalveluAika;
 	private static int palvellutAsiakkaatTotal = 0;
 	private int palvelupisteessaPalvellutAsiakkaat;
 
 	private boolean varattu = false;
-
 
 	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi){
 		this.tapahtumalista = tapahtumalista;
@@ -41,6 +40,7 @@ public class Palvelupiste {
 
 	public Asiakas otaJonosta(){  // Poistetaan palvelussa ollut
 		varattu = false;
+		palvelupisteessaPalvellutAsiakkaat++;
 		return jono.poll();
 	}
 
@@ -51,6 +51,8 @@ public class Palvelupiste {
 
 		varattu = true;
 		double palveluaika = generator.sample();
+		palvelupisteenPalveluAika += palveluaika;
+		kokoJarjestelmanPalveluaika += palveluaika;
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi,Kello.getInstance().getAika()+palveluaika));
 	}
 
@@ -70,9 +72,9 @@ public class Palvelupiste {
 	public double getPalvelupisteenPalveluAika(){
 		return palvelupisteenPalveluAika;
 	}
-	public static double getKokoJärjstelmäPalveluAika(){
-		return kokoJärjstelmäPalveluAika;
-
+	public static double getKokoJarjestelmanPalveluAika(){
+		return kokoJarjestelmanPalveluaika;
+	}
 	public boolean onJonossa(){
 		return jono.size() != 0;
 	}

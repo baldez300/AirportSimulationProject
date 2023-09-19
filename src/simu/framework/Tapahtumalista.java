@@ -23,5 +23,7 @@ public class Tapahtumalista {
 		return lista.peek().getAika();
 	}
 	
-	
+	public int getKoko(){
+		return lista.size();
+	}
 }
