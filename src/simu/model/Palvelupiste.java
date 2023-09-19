@@ -15,6 +15,13 @@ public class Palvelupiste {
 	
 	//JonoStartegia strategia; //optio: asiakkaiden järjestys
 
+
+	// Laskutoimituksien tarvitsemat muuttujat
+	private static double kokoJärjstelmäPalveluAika = 0;
+	private double palvelupisteenPalveluAika;
+	private static int palvellutAsiakkaatTotal = 0;
+	private int palvelupisteessaPalvellutAsiakkaat;
+
 	private boolean varattu = false;
 
 
@@ -54,6 +61,17 @@ public class Palvelupiste {
 	}
 
 
+	public int getPalvelupisteessaPalvellutAsiakkaat(){
+		return palvelupisteessaPalvellutAsiakkaat;
+	}
+	public static int getPalvellutAsiakkaatTotal(){
+		return palvellutAsiakkaatTotal;
+	}
+	public double getPalvelupisteenPalveluAika(){
+		return palvelupisteenPalveluAika;
+	}
+	public static double getKokoJärjstelmäPalveluAika(){
+		return kokoJärjstelmäPalveluAika;
 
 	public boolean onJonossa(){
 		return jono.size() != 0;
