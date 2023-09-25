@@ -14,8 +14,8 @@ public class Asiakas {
 
 	public Asiakas() {
 		id = i++;
-		this.width = 30;
-		this.height = 30;
+		this.width = 25;
+		this.height = 25;
 		saapumisaika = Kello.getInstance().getAika();
 
 		// Arvotaan ulkomaanlennon asiakkuus
@@ -42,6 +42,14 @@ public class Asiakas {
 
 	public int getId() {
 		return id;
+	}
+
+	public double getWidth() {
+		return width;
+	}
+
+	public double getHeight() {
+		return height;
 	}
 
 	public boolean isUlkomaanlento() {

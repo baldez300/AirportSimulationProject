@@ -39,8 +39,8 @@ public class Visualisointi {
 			int line = 0;
 
 			for (Asiakas asiakas : p.getAsiakasJono()) {
-				double destX = p.getX() + (line * 35 * suunta);
-				double destY = p.getY() + (row * 35);
+				double destX = p.getX() + (line * (asiakas.getWidth() + 5) * suunta);
+				double destY = p.getY() + (row * (asiakas.getHeight() + 5));
 				asiakas.piirra(gc, destX, destY);
 
 				row++;

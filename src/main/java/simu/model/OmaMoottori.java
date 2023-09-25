@@ -25,15 +25,15 @@ public class OmaMoottori extends Moottori {
 		palvelupisteet = new Palvelupiste[5];
 
 		// Lähtöselvitys
-		palvelupisteet[0] = new Palvelupiste(1350, 625, "LS", new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.DEP1);
+		palvelupisteet[0] = new Palvelupiste(1187, 500, "LS", new Normal(20, 3), tapahtumalista, TapahtumanTyyppi.DEP1);
 		// Turvatarkastus
-		palvelupisteet[1] = new Palvelupiste(330, 420, "TT", new Normal(10, 3), tapahtumalista, TapahtumanTyyppi.DEP2);
+		palvelupisteet[1] = new Palvelupiste(288, 338, "TT", new Normal(20, 3), tapahtumalista, TapahtumanTyyppi.DEP2);
 		// Passintarkistus
-		palvelupisteet[2] = new Palvelupiste(1355, 220, "PT", new Normal(10, 3), tapahtumalista, TapahtumanTyyppi.DEP3);
+		palvelupisteet[2] = new Palvelupiste(1187, 165, "PT", new Normal(20, 3), tapahtumalista, TapahtumanTyyppi.DEP3);
 		// Lähtöportti ulkomaat
-		palvelupisteet[3] = new Palvelupiste(1545, 20, "T1", new Normal(10, 3), tapahtumalista, TapahtumanTyyppi.DEP4);
+		palvelupisteet[3] = new Palvelupiste(1360, 12, "T1", new Normal(20, 3), tapahtumalista, TapahtumanTyyppi.DEP4);
 		// Lähtöportti kotimaa
-		palvelupisteet[4] = new Palvelupiste(145, 20, "T2", new Normal(10, 3), tapahtumalista, TapahtumanTyyppi.DEP5);
+		palvelupisteet[4] = new Palvelupiste(127, 12, "T2", new Normal(20, 3), tapahtumalista, TapahtumanTyyppi.DEP5);
 		// Saapumisprosessi
 		saapumisprosessi = new Saapumisprosessi(new Negexp(5, 15), tapahtumalista, TapahtumanTyyppi.ARR1);
 	}
