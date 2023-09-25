@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1022.0" prefWidth="1019.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="simu.controller.TuloksetKontrolleri">
+   <children>
+      <HBox alignment="CENTER" prefHeight="64.0" prefWidth="801.0">
+         <children>
+            <Label prefHeight="53.0" prefWidth="140.0" text="Tulokset">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <VBox prefHeight="210.0" prefWidth="1019.0">
+         <children>
+            <Label prefHeight="43.0" prefWidth="150.0" text="Lähtöselvitys">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox fx:id="lahtoselvitysBoksi" prefHeight="208.0" prefWidth="1019.0" />
+         </children>
+      </VBox>
+      <VBox prefHeight="210.0" prefWidth="100.0">
+         <children>
+            <Label prefHeight="43.0" prefWidth="170.0" text="Turvatarkastus">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox fx:id="turvaTarkastusBoksi" prefHeight="156.0" prefWidth="801.0" />
+         </children>
+      </VBox>
+      <VBox prefHeight="210.0" prefWidth="1019.0">
+         <children>
+            <Label prefHeight="43.0" prefWidth="177.0" text="Passintarkastus">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox fx:id="passintarkastusBoksi" prefHeight="204.0" prefWidth="1019.0" />
+         </children>
+      </VBox>
+      <VBox prefHeight="250.0" prefWidth="1019.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="380.0">
+               <children>
+                  <Label prefHeight="43.0" prefWidth="131.0" text="Lähtöportit">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="43.0" prefWidth="113.0" text="Asiakkaat">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="228.0" prefWidth="1019.0" spacing="20.0">
+               <children>
+                  <VBox prefHeight="214.0" prefWidth="240.0">
+                     <children>
+                        <Label prefHeight="43.0" prefWidth="38.0" text="T1">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="51.0" prefWidth="180.0" text="Palvellut asiakkaat:">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="T1Asiakkaat" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="51.0" prefWidth="180.0" text="Käyttöaste: ">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="T1Kayttoaste" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="51.0" prefWidth="180.0" text="Jonon pistuus (KA):">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="T1JononPituus" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="189.0" prefWidth="229.0">
+                     <children>
+                        <Label prefHeight="43.0" prefWidth="33.0" text="T2">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="51.0" prefWidth="180.0" text="Palvellut asiakkaat:">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="T2Asiakkaat" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="230.0">
+                           <children>
+                              <Label prefHeight="51.0" prefWidth="180.0" text="Käyttöaste: ">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="T2Kayttoaste" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="51.0" prefWidth="180.0" text="Jonon pistuus (KA):">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="T2JononPituus" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="189.0" prefWidth="477.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="477.0">
+                           <children>
+                              <Label prefHeight="38.0" prefWidth="221.0" text="Kaikki asiakkaat:">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="kaikkiAsiakkaat" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="477.0">
+                           <children>
+                              <Label prefHeight="44.0" prefWidth="221.0" text="Lennolta myöhästyneet:">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="myohastyneet" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="477.0">
+                           <children>
+                              <Label prefHeight="38.0" prefWidth="221.0" text="Lennolle ehtineet:">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="ehtineet" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="730.0">
+         <children>
+            <Button fx:id="uusiNappi" mnemonicParsing="false" onAction="#uusiSimulointi" prefHeight="51.0" prefWidth="97.0" text="UUSI">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="tallennaNappi" mnemonicParsing="false" onAction="#tallenna" prefHeight="49.0" prefWidth="139.0" text="TALLENNA">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets left="20.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>
