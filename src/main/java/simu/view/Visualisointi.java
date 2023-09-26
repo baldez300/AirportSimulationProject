@@ -38,6 +38,8 @@ public class Visualisointi {
 			int rowBreak = 4;
 			int line = 0;
 
+			p.piirra(gc);
+
 			for (Asiakas asiakas : p.getAsiakasJono()) {
 				double destX = p.getX() + (line * (asiakas.getWidth() + 5) * suunta);
 				double destY = p.getY() + (row * (asiakas.getHeight() + 5));
