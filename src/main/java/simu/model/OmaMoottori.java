@@ -25,15 +25,15 @@ public class OmaMoottori extends Moottori {
 		palvelupisteet = new Palvelupiste[5];
 
 		// Lähtöselvitys
-		palvelupisteet[0] = new Palvelupiste(1187, 500, "LS", new Normal(20, 3), tapahtumalista, TapahtumanTyyppi.DEP1);
+		palvelupisteet[0] = new Palvelupiste(1187, 500, "LS", kontrolleri.getLahtoselvitysMaara(), new Normal(kontrolleri.getLSpalveluNopeus(), kontrolleri.getLahtoselvitysVar()), tapahtumalista, TapahtumanTyyppi.DEP1);
 		// Turvatarkastus
-		palvelupisteet[1] = new Palvelupiste(288, 338, "TT", new Normal(20, 3), tapahtumalista, TapahtumanTyyppi.DEP2);
+		palvelupisteet[1] = new Palvelupiste(288, 338, "TT", kontrolleri.getTurvatarkastusMaara(), new Normal(kontrolleri.getTTpalveluNopeus(), kontrolleri.getTurvatarkastusVar()), tapahtumalista, TapahtumanTyyppi.DEP2);
 		// Passintarkistus
-		palvelupisteet[2] = new Palvelupiste(1187, 165, "PT", new Normal(20, 3), tapahtumalista, TapahtumanTyyppi.DEP3);
+		palvelupisteet[2] = new Palvelupiste(1187, 165, "PT", kontrolleri.getPassintarkastusMaara(), new Normal(kontrolleri.getPTpalveluNopeus(), kontrolleri.getPassintarkastusVar()), tapahtumalista, TapahtumanTyyppi.DEP3);
 		// Lähtöportti ulkomaat
-		palvelupisteet[3] = new Palvelupiste(1360, 12, "T1", new Normal(20, 3), tapahtumalista, TapahtumanTyyppi.DEP4);
+		palvelupisteet[3] = new Palvelupiste(1360, 12, "T1", new Normal(kontrolleri.getUlkomaaKA(), kontrolleri.getUlkomaaVar()), tapahtumalista, TapahtumanTyyppi.DEP4);
 		// Lähtöportti kotimaa
-		palvelupisteet[4] = new Palvelupiste(127, 12, "T2", new Normal(20, 3), tapahtumalista, TapahtumanTyyppi.DEP5);
+		palvelupisteet[4] = new Palvelupiste(127, 12, "T2", new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista, TapahtumanTyyppi.DEP5);
 		// Saapumisprosessi
 		saapumisprosessi = new Saapumisprosessi(new Negexp(5, 15), tapahtumalista, TapahtumanTyyppi.ARR1);
 	}
