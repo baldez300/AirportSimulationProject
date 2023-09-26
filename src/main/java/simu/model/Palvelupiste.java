@@ -2,6 +2,8 @@ package simu.model;
 
 import simu.framework.*;
 import java.util.LinkedList;
+
+import javafx.scene.canvas.GraphicsContext;
 import simu.eduni.distributions.ContinuousGenerator;
 
 // TODO:
@@ -21,6 +23,7 @@ public class Palvelupiste {
 	private static int palvellutAsiakkaatTotal = 0;
 	private int palvelupisteessaPalvellutAsiakkaat;
 	private final int x, y;
+	private int pisteidenMaara;
 	private final String nimi;
 
 	private boolean varattu = false;
@@ -30,6 +33,18 @@ public class Palvelupiste {
 		this.x = x;
 		this.y = y;
 		this.nimi = nimi;
+		this.tapahtumalista = tapahtumalista;
+		this.generator = generator;
+		this.skeduloitavanTapahtumanTyyppi = tyyppi;
+	}
+
+	public Palvelupiste(int x, int y, String nimi, int pisteidenMaara, ContinuousGenerator generator,
+			Tapahtumalista tapahtumalista,
+			TapahtumanTyyppi tyyppi) {
+		this.x = x;
+		this.y = y;
+		this.nimi = nimi;
+		this.pisteidenMaara = pisteidenMaara;
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
 		this.skeduloitavanTapahtumanTyyppi = tyyppi;
@@ -97,5 +112,13 @@ public class Palvelupiste {
 	public boolean onJonossa() {
 		return jono.size() != 0;
 	}
-
+	
+	// Piirretään infoa palvelupisteiden päälle
+	public void piirra(GraphicsContext gc) {
+		gc.setFont(javafx.scene.text.Font.font("Verdana", 15));
+		if (this.pisteidenMaara != 0 && !this.nimi.equals("TT"))
+			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x + 43, this.y + 20);
+		else if (this.pisteidenMaara != 0 && this.nimi.equals("TT"))
+			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x - 160, this.y + 15);
+	}
 }
