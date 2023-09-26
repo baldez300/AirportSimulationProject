@@ -22,7 +22,7 @@ import simu.framework.Trace;
 import simu.framework.Trace.Level;
 import simu.model.OmaMoottori;
 
-public class Kontrolleri{
+public class Kontrolleri {
     // Oletusarvot asetuksille jotta pysyvät muistissa
     private static double simulointiAika = 1440;
     private static int simulointiViive = 100;
@@ -278,5 +278,75 @@ public class Kontrolleri{
 
     public Canvas getCanvas() {
         return contentCanvas;
+    }
+
+    // Getters for settings
+
+    /*
+     * Tämä palauttaa lähtöselvityksen keskiarvon jaettuna pisteiden määrällä
+     * joka on keskimääräinen palvelunopeus
+     */
+    public int getLSpalveluNopeus() {
+        return lahtoselvitysKA.getValue() / lahtoselvitysMaara.getValue();
+    }
+
+    public int getLahtoselvitysMaara() {
+        return lahtoselvitysMaara.getValue();
+    }
+
+    public int getLahtoselvitysVar() {
+        return lahtoselvitysVar.getValue();
+    }
+
+    public int getPTpalveluNopeus() {
+        return passintarkastusKA.getValue() / passintarkastusMaara.getValue();
+    }
+
+    public int getPassintarkastusMaara() {
+        return passintarkastusMaara.getValue();
+    }
+
+    public int getPassintarkastusVar() {
+        return passintarkastusVar.getValue();
+    }
+
+    public int getTTpalveluNopeus() {
+        return turvatarkastusKA.getValue() / turvatarkastusMaara.getValue();
+    }
+
+    public int getTurvatarkastusMaara() {
+        return turvatarkastusMaara.getValue();
+    }
+
+    public int getTurvatarkastusVar() {
+        return turvatarkastusVar.getValue();
+    }
+
+    public int getKotimaaVar() {
+        return kotimaaVar.getValue();
+    }
+
+    public int getKotimaaKA() {
+        return kotimaaKA.getValue();
+    }
+
+    public int getUlkomaaVar() {
+        return ulkomaaVar.getValue();
+    }
+
+    public int getUlkomaaKA() {
+        return ulkomaaKA.getValue();
+    }
+
+    public int getLentojenVali() {
+        return lentojenVali.getValue();
+    }
+
+    public double getSimulointiAika() {
+        return simulaationAika.getValue();
+    }
+
+    public int getSimulointiViive() {
+        return simulaationViive.getValue();
     }
 }
