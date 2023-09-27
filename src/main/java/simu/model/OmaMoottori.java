@@ -9,8 +9,6 @@ import simu.framework.Saapumisprosessi;
 import simu.framework.Tapahtuma;
 import simu.view.Visualisointi;
 
-import java.util.LinkedList;
-
 public class OmaMoottori extends Moottori {
 
 	private Saapumisprosessi saapumisprosessi;
@@ -99,7 +97,7 @@ public class OmaMoottori extends Moottori {
 		}
 	}
 
-	/*@Override
+	@Override
 	protected void tulokset() {
 		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
 		// System.out.println("Tulokset ... puuttuvat vielä");
@@ -120,50 +118,4 @@ public class OmaMoottori extends Moottori {
 			}
 		}
 	}
-	*/
-
-	// TODO: Tämä metodi on toteutettava, jotta saadaan kaikki tulokset
-	@Override
-	protected void tulokset() {
-		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
-
-		// Calculate and present statistics for each service point
-		for (int i = 0; i < palvelupisteet.length; i++) {
-			System.out.println("Palvelupiste " + (i + 1) + " palvellut asiakkaat: "
-					+ palvelupisteet[i].getPalvelupisteessaPalvellutAsiakkaat());
-			System.out.println("Palvelupiste " + (i + 1) + " palveluaika: " + palvelupisteet[i].getPalvelupisteenPalveluAika());
-
-			// Calculate and present queue length statistics
-			double avgQueueLength = calculateAverage(palvelupisteet[i].getQueueLengthHistory());
-			System.out.println("Palvelupiste " + (i + 1) + " keskimääräinen jonon pituus: " + avgQueueLength);
-
-			// Calculate and present average waiting time statistics
-			double avgWaitingTime = calculateAverage(palvelupisteet[i].getWaitingTimeHistory());
-			System.out.println("Palvelupiste " + (i + 1) + " keskimääräinen odotusaika: " + avgWaitingTime);
-		}
-
-		// Additional global statistics (if needed)
-		System.out.println("Koko järjestelmässä palvellut asiakkaat: " + palvelupisteet[3].getPalvelupisteessaPalvellutAsiakkaat()
-				+ palvelupisteet[4].getPalvelupisteessaPalvellutAsiakkaat());
-		System.out.println("Koko järjestelmän palveluaika: " + Palvelupiste.getKokoJarjestelmanPalveluAika());
-
-		if (kaikkiAsiakkaatValmiit) {
-			System.out.println("Kaikki asiakkaat ovat kulkeneet läpi.");
-		} else {
-			System.out.println("Kaikki asiakkaat eivät ole vielä kulkeneet läpi.");
-		}
-	}
-
-	// laske keskimääräinen jonon pituus
-	private double calculateAverage(LinkedList<Double> data) {
-		if (data.isEmpty()) {
-			return 0.0;
-		}
-		double sum = 0;
-		for (Double value : data) {
-			sum += value;
-		}
-		return sum / data.size();
-	}
-
 }
