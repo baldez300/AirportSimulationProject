@@ -1,9 +1,11 @@
 package simu.model;
 
-import simu.framework.*;
-import java.util.LinkedList;
-
 import javafx.scene.canvas.GraphicsContext;
+import simu.framework.Kello;
+import simu.framework.Trace;
+import simu.framework.Tapahtuma;
+import simu.framework.Tapahtumalista;
+import java.util.LinkedList;
 import simu.eduni.distributions.ContinuousGenerator;
 
 // TODO:
@@ -28,24 +30,9 @@ public class Palvelupiste {
 
 	private boolean varattu = false;
 
-	// Muuttujat metriikkojen tallentamiseen
-	private double kokonaisOdottamisaika = 0;
-	private double kokonaisPalveluaika = 0;
-	private double kokonaisSimulaatioaika = 0;
-
-	public Palvelupiste(int x, int y, String nimi, ContinuousGenerator generator, Tapahtumalista tapahtumalista,
-						TapahtumanTyyppi tyyppi) {
-		this.x = x;
-		this.y = y;
-		this.nimi = nimi;
-		this.tapahtumalista = tapahtumalista;
-		this.generator = generator;
-		this.skeduloitavanTapahtumanTyyppi = tyyppi;
-	}
-
 	public Palvelupiste(int x, int y, String nimi, int pisteidenMaara, ContinuousGenerator generator,
-						Tapahtumalista tapahtumalista,
-						TapahtumanTyyppi tyyppi) {
+			Tapahtumalista tapahtumalista,
+			TapahtumanTyyppi tyyppi) {
 		this.x = x;
 		this.y = y;
 		this.nimi = nimi;
@@ -55,55 +42,47 @@ public class Palvelupiste {
 		this.skeduloitavanTapahtumanTyyppi = tyyppi;
 	}
 
-	public void lisaaJonoon(Asiakas a) { // Jonon 1. asiakas aina palvelussa
-		// Toteuta asiakkaan lisäys jonoon tässä
-		a.setSaapumisaika(Kello.getInstance().getAika());
-		jono.add(a);
-	}
-
 	public LinkedList<Asiakas> getAsiakasJono() {
 		return jono;
 	}
 
-	public int getKoko() {
-		return jono.size();
-	}
-
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public String getNimi() {
-		return nimi;
+	public void lisaaJonoon(Asiakas a) { // Jonon 1. asiakas aina palvelussa
+		jono.add(a);
 	}
 
 	public Asiakas otaJonosta() { // Poistetaan palvelussa ollut
 		varattu = false;
-		palvelupisteessaPalvellutAsiakkaat++;
-		// Toteuta asiakkaan poisto jonosta tässä
-		double odotusaika = Kello.getInstance().getAika() - jono.peek().getSaapumisaika();
-		kokonaisOdottamisaika += odotusaika;
-		palvellutAsiakkaatTotal++;
+		// System.out.println("+1");
+		palvelupisteessaPalvellutAsiakkaat += 1;
 		return jono.poll();
 	}
 
 	public void aloitaPalvelu() { // Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
+
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
+
 		varattu = true;
 		double palveluaika = generator.sample();
-		// Toteuta palvelun aloitus tässä
-		kokonaisPalveluaika += palveluaika;
 		palvelupisteenPalveluAika += palveluaika;
 		kokoJarjestelmanPalveluaika += palveluaika;
-		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
+
+		if (jono.peek().isUlkomaanlento()) {
+			tapahtumalista.lisaa(
+					new Tapahtuma(skeduloitavanTapahtumanTyyppi, (Kello.getInstance().getAika() + palveluaika), true));
+
+		} else {
+			tapahtumalista.lisaa(
+					new Tapahtuma(skeduloitavanTapahtumanTyyppi, (Kello.getInstance().getAika() + palveluaika), false));
+
+		}
 	}
 
 	public boolean onVarattu() {
 		return varattu;
+	}
+
+	public boolean eiVarattu() {
+		return !varattu;
 	}
 
 	public int getPalvelupisteessaPalvellutAsiakkaat() {
@@ -126,22 +105,25 @@ public class Palvelupiste {
 		return jono.size() != 0;
 	}
 
-	// Laske keskimääräinen odotusaika
-	public double getKeskimaarainenOdotusaika() {
-		return kokonaisOdottamisaika / palvellutAsiakkaatTotal;
+	public void removeAsiakasARR1(Asiakas a) {
+		jono.removeIf(b -> a.isUlkomaanlento());
 	}
 
-	// Laske palvelutehokkuus
-	public double getSuoritusTeho() {
-		return (palvellutAsiakkaatTotal / kokonaisSimulaatioaika) * 100;
+	public void removeAsiakasARR2(Asiakas a) {
+		jono.removeIf(b -> !a.isUlkomaanlento());
 	}
 
-	// Laske palvelupisteen käyttöaste
-	public double getPalvelupisteenKayttoaste(double simulointAika) {
-		return (palvelupisteenPalveluAika / simulointAika) * 100;
+	public String getNimi() {
+		return this.nimi;
 	}
 
-	// Loput luokasta...
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
 
 	// Piirretään infoa palvelupisteiden päälle
 	public void piirra(GraphicsContext gc) {
@@ -151,4 +133,5 @@ public class Palvelupiste {
 		else if (this.pisteidenMaara != 0 && this.nimi.equals("TT"))
 			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x - 160, this.y + 15);
 	}
+
 }
