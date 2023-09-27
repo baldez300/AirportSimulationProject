@@ -100,22 +100,39 @@ public class OmaMoottori extends Moottori {
 	@Override
 	protected void tulokset() {
 		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
-		// System.out.println("Tulokset ... puuttuvat vielä");
-		System.out.println(
-				"Koko järjestelmässä palvellut asiakkaat: " + (palvelupisteet[3].getPalvelupisteessaPalvellutAsiakkaat()
-						+ palvelupisteet[4].getPalvelupisteessaPalvellutAsiakkaat()));
-		System.out.println("Koko järjestelmän palveluaika: " + Palvelupiste.getKokoJarjestelmanPalveluAika());
+
+		// Laske ja näytä mittareita jokaiselle Palvelupisteelle
 		for (int i = 0; i < palvelupisteet.length; i++) {
+			Palvelupiste p = palvelupisteet[i];
+
+			// Laske ja näytä nykyisen Palvelupisteen mittarit
+			System.out.println("Tulokset Palvelupisteelle " + p.getNimi() + ":");
+
+			// Laske ja näytä keskimääräinen odotusaika;
+			System.out.println("Keskimääräinen odotusaika: " + p.getKeskimaarainenOdotusaika());
+
+			// Laske ja näytä palvelun tehokkuus;
+			System.out.println("Palvelutehokkuus: " + p.getSuoritusTeho() + "%");
+
+			// Palvelupisteiden käyttöasteen laskeminen ja näyttö;
+			System.out.println("Palvelupisteen käyttöaste: " + p.getPalvelupisteenKayttoaste() + "%");
+
+			// Lisämittareita voi tarvittaessa laskea täältä...
+
 			System.out.println("Palvelupiste " + (i + 1) + " palvellut asiakkaat: "
 					+ palvelupisteet[i].getPalvelupisteessaPalvellutAsiakkaat());
 			System.out.println(
 					"Palvelupiste " + (i + 1) + " palveluaika: " + palvelupisteet[i].getPalvelupisteenPalveluAika());
-			System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
-			if (kaikkiAsiakkaatValmiit) {
-				System.out.println("Kaikki asiakkaat ovat kulkeneet läpi.");
-			} else {
-				System.out.println("Kaikki asiakkaat eivät ole vielä kulkeneet läpi.");
-			}
+		}
+
+		System.out.println("Koko järjestelmässä palvellut asiakkaat: " + (palvelupisteet[3].getPalvelupisteessaPalvellutAsiakkaat()
+				+ palvelupisteet[4].getPalvelupisteessaPalvellutAsiakkaat()));
+		System.out.println("Koko järjestelmän palveluaika: " + Palvelupiste.getKokoJarjestelmanPalveluAika());
+
+		if (kaikkiAsiakkaatValmiit) {
+			System.out.println("Kaikki asiakkaat ovat kulkeneet läpi.");
+		} else {
+			System.out.println("Kaikki asiakkaat eivät ole vielä kulkeneet läpi.");
 		}
 	}
 }

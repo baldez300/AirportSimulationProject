@@ -28,8 +28,13 @@ public class Palvelupiste {
 
 	private boolean varattu = false;
 
+	// Muuttujat metriikkojen tallentamiseen
+	private double kokonaisOdottamisaika = 0;
+	private double kokonaisPalveluaika = 0;
+	private double kokonaisSimulaatioaika = 0;
+
 	public Palvelupiste(int x, int y, String nimi, ContinuousGenerator generator, Tapahtumalista tapahtumalista,
-			TapahtumanTyyppi tyyppi) {
+						TapahtumanTyyppi tyyppi) {
 		this.x = x;
 		this.y = y;
 		this.nimi = nimi;
@@ -39,8 +44,8 @@ public class Palvelupiste {
 	}
 
 	public Palvelupiste(int x, int y, String nimi, int pisteidenMaara, ContinuousGenerator generator,
-			Tapahtumalista tapahtumalista,
-			TapahtumanTyyppi tyyppi) {
+						Tapahtumalista tapahtumalista,
+						TapahtumanTyyppi tyyppi) {
 		this.x = x;
 		this.y = y;
 		this.nimi = nimi;
@@ -51,6 +56,8 @@ public class Palvelupiste {
 	}
 
 	public void lisaaJonoon(Asiakas a) { // Jonon 1. asiakas aina palvelussa
+		// Toteuta asiakkaan lisäys jonoon tässä
+		a.setSaapumisaika(Kello.getInstance().getAika());
 		jono.add(a);
 	}
 
@@ -77,6 +84,10 @@ public class Palvelupiste {
 	public Asiakas otaJonosta() { // Poistetaan palvelussa ollut
 		varattu = false;
 		palvelupisteessaPalvellutAsiakkaat++;
+		// Toteuta asiakkaan poisto jonosta tässä
+		double odotusaika = Kello.getInstance().getAika() - jono.peek().getSaapumisaika();
+		kokonaisOdottamisaika += odotusaika;
+		palvellutAsiakkaatTotal++;
 		return jono.poll();
 	}
 
@@ -84,6 +95,8 @@ public class Palvelupiste {
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
 		varattu = true;
 		double palveluaika = generator.sample();
+		// Toteuta palvelun aloitus tässä
+		kokonaisPalveluaika += palveluaika;
 		palvelupisteenPalveluAika += palveluaika;
 		kokoJarjestelmanPalveluaika += palveluaika;
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
@@ -112,7 +125,24 @@ public class Palvelupiste {
 	public boolean onJonossa() {
 		return jono.size() != 0;
 	}
-	
+
+	// Laske keskimääräinen odotusaika
+	public double getKeskimaarainenOdotusaika() {
+		return kokonaisOdottamisaika / palvellutAsiakkaatTotal;
+	}
+
+	// Laske palvelutehokkuus
+	public double getSuoritusTeho() {
+		return (palvellutAsiakkaatTotal / kokonaisSimulaatioaika);
+	}
+
+	// Laske palvelupisteen käyttöaste
+	public double getPalvelupisteenKayttoaste() {
+		return (palvelupisteenPalveluAika / kokonaisSimulaatioaika);
+	}
+
+	// Loput luokasta...
+
 	// Piirretään infoa palvelupisteiden päälle
 	public void piirra(GraphicsContext gc) {
 		gc.setFont(javafx.scene.text.Font.font("Verdana", 15));
