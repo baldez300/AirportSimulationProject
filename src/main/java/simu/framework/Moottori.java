@@ -43,11 +43,11 @@ public abstract class Moottori extends Thread implements IMoottori {
 		return viive;
 	}
 
-	@Override
-	public void run() {
+
+	public void aja() {
 		alustukset(); // luodaan mm. ensimmäinen tapahtuma
-		while (!Thread.interrupted() && simuloidaan()) {
-			viive();
+		while (simuloidaan()) {
+
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
 			kello.setAika(nykyaika());
 
@@ -62,18 +62,20 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 	}
 
-	private void viive() { // UUSI
-		Trace.out(Trace.Level.INFO, "Viive " + viive);
-		try {
-			sleep(viive);
-		} catch (InterruptedException e) {
-			kontrolleri.lopetaSaie();
-		}
-	}
-
 	private void suoritaBTapahtumat() {
-		while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
-			suoritaTapahtuma(tapahtumalista.poista());
+		try {
+			while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
+				suoritaTapahtuma(tapahtumalista.poista());
+			}
+		} catch (NullPointerException e) {
+			System.out.println("Ei seuraavia tapahtumia.. ");
+
+			System.out.println("Ulkomaille ja sisälle lähtevät lennot ovat lähteneet..");
+
+			System.out.println("Genetoidaan seuraavia lentoja.. jatketaan simulointia..");
+
+			// Generoidaan uudet lennot ja niiden yhteydessä myös uudet tapahtumat
+			alustukset();
 		}
 	}
 
@@ -83,6 +85,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 	private boolean simuloidaan() {
 		return kello.getAika() < simulointiaika;
+
 	}
 
 	protected abstract void suoritaTapahtuma(Tapahtuma t); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa

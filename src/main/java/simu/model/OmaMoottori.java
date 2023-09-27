@@ -1,7 +1,6 @@
 package simu.model;
 
 import simu.controller.Kontrolleri;
-import simu.eduni.distributions.Negexp;
 import simu.eduni.distributions.Normal;
 import simu.framework.Kello;
 import simu.framework.Moottori;
@@ -35,7 +34,7 @@ public class OmaMoottori extends Moottori {
 		// Lähtöportti kotimaa
 		palvelupisteet[4] = new Palvelupiste(127, 12, "T2", new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista, TapahtumanTyyppi.DEP5);
 		// Saapumisprosessi
-		saapumisprosessi = new Saapumisprosessi(new Negexp(5, 15), tapahtumalista, TapahtumanTyyppi.ARR1);
+		saapumisprosessi = new Saapumisprosessi(tapahtumalista, TapahtumanTyyppi.ULKO, kontrolleri.getUlkomaaKA(), kontrolleri.getLentojenVali());
 	}
 
 	@Override
@@ -48,9 +47,15 @@ public class OmaMoottori extends Moottori {
 		Asiakas a;
 		switch ((TapahtumanTyyppi) t.getTyyppi()) {
 			case ARR1:
-				a = new Asiakas();
+				a = new Asiakas(TapahtumanTyyppi.ARR1);
 				palvelupisteet[0].lisaaJonoon(a);
-				saapumisprosessi.generoiSeuraava();
+				//saapumisprosessi.generoiSeuraava();
+				visualisointi.piirra(palvelupisteet);
+				break;
+			case ARR2:
+				a = new Asiakas(TapahtumanTyyppi.ARR2);
+				palvelupisteet[0].lisaaJonoon(a);
+				//saapumisprosessi.generoiSeuraava();
 				visualisointi.piirra(palvelupisteet);
 				break;
 			case DEP1:
@@ -85,8 +90,37 @@ public class OmaMoottori extends Moottori {
 				a.raportti();
 				visualisointi.piirra(palvelupisteet);
 				break;
+			case ULKO:
+				// Poistetaan jonoista kaikki ARR1-asiakkaat
+				for(Palvelupiste palvelupiste : palvelupisteet) {
+					for(Asiakas asiakas : palvelupiste.getAsiakasJono()) {
+						if(asiakas.getTyyppi().equals(TapahtumanTyyppi.ARR1)) {
+							palvelupiste.removeAsiakasARR1(asiakas);
+							asiakas.setMyohastuneet();
+						}
+					}
+				}
+				// Poistetaan tapahtumalistan "Ulkomaalentojen"-tapahtuma
+				tapahtumalista.removeUlkoTapahtumia();
+				visualisointi.piirra(palvelupisteet);
+				break;
+			case SISA:
+				// Poistetaan jonoista kaikki ARR2-asiakkaat
+				for(Palvelupiste palvelupiste : palvelupisteet) {
+					for(Asiakas asiakas : palvelupiste.getAsiakasJono()) {
+						if(asiakas.isUlkomaanlento()) {
+							palvelupiste.removeAsiakasARR2(asiakas);
+							asiakas.setMyohastuneet();
+						}
+					}
+				}
+				// Poistetaan tapahtumalistan "Sisälentojen"-tapahtuma
+				tapahtumalista.removeTapahtumia();
+				visualisointi.piirra(palvelupisteet);
+				break;
 		}
 	}
+
 
 	@Override
 	protected void yritaCTapahtumat() {
