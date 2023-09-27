@@ -28,15 +28,7 @@ public class Palvelupiste {
 
 	private boolean varattu = false;
 
-	public Palvelupiste(int x, int y, String nimi, ContinuousGenerator generator, Tapahtumalista tapahtumalista,
-						TapahtumanTyyppi tyyppi) {
-		this.x = x;
-		this.y = y;
-		this.nimi = nimi;
-		this.tapahtumalista = tapahtumalista;
-		this.generator = generator;
-		this.skeduloitavanTapahtumanTyyppi = tyyppi;
-	}
+
 	public Palvelupiste(int x, int y, String nimi, int pisteidenMaara, ContinuousGenerator generator,
 						Tapahtumalista tapahtumalista,
 						TapahtumanTyyppi tyyppi) {
