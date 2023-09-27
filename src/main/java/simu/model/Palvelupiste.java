@@ -17,6 +17,11 @@ public class Palvelupiste {
 	private final Tapahtumalista tapahtumalista;
 	private final TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
 
+	// Muuttujat metriikkojen tallentamiseen
+	private double kokonaisOdottamisaika = 0;
+	private double kokonaisPalveluaika = 0;
+	private double kokonaisSimulaatioaika = 0;
+
 	// JonoStartegia strategia; //optio: asiakkaiden järjestys
 
 	// Laskutoimituksien tarvitsemat muuttujat
@@ -47,6 +52,8 @@ public class Palvelupiste {
 	}
 
 	public void lisaaJonoon(Asiakas a) { // Jonon 1. asiakas aina palvelussa
+		// Toteutetaan asiakkaan lisäys jonoon
+		a.setSaapumisaika(Kello.getInstance().getAika());
 		jono.add(a);
 	}
 
@@ -54,6 +61,10 @@ public class Palvelupiste {
 		varattu = false;
 		// System.out.println("+1");
 		palvelupisteessaPalvellutAsiakkaat += 1;
+		// Toteutus asiakkaan poistamiseksi jonosta
+		double odotusaika = Kello.getInstance().getAika() - jono.peek().getSaapumisaika();
+		kokonaisOdottamisaika += odotusaika;
+		palvellutAsiakkaatTotal += 1;
 		return jono.poll();
 	}
 
@@ -124,6 +135,23 @@ public class Palvelupiste {
 	public double getY() {
 		return y;
 	}
+
+	// Laske keskimääräinen odotusaika
+	public double getKeskimaarainenOdotusaika() {
+		return kokonaisOdottamisaika / palvellutAsiakkaatTotal;
+	}
+
+	// Laske palvelutehokkuus
+	public double getSuoritusTeho() {
+		return (palvellutAsiakkaatTotal / kokonaisSimulaatioaika) * 100;
+	}
+
+	// Laske palvelupisteen käyttöaste
+	public double getPalvelupisteenKayttoaste(double simulointAika) {
+		return (palvelupisteenPalveluAika / simulointAika) * 100;
+	}
+
+	// Loput luokasta...
 
 	// Piirretään infoa palvelupisteiden päälle
 	public void piirra(GraphicsContext gc) {
