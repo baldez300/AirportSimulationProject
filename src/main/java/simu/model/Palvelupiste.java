@@ -133,12 +133,12 @@ public class Palvelupiste {
 
 	// Laske palvelutehokkuus
 	public double getSuoritusTeho() {
-		return (palvellutAsiakkaatTotal / kokonaisSimulaatioaika);
+		return (palvellutAsiakkaatTotal / kokonaisSimulaatioaika) * 100;
 	}
 
 	// Laske palvelupisteen käyttöaste
-	public double getPalvelupisteenKayttoaste() {
-		return (palvelupisteenPalveluAika / kokonaisSimulaatioaika);
+	public double getPalvelupisteenKayttoaste(double simulointAika) {
+		return (palvelupisteenPalveluAika / simulointAika) * 100;
 	}
 
 	// Loput luokasta...

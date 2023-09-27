@@ -115,7 +115,7 @@ public class OmaMoottori extends Moottori {
 			System.out.println("Palvelutehokkuus: " + p.getSuoritusTeho() + "%");
 
 			// Palvelupisteiden käyttöasteen laskeminen ja näyttö;
-			System.out.println("Palvelupisteen käyttöaste: " + p.getPalvelupisteenKayttoaste() + "%");
+			System.out.println("Palvelupisteen käyttöaste: " + p.getPalvelupisteenKayttoaste(getSimulointiaika()) + "%");
 
 			// Lisämittareita voi tarvittaessa laskea täältä...
 
