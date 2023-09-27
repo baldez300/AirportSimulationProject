@@ -627,6 +627,16 @@
                         <Spinner fx:id="lentojenVali" prefHeight="26.0" prefWidth="70.0" />
                      </children>
                   </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="31.0" prefWidth="435.0" spacing="10.0">
+                     <children>
+                        <Label prefHeight="26.0" prefWidth="236.0" text="Ulko- ja kotimaan lentojen väli">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                        <Spinner fx:id="lentojenVali2" prefHeight="26.0" prefWidth="81.0" />
+                     </children>
+                  </HBox>
                </children>
                <VBox.margin>
                   <Insets left="50.0" />

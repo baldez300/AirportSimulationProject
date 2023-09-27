@@ -44,8 +44,7 @@ public class OmaMoottori extends Moottori {
 				new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP5);
 		// Saapumisprosessi
-		saapumisprosessi = new Saapumisprosessi(tapahtumalista, TapahtumanTyyppi.ULKO, 600,
-				15);
+		saapumisprosessi = new Saapumisprosessi(tapahtumalista, TapahtumanTyyppi.ULKO, kontrolleri.getLentojenVali(), kontrolleri.getLentojenVali2());
 	}
 
 	@Override
