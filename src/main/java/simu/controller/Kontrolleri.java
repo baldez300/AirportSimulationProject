@@ -2,6 +2,7 @@ package simu.controller;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.time.LocalDate;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -11,7 +12,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -31,22 +31,64 @@ public class Kontrolleri {
     private VBox AsetuksetSivu;
 
     @FXML
-    private Text T1Asiakkaat;
+    private Text LSJononPituus;
+
+    @FXML
+    private Text LSjonotusaika;
+
+    @FXML
+    private Text LSkayttoaste;
+
+    @FXML
+    private Text LSsuoritusteho;
+
+    @FXML
+    private Text PTJononPituus;
+
+    @FXML
+    private Text PTJonotusaika;
+
+    @FXML
+    private Text PTKayttoaste;
+
+    @FXML
+    private Text PTSuoritusteho;
 
     @FXML
     private Text T1JononPituus;
 
     @FXML
+    private Text T1Jonotusaika;
+
+    @FXML
     private Text T1Kayttoaste;
 
     @FXML
-    private Text T2Asiakkaat;
+    private Text T1Suoritusteho;
 
     @FXML
     private Text T2JononPituus;
 
     @FXML
+    private Text T2Jonotusaika;
+
+    @FXML
     private Text T2Kayttoaste;
+
+    @FXML
+    private Text T2Suoritusteho;
+
+    @FXML
+    private Text TTJononPituus;
+
+    @FXML
+    private Text TTJonotusaika;
+
+    @FXML
+    private Text TTKayttoaste;
+
+    @FXML
+    private Text TTSuoritusteho;
 
     @FXML
     private VBox TuloksetSivu;
@@ -70,13 +112,13 @@ public class Kontrolleri {
     private Text kaikkiAsiakkaat;
 
     @FXML
+    private Text kokonaisAika;
+
+    @FXML
     private Spinner<Integer> kotimaaKA;
 
     @FXML
     private Spinner<Integer> kotimaaVar;
-
-    @FXML
-    private HBox lahtoselvitysBoksi;
 
     @FXML
     private Spinner<Integer> lahtoselvitysKA;
@@ -97,10 +139,13 @@ public class Kontrolleri {
     private Text myohastyneet;
 
     @FXML
-    private Button nopeutaNappi;
+    private Text myohastyneetT1;
 
     @FXML
-    private HBox passintarkastusBoksi;
+    private Text myohastyneetT2;
+
+    @FXML
+    private Button nopeutaNappi;
 
     @FXML
     private Spinner<Integer> passintarkastusKA;
@@ -110,6 +155,9 @@ public class Kontrolleri {
 
     @FXML
     private Spinner<Integer> passintarkastusVar;
+
+    @FXML
+    private Text pvm;
 
     @FXML
     private VBox simulaatioSivu;
@@ -122,9 +170,6 @@ public class Kontrolleri {
 
     @FXML
     private Button tallennaNappi;
-
-    @FXML
-    private HBox turvaTarkastusBoksi;
 
     @FXML
     private Spinner<Integer> turvatarkastusKA;
@@ -195,6 +240,8 @@ public class Kontrolleri {
         SpinnerValueFactory<Integer> lentojenValiSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(120, 240,
                 120);
         lentojenVali.setValueFactory(lentojenValiSpinner);
+        // Asetetaan päivämäärä
+        pvm.setText(LocalDate.now().toString());
 
         hidastaNappi.setOnAction(e -> {
             hidasta();
