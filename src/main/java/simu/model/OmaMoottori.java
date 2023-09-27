@@ -24,17 +24,28 @@ public class OmaMoottori extends Moottori {
 		palvelupisteet = new Palvelupiste[5];
 
 		// Lähtöselvitys
-		palvelupisteet[0] = new Palvelupiste(1187, 500, "LS", kontrolleri.getLahtoselvitysMaara(), new Normal(kontrolleri.getLSpalveluNopeus(), kontrolleri.getLahtoselvitysVar()), tapahtumalista, TapahtumanTyyppi.DEP1);
+		palvelupisteet[0] = new Palvelupiste(1187, 500, "LS", kontrolleri.getLahtoselvitysMaara(),
+				new Normal(kontrolleri.getLSpalveluNopeus(), kontrolleri.getLahtoselvitysVar()), tapahtumalista,
+				TapahtumanTyyppi.DEP1);
 		// Turvatarkastus
-		palvelupisteet[1] = new Palvelupiste(288, 338, "TT", kontrolleri.getTurvatarkastusMaara(), new Normal(kontrolleri.getTTpalveluNopeus(), kontrolleri.getTurvatarkastusVar()), tapahtumalista, TapahtumanTyyppi.DEP2);
+		palvelupisteet[1] = new Palvelupiste(288, 338, "TT", kontrolleri.getTurvatarkastusMaara(),
+				new Normal(kontrolleri.getTTpalveluNopeus(), kontrolleri.getTurvatarkastusVar()), tapahtumalista,
+				TapahtumanTyyppi.DEP2);
 		// Passintarkistus
-		palvelupisteet[2] = new Palvelupiste(1187, 165, "PT", kontrolleri.getPassintarkastusMaara(), new Normal(kontrolleri.getPTpalveluNopeus(), kontrolleri.getPassintarkastusVar()), tapahtumalista, TapahtumanTyyppi.DEP3);
+		palvelupisteet[2] = new Palvelupiste(1187, 165, "PT", kontrolleri.getPassintarkastusMaara(),
+				new Normal(kontrolleri.getPTpalveluNopeus(), kontrolleri.getPassintarkastusVar()), tapahtumalista,
+				TapahtumanTyyppi.DEP3);
 		// Lähtöportti ulkomaat
-		palvelupisteet[3] = new Palvelupiste(1360, 12, "T1",1, new Normal(kontrolleri.getUlkomaaKA(), kontrolleri.getUlkomaaVar()), tapahtumalista, TapahtumanTyyppi.DEP4);
+		palvelupisteet[3] = new Palvelupiste(1360, 12, "T1", 1,
+				new Normal(kontrolleri.getUlkomaaKA(), kontrolleri.getUlkomaaVar()), tapahtumalista,
+				TapahtumanTyyppi.DEP4);
 		// Lähtöportti kotimaa
-		palvelupisteet[4] = new Palvelupiste(127, 12, "T2",1, new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista, TapahtumanTyyppi.DEP5);
+		palvelupisteet[4] = new Palvelupiste(127, 12, "T2", 1,
+				new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista,
+				TapahtumanTyyppi.DEP5);
 		// Saapumisprosessi
-		saapumisprosessi = new Saapumisprosessi(tapahtumalista, TapahtumanTyyppi.ULKO, kontrolleri.getUlkomaaKA(), kontrolleri.getLentojenVali());
+		saapumisprosessi = new Saapumisprosessi(tapahtumalista, TapahtumanTyyppi.ULKO, kontrolleri.getUlkomaaKA(),
+				kontrolleri.getLentojenVali());
 	}
 
 	@Override
@@ -49,13 +60,11 @@ public class OmaMoottori extends Moottori {
 			case ARR1:
 				a = new Asiakas(TapahtumanTyyppi.ARR1);
 				palvelupisteet[0].lisaaJonoon(a);
-				//saapumisprosessi.generoiSeuraava();
 				visualisointi.piirra(palvelupisteet);
 				break;
 			case ARR2:
 				a = new Asiakas(TapahtumanTyyppi.ARR2);
 				palvelupisteet[0].lisaaJonoon(a);
-				//saapumisprosessi.generoiSeuraava();
 				visualisointi.piirra(palvelupisteet);
 				break;
 			case DEP1:
@@ -92,9 +101,9 @@ public class OmaMoottori extends Moottori {
 				break;
 			case ULKO:
 				// Poistetaan jonoista kaikki ARR1-asiakkaat
-				for(Palvelupiste palvelupiste : palvelupisteet) {
-					for(Asiakas asiakas : palvelupiste.getAsiakasJono()) {
-						if(asiakas.getTyyppi().equals(TapahtumanTyyppi.ARR1)) {
+				for (Palvelupiste palvelupiste : palvelupisteet) {
+					for (Asiakas asiakas : palvelupiste.getAsiakasJono()) {
+						if (asiakas.getTyyppi().equals(TapahtumanTyyppi.ARR1)) {
 							palvelupiste.removeAsiakasARR1(asiakas);
 							asiakas.setMyohastuneet();
 						}
@@ -106,9 +115,9 @@ public class OmaMoottori extends Moottori {
 				break;
 			case SISA:
 				// Poistetaan jonoista kaikki ARR2-asiakkaat
-				for(Palvelupiste palvelupiste : palvelupisteet) {
-					for(Asiakas asiakas : palvelupiste.getAsiakasJono()) {
-						if(asiakas.isUlkomaanlento()) {
+				for (Palvelupiste palvelupiste : palvelupisteet) {
+					for (Asiakas asiakas : palvelupiste.getAsiakasJono()) {
+						if (asiakas.isUlkomaanlento()) {
 							palvelupiste.removeAsiakasARR2(asiakas);
 							asiakas.setMyohastuneet();
 						}
@@ -120,7 +129,6 @@ public class OmaMoottori extends Moottori {
 				break;
 		}
 	}
-
 
 	@Override
 	protected void yritaCTapahtumat() {

@@ -1,15 +1,9 @@
 package simu.framework;
 
-import simu.model.TapahtumanTyyppi;
-
 import java.util.PriorityQueue;
 
 public class Tapahtumalista {
 	private PriorityQueue<Tapahtuma> lista = new PriorityQueue<Tapahtuma>();
-
-	public Tapahtumalista(){
-
-	}
 
 	public Tapahtuma poista(){
 		Trace.out(Trace.Level.INFO,"Tapahtumalistasta poisto " + lista.peek().getTyyppi() + " " + lista.peek().getAika() );

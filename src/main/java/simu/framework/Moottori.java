@@ -43,10 +43,10 @@ public abstract class Moottori extends Thread implements IMoottori {
 		return viive;
 	}
 
-
-	public void aja() {
+	public void run() {
 		alustukset(); // luodaan mm. ensimmäinen tapahtuma
-		while (simuloidaan()) {
+		while (!Thread.interrupted() && simuloidaan()) {
+			viive();
 
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
 			kello.setAika(nykyaika());
@@ -59,7 +59,15 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 		}
 		tulokset();
+	}
 
+	private void viive() { // UUSI
+		Trace.out(Trace.Level.INFO, "Viive " + viive);
+		try {
+			sleep(viive);
+		} catch (InterruptedException e) {
+			kontrolleri.lopetaSaie();
+		}
 	}
 
 	private void suoritaBTapahtumat() {

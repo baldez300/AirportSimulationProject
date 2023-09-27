@@ -252,9 +252,8 @@ public class Kontrolleri {
         });
 
         lopetaNappi.setOnAction(e -> {
-            ((Thread) moottori).interrupt();
+            lopetaSaie();
         });
-
     }
 
     @FXML

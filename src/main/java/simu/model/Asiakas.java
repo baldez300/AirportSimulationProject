@@ -2,7 +2,8 @@ package simu.model;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import simu.framework.*;
+import simu.framework.Trace;
+import simu.framework.Kello;
 import static simu.model.TapahtumanTyyppi.*;
 
 public class Asiakas {
@@ -12,10 +13,7 @@ public class Asiakas {
 	private static int i = 1;
 	private static long sum = 0;
 	private boolean ulkomaanlento; // Uusi kenttä, määrittää onko asiakas ulkomaanlennon asiakas
-
 	private static int myohastuneet = 0;
-
-	private String tyyppi;
 
 	public Asiakas(TapahtumanTyyppi tyyppi) {
 		id = i++;
@@ -24,9 +22,6 @@ public class Asiakas {
 		this.ulkomaanlento = this.tyypi.equals(ARR1);
 		this.width = 25;
 		this.height = 25;
-
-
-
 		Trace.out(Trace.Level.INFO, "Uusi asiakas nro " + id + " saapui klo " + saapumisaika);
 	}
 
@@ -72,14 +67,6 @@ public class Asiakas {
 
 	public double getHeight() {
 		return height;
-	}
-
-	// Arpoa ulkomaanlennon asiakkuuden
-	// Jos satunnaisluku on pienempi kuin 0.5 väliltä 0.0 ja 1.0, Math.random() < 0.5 palauttaa true.
-	// Jos satunnaisluku on suurempi tai yhtä suuri kuin 0.5, se palauttaa false.
-
-	private boolean arvoUlkomaanlento() {
-		return Math.random() < 0.5; // Voit muuttaa arvontakriteeriä tarpeidesi mukaan
 	}
 
 	public void raportti() {

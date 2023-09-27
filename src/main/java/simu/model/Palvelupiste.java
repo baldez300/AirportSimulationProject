@@ -1,7 +1,10 @@
 package simu.model;
 
 import javafx.scene.canvas.GraphicsContext;
-import simu.framework.*;
+import simu.framework.Kello;
+import simu.framework.Trace;
+import simu.framework.Tapahtuma;
+import simu.framework.Tapahtumalista;
 import java.util.LinkedList;
 import simu.eduni.distributions.ContinuousGenerator;
 
@@ -14,8 +17,7 @@ public class Palvelupiste {
 	private final Tapahtumalista tapahtumalista;
 	private final TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
 
-	//JonoStartegia strategia; //optio: asiakkaiden järjestys
-
+	// JonoStartegia strategia; //optio: asiakkaiden järjestys
 
 	// Laskutoimituksien tarvitsemat muuttujat
 	private static double kokoJarjestelmanPalveluaika = 0;
@@ -28,10 +30,9 @@ public class Palvelupiste {
 
 	private boolean varattu = false;
 
-
 	public Palvelupiste(int x, int y, String nimi, int pisteidenMaara, ContinuousGenerator generator,
-						Tapahtumalista tapahtumalista,
-						TapahtumanTyyppi tyyppi) {
+			Tapahtumalista tapahtumalista,
+			TapahtumanTyyppi tyyppi) {
 		this.x = x;
 		this.y = y;
 		this.nimi = nimi;
@@ -41,22 +42,22 @@ public class Palvelupiste {
 		this.skeduloitavanTapahtumanTyyppi = tyyppi;
 	}
 
-	public LinkedList<Asiakas> getAsiakasJono(){
+	public LinkedList<Asiakas> getAsiakasJono() {
 		return jono;
 	}
 
-	public void lisaaJonoon(Asiakas a){   // Jonon 1. asiakas aina palvelussa
+	public void lisaaJonoon(Asiakas a) { // Jonon 1. asiakas aina palvelussa
 		jono.add(a);
 	}
 
-	public Asiakas otaJonosta(){  // Poistetaan palvelussa ollut
+	public Asiakas otaJonosta() { // Poistetaan palvelussa ollut
 		varattu = false;
-		//System.out.println("+1");
-		palvelupisteessaPalvellutAsiakkaat+=1;
+		// System.out.println("+1");
+		palvelupisteessaPalvellutAsiakkaat += 1;
 		return jono.poll();
 	}
 
-	public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
+	public void aloitaPalvelu() { // Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
 
@@ -65,45 +66,49 @@ public class Palvelupiste {
 		palvelupisteenPalveluAika += palveluaika;
 		kokoJarjestelmanPalveluaika += palveluaika;
 
-
-		if(jono.peek().isUlkomaanlento()) {
-			tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi,(Kello.getInstance().getAika()+palveluaika), true));
+		if (jono.peek().isUlkomaanlento()) {
+			tapahtumalista.lisaa(
+					new Tapahtuma(skeduloitavanTapahtumanTyyppi, (Kello.getInstance().getAika() + palveluaika), true));
 
 		} else {
-			tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi,(Kello.getInstance().getAika()+palveluaika), false));
+			tapahtumalista.lisaa(
+					new Tapahtuma(skeduloitavanTapahtumanTyyppi, (Kello.getInstance().getAika() + palveluaika), false));
 
 		}
 	}
 
-
-
-	public boolean onVarattu(){
+	public boolean onVarattu() {
 		return varattu;
 	}
-	public boolean eiVarattu(){
+
+	public boolean eiVarattu() {
 		return !varattu;
 	}
 
-
-	public int getPalvelupisteessaPalvellutAsiakkaat(){
+	public int getPalvelupisteessaPalvellutAsiakkaat() {
 		return palvelupisteessaPalvellutAsiakkaat;
 	}
-	public static int getPalvellutAsiakkaatTotal(){
+
+	public static int getPalvellutAsiakkaatTotal() {
 		return palvellutAsiakkaatTotal;
 	}
-	public double getPalvelupisteenPalveluAika(){
+
+	public double getPalvelupisteenPalveluAika() {
 		return palvelupisteenPalveluAika;
 	}
-	public static double getKokoJarjestelmanPalveluAika(){
+
+	public static double getKokoJarjestelmanPalveluAika() {
 		return kokoJarjestelmanPalveluaika;
 	}
-	public boolean onJonossa(){
+
+	public boolean onJonossa() {
 		return jono.size() != 0;
 	}
 
 	public void removeAsiakasARR1(Asiakas a) {
 		jono.removeIf(b -> a.isUlkomaanlento());
 	}
+
 	public void removeAsiakasARR2(Asiakas a) {
 		jono.removeIf(b -> !a.isUlkomaanlento());
 	}
@@ -128,7 +133,5 @@ public class Palvelupiste {
 		else if (this.pisteidenMaara != 0 && this.nimi.equals("TT"))
 			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x - 160, this.y + 15);
 	}
-
-
 
 }

@@ -1,13 +1,10 @@
 package simu.framework;
-import simu.eduni.distributions.*;
 import simu.eduni.distributions.Normal;
 
 import static simu.model.TapahtumanTyyppi.ARR1;
 import static simu.model.TapahtumanTyyppi.*;
 
 public class Saapumisprosessi {
-
-	private ContinuousGenerator generaattori;
 	private Tapahtumalista tapahtumalista;
 	private ITapahtumanTyyppi tyyppi;
 
@@ -21,13 +18,7 @@ public class Saapumisprosessi {
 		this.tyyppi = tyyppi;
 		this.ulkoLahtoAika = ulkoLahtoAika;
 		this.lentojenVali = lentojenVali;
-
 	}
-
-	/*public void generoiSeuraava(){
-		Tapahtuma t = new Tapahtuma(tyyppi, Kello.getInstance().getAika()+generaattori.sample());
-		tapahtumalista.lisaa(t);
-	}*/
 
 	public void generoiSeuraava() {
 
