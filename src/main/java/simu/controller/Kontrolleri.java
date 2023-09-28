@@ -1,17 +1,19 @@
 package simu.controller;
 
-import simu.model.Palvelupiste;
-
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.time.LocalDate;
 
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.VBox;
@@ -19,12 +21,19 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import simu.dao.TuloksetDao;
-import simu.entity.*;
+import simu.entity.LSTulos;
+import simu.entity.PTTulos;
+import simu.entity.T1Tulos;
+import simu.entity.T2Tulos;
+import simu.entity.TTTulos;
+import simu.entity.Tulokset;
 import simu.framework.IMoottori;
 import simu.framework.Kello;
 import simu.framework.Trace;
 import simu.framework.Trace.Level;
+import simu.model.Asiakas;
 import simu.model.OmaMoottori;
+import simu.model.Palvelupiste;
 
 public class Kontrolleri {
     // Oletusarvot asetuksille jotta pysyvät muistissa
@@ -93,6 +102,24 @@ public class Kontrolleri {
 
     @FXML
     private Text TTSuoritusteho;
+
+    @FXML
+    private Text Tehtineet;
+
+    @FXML
+    private Text TkaikkiAsiakkaat;
+
+    @FXML
+    private Text TkokonaisAika;
+
+    @FXML
+    private Text Tmyohastyneet;
+
+    @FXML
+    private Text TmyohastyneetT1;
+
+    @FXML
+    private Text TmyohastyneetT2;
 
     @FXML
     private VBox TuloksetSivu;
@@ -164,6 +191,9 @@ public class Kontrolleri {
     private Spinner<Integer> passintarkastusVar;
 
     @FXML
+    private Button postuNappi;
+
+    @FXML
     private Text pvm;
 
     @FXML
@@ -177,6 +207,18 @@ public class Kontrolleri {
 
     @FXML
     private Button tallennaNappi;
+
+    @FXML
+    private VBox tallennetut;
+
+    @FXML
+    private Button tarkemmatTiedotNappi;
+
+    @FXML
+    private ListView<Tulokset> tuloksetLista;
+
+    @FXML
+    private Button tuloksetPoistu;
 
     @FXML
     private Spinner<Integer> turvatarkastusKA;
@@ -235,7 +277,7 @@ public class Kontrolleri {
         turvatarkastusVar.setValueFactory(turvatarkastusVarSpinner);
         turvatarkastusKA.setValueFactory(turvatarkastusKASpinner);
 
-        SpinnerValueFactory<Integer> kotimaaKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 5);
+        SpinnerValueFactory<Integer> kotimaaKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 5);
         SpinnerValueFactory<Integer> kotimaaVarSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 1);
         kotimaaVar.setValueFactory(kotimaaVarSpinner);
         kotimaaKA.setValueFactory(kotimaaKASpinner);
@@ -273,17 +315,29 @@ public class Kontrolleri {
         lopetaNappi.setOnAction(e -> {
             lopetaSaie();
         });
+
+        /*
+         * Asetataan Tuloksetlistalle kuuntelija joka päivittää tiedot kun valinta
+         * muuttuu
+         */
+        tuloksetLista.getSelectionModel().selectedItemProperty().addListener(this::valintaMuuttui);
     }
 
     @FXML
     void aloita(ActionEvent event) {
+        // Resetoidaan kellon aika ja staattiset muuttujat
         Kello.getInstance().setAika(0);
+        resetoiStaattisetMuuttujat();
+        // Luodaan uusi moottori ja asetetaan sille asetukset
         moottori = new OmaMoottori(this);
         simulointiAika = simulaationAika.getValue();
         moottori.setSimulointiaika(simulointiAika);
         moottori.setViive(simulaationViive.getValue());
         AsetuksetSivu.setVisible(false);
         simulaatioSivu.setVisible(true);
+        uusiNappi.setVisible(true);
+        tallennaNappi.setVisible(true);
+        tuloksetPoistu.setVisible(false);
         ((Thread) moottori).start();
 
         // Suljetaan ohjelma jos ikkuna suljetaan
@@ -302,7 +356,7 @@ public class Kontrolleri {
                 // Check the condition
                 if (Kello.getInstance().getAika() >= simulointiAika) {
                     // Update the UI on the JavaFX application thread
-                    asetaTulokset(((OmaMoottori)moottori).getPalvelupisteet());
+                    asetaTulokset(((OmaMoottori) moottori).getPalvelupisteet());
                     simulaatioSivu.setVisible(false);
                     TuloksetSivu.setVisible(true);
                     timer.cancel();
@@ -312,22 +366,75 @@ public class Kontrolleri {
     }
 
     @FXML
+    // Haetaan tulokset tietokannasta ja asetetaan ne listaan
     void naytaTulokset(ActionEvent event) {
-        // TODO: Toteuta tulosten haku databasesta ja näyttäminen
+        List<Tulokset> tulokset = tuloksetDao.lataaKaikki();
+        tuloksetLista.getItems().clear();
+        for (Tulokset t : tulokset) {
+            tuloksetLista.getItems().add(t);
+        }
+        AsetuksetSivu.setVisible(false);
+        tallennetut.setVisible(true);
     }
 
     @FXML
+    // Haetaan tarkemmat tiedot tietokannasta valitun tuloksen id:n perusteella
+    void naytaTarkemmatTiedot(ActionEvent event) {
+        Tulokset valittuTulos = tuloksetLista.getSelectionModel().getSelectedItem();
+        HashMap<Object, Object> tarkemmatTiedot = tuloksetDao.lataaTarkemmatTiedot(valittuTulos.getId());
+        asetaTallennetutTulokset(tarkemmatTiedot);
+        TuloksetSivu.setVisible(true);
+        tallennetut.setVisible(false);
+        tuloksetPoistu.setVisible(true);
+        uusiNappi.setVisible(false);
+        tallennaNappi.setVisible(false);
+    }
+
+    @FXML
+    void palaaAsetuksiin(ActionEvent event) {
+        tallennetut.setVisible(false);
+        AsetuksetSivu.setVisible(true);
+    }
+
+    @FXML
+    void palaaTallennettuihin(ActionEvent event) {
+        TuloksetSivu.setVisible(false);
+        tallennetut.setVisible(true);
+    }
+
+    @FXML
+    // Tallennetaan tulokset tietokantaan
     void tallenna(ActionEvent event) {
-        System.out.println("Tallennetaan tulokset");
-        Tulokset tulokset = new Tulokset(LocalDate.now(), 10.0,
-                10.0, 10.0, 10.0, 10.0, 10.0);
-        LSTulos lsTulos = new LSTulos(100.0, 100.0, 100.0, 100.0);
-        TTTulos ttTulos = new TTTulos(100.0, 100.0, 100.0, 100.0);
-        PTTulos ptTulos = new PTTulos(100.0, 100.0, 100.0, 100.0);
-        T1Tulos t1Tulos = new T1Tulos(100.0, 100.0, 100.0, 100.0);
-        T2Tulos t2Tulos = new T2Tulos(100.0, 100.0, 100.0, 100.0);
-        tuloksetDao.tallenna(tulokset, lsTulos, ttTulos, ptTulos, t1Tulos, t2Tulos);
-        tuloksetDao.tallenna(tulokset, lsTulos, ttTulos, ptTulos, t1Tulos, t2Tulos);
+        tallennaNappi.setDisable(true);
+        Palvelupiste[] palvelupisteet = ((OmaMoottori) moottori).getPalvelupisteet(); // hae palvelupisteet
+
+        Tulokset tulokset = new Tulokset(LocalDate.now(), simulointiAika,
+                Asiakas.i, 10.0, Asiakas.T1myohastyneet + Asiakas.T2myohastyneet, Asiakas.T1myohastyneet,
+                Asiakas.T2myohastyneet); // luo uusi tulokset entity
+
+        Map<String, Object> tuloksetMap = new HashMap<>();
+
+        tuloksetMap.put("SL", tulokset); // lisää tulokset entity map:iin
+
+        // Lisää palvelupisteiden tulokset map:iin
+        // TODO BALDE: lisää saadut tulokset palvelupisteiden mukaan
+        for (Palvelupiste p : palvelupisteet) {
+            if (p.getNimi().equals("LS")) {
+                tuloksetMap.put("LS", new LSTulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+            } else if (p.getNimi().equals("PT")) {
+                tuloksetMap.put("PT", new PTTulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+            } else if (p.getNimi().equals("TT")) {
+                tuloksetMap.put("TT", new TTTulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+            } else if (p.getNimi().equals("T1")) {
+                tuloksetMap.put("T1", new T1Tulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+            } else if (p.getNimi().equals("T2")) {
+                tuloksetMap.put("T2", new T2Tulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+            }
+        }
+        // Tallenna tulokset tietokantaan
+        tuloksetDao.tallenna((Tulokset) tuloksetMap.get("SL"), (LSTulos) tuloksetMap.get("LS"),
+                (TTTulos) tuloksetMap.get("TT"), (PTTulos) tuloksetMap.get("PT"), (T1Tulos) tuloksetMap.get("T1"),
+                (T2Tulos) tuloksetMap.get("T2"));
     }
 
     @FXML
@@ -335,6 +442,7 @@ public class Kontrolleri {
         ((Thread) moottori).interrupt();
         TuloksetSivu.setVisible(false);
         AsetuksetSivu.setVisible(true);
+        tallennaNappi.setDisable(false);
     }
 
     public void lopetaSaie() {
@@ -432,6 +540,12 @@ public class Kontrolleri {
     // Esimerkki Baldelle jatka tästä...
     public void asetaTulokset(Palvelupiste[] palvelupisteet) {
         for (Palvelupiste p : palvelupisteet) {
+            kokonaisAika.setText(simulointiAika + " min");
+            kaikkiAsiakkaat.setText(Asiakas.i + " kpl");
+            ehtineet.setText(Asiakas.lennolleEhtineet + " kpl");
+            myohastyneet.setText(Asiakas.T1myohastyneet + Asiakas.T2myohastyneet + " kpl");
+            myohastyneetT1.setText(Asiakas.T1myohastyneet + " kpl");
+            myohastyneetT2.setText(Asiakas.T2myohastyneet + " kpl");
             if (p.getNimi().equals("LS")) {
                 LSsuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
             } else if (p.getNimi().equals("PT")) {
@@ -444,5 +558,57 @@ public class Kontrolleri {
                 T2Suoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
             }
         }
+    }
+
+    // Asetetaan tallennetut tulokset näkymään tulokset sivulle
+    public void asetaTallennetutTulokset(HashMap<Object, Object> tuloksetMap) {
+        kokonaisAika.setText(((Tulokset) tuloksetMap.get("SL")).getAika() + " min");
+        kaikkiAsiakkaat.setText(((Tulokset) tuloksetMap.get("SL")).getAsiakkaat() + " kpl");
+        ehtineet.setText(((Tulokset) tuloksetMap.get("SL")).getLennolle_ehtineet() + " kpl");
+        myohastyneet.setText(((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t1()
+                + ((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t2() + " kpl");
+        myohastyneetT1.setText(((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t1() + " kpl");
+        myohastyneetT2.setText(((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t2() + " kpl");
+        LSsuoritusteho.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getSuoritusteho()));
+        PTSuoritusteho.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getSuoritusteho()));
+        TTSuoritusteho.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getSuoritusteho()));
+        T1Suoritusteho.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getSuoritusteho()));
+        T2Suoritusteho.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getSuoritusteho()));
+        LSJononPituus.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getJononpituus()));
+        PTJononPituus.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getJononpituus()));
+        TTJononPituus.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getJononpituus()));
+        T1JononPituus.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getJononpituus()));
+        T2JononPituus.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getJononpituus()));
+        LSjonotusaika.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getJonotusaika()));
+        PTJonotusaika.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getJonotusaika()));
+        TTJonotusaika.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getJonotusaika()));
+        T1Jonotusaika.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getJonotusaika()));
+        T2Jonotusaika.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getJonotusaika()));
+        LSkayttoaste.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getKayttoaste()));
+        PTKayttoaste.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getKayttoaste()));
+        TTKayttoaste.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getKayttoaste()));
+        T1Kayttoaste.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getKayttoaste()));
+        T2Kayttoaste.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getKayttoaste()));
+    }
+
+    // Asetetaan tulokset näkymään kun valinta muuttuu viereseen Vboxiin
+    public void valintaMuuttui(ObservableValue<? extends Tulokset> observable, Tulokset oldValue, Tulokset newValue) {
+        // Asennetaan tulokset näkymään
+        if (newValue != null) {
+            TkokonaisAika.setText(newValue.getAika() + " min");
+            TkaikkiAsiakkaat.setText(newValue.getAsiakkaat() + " kpl");
+            Tehtineet.setText(newValue.getLennolle_ehtineet() + " kpl");
+            Tmyohastyneet.setText(newValue.getMyohastyneet_t1() + newValue.getMyohastyneet_t2() + " kpl");
+            TmyohastyneetT1.setText(newValue.getMyohastyneet_t1() + " kpl");
+            TmyohastyneetT2.setText(newValue.getMyohastyneet_t2() + " kpl");
+        }
+    }
+
+    // Resetoidaan staattiset muuttujat
+    public void resetoiStaattisetMuuttujat() {
+        Asiakas.T1myohastyneet = 0;
+        Asiakas.T2myohastyneet = 0;
+        Asiakas.lennolleEhtineet = 0;
+        Asiakas.i = 0;
     }
 }
