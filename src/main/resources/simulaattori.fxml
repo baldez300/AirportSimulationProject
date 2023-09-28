@@ -553,7 +553,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="71.0" prefWidth="1380.0" spacing="1150.0">
                <children>
                   <Button fx:id="uusiNappi" mnemonicParsing="false" onAction="#uusiSimulointi" prefHeight="30.0" prefWidth="71.0" text="UUSI" />
-                  <Button fx:id="tallennaNappi" mnemonicParsing="false" prefHeight="30.0" prefWidth="136.0" text="TALLENNA TULOKSET" />
+                  <Button fx:id="tallennaNappi" mnemonicParsing="false" onAction="#tallenna" prefHeight="30.0" prefWidth="136.0" text="TALLENNA TULOKSET" />
                </children>
                <VBox.margin>
                   <Insets left="20.0" />

@@ -1,5 +1,8 @@
 package simu.entity;
 
+import java.time.LocalDate;
+import java.sql.Date;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -8,11 +11,10 @@ import jakarta.persistence.*;
 public class Tulokset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OneToMany
-    @Column(name = "id")
+    @Column(name = "tulokset_id")
     private int id;
     @Column(name = "paivamaara")
-    private String paivamaara;
+    private Date paivamaara;
     @Column(name = "aika")
     private double aika;
     @Column(name = "asiakkaat")
@@ -26,8 +28,8 @@ public class Tulokset {
     @Column(name = "myohastyneet_t2")
     private double myohastyneet_t2;
 
-    public Tulokset(String paivamaara, double aika, double asiakkaat, double lennolle_ehtineet, double lennolta_myohastyneet, double myohastyneet_t1, double myohastyneet_t2) {
-        this.paivamaara = paivamaara;
+    public Tulokset(LocalDate paivamaara, double aika, double asiakkaat, double lennolle_ehtineet, double lennolta_myohastyneet, double myohastyneet_t1, double myohastyneet_t2) {
+        this.paivamaara = Date.valueOf(paivamaara);
         this.aika = aika;
         this.asiakkaat = asiakkaat;
         this.lennolle_ehtineet = lennolle_ehtineet;
@@ -39,9 +41,38 @@ public class Tulokset {
     public Tulokset() {
     }
 
+    //Setterit
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void setPaivamaara(LocalDate paivamaara) {
+        this.paivamaara =  Date.valueOf(paivamaara);
+    }
+    public void setAika(double aika) {
+        this.aika = aika;
+    }
+    public void setAsiakkaat(double asiakkaat) {
+        this.asiakkaat = asiakkaat;
+    }
+    public void setLennolle_ehtineet(double lennolle_ehtineet) {
+        this.lennolle_ehtineet = lennolle_ehtineet;
+    }
+    public void setLennolta_myohastyneet(double lennolta_myohastyneet) {
+        this.lennolta_myohastyneet = lennolta_myohastyneet;
+    }
+    public void setMyohastyneet_t1(double myohastyneet_t1) {
+        this.myohastyneet_t1 = myohastyneet_t1;
+    }
+    public void setMyohastyneet_t2(double myohastyneet_t2) {
+        this.myohastyneet_t2 = myohastyneet_t2;
+    }
+
     //Getterit
-    public String getPaivamaara() {
-        return paivamaara;
+    public int getId() {
+        return id;
+    }
+    public LocalDate getPaivamaara() {
+        return paivamaara.toLocalDate();
     }
     public double getAika() {
         return aika;

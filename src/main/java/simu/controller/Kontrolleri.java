@@ -16,6 +16,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import simu.dao.TuloksetDao;
+import simu.entity.*;
 import simu.framework.IMoottori;
 import simu.framework.Kello;
 import simu.framework.Trace;
@@ -191,6 +193,8 @@ public class Kontrolleri {
 
     private static IMoottori moottori;
 
+    private TuloksetDao tuloksetDao = new TuloksetDao();
+
     // Asetetaan oletusarvot spinnereille
     @FXML
     void initialize() {
@@ -299,7 +303,16 @@ public class Kontrolleri {
 
     @FXML
     void tallenna(ActionEvent event) {
-        // TODO: Tallenna tulokset databaseen
+        System.out.println("Tallennetaan tulokset");
+        Tulokset tulokset = new Tulokset(LocalDate.now(), 10.0,
+                10.0, 10.0, 10.0, 10.0, 10.0);
+        LSTulos lsTulos = new LSTulos(100.0, 100.0, 100.0, 100.0);
+        TTTulos ttTulos = new TTTulos(100.0, 100.0, 100.0, 100.0);
+        PTTulos ptTulos = new PTTulos(100.0, 100.0, 100.0, 100.0);
+        T1Tulos t1Tulos = new T1Tulos(100.0, 100.0, 100.0, 100.0);
+        T2Tulos t2Tulos = new T2Tulos(100.0, 100.0, 100.0, 100.0);
+        tuloksetDao.tallenna(tulokset, lsTulos, ttTulos, ptTulos, t1Tulos, t2Tulos);
+        tuloksetDao.tallenna(tulokset, lsTulos, ttTulos, ptTulos, t1Tulos, t2Tulos);
     }
 
     @FXML
