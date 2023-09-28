@@ -21,7 +21,7 @@ public class Palvelupiste {
 
 	// Laskutoimituksien tarvitsemat muuttujat
 	private static double kokoJarjestelmanPalveluaika = 0;
-	private double palvelupisteenPalveluAika;
+	private double palvelupisteenPalveluAika, suoritusTeho;
 	private static int palvellutAsiakkaatTotal = 0;
 	private int palvelupisteessaPalvellutAsiakkaat;
 	private final int x, y;
@@ -83,6 +83,14 @@ public class Palvelupiste {
 
 	public boolean eiVarattu() {
 		return !varattu;
+	}
+
+	// Esimerkki Baldelle jatka tästä...
+	public void setSuoritusteho(double kokonaisAika) {
+		this.suoritusTeho = palvelupisteessaPalvellutAsiakkaat / kokonaisAika;
+	}
+	public double getSuoritusteho() {
+		return suoritusTeho;
 	}
 
 	public int getPalvelupisteessaPalvellutAsiakkaat() {

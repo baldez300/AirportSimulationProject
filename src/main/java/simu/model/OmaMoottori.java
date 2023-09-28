@@ -44,7 +44,12 @@ public class OmaMoottori extends Moottori {
 				new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP5);
 		// Saapumisprosessi
-		saapumisprosessi = new Saapumisprosessi(tapahtumalista, TapahtumanTyyppi.ULKO, kontrolleri.getLentojenVali(), kontrolleri.getLentojenVali2());
+		saapumisprosessi = new Saapumisprosessi(tapahtumalista, TapahtumanTyyppi.ULKO, kontrolleri.getLentojenVali(),
+				kontrolleri.getLentojenVali2());
+	}
+
+	public Palvelupiste[] getPalvelupisteet() {
+		return palvelupisteet;
 	}
 
 	@Override
@@ -140,6 +145,7 @@ public class OmaMoottori extends Moottori {
 
 	@Override
 	protected void tulokset() {
+
 		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
 		// System.out.println("Tulokset ... puuttuvat vielä");
 		System.out.println(
@@ -157,6 +163,14 @@ public class OmaMoottori extends Moottori {
 			} else {
 				System.out.println("Kaikki asiakkaat eivät ole vielä kulkeneet läpi.");
 			}
+		}
+	}
+	
+	// Esimerkki Baldelle jatka tästä...
+	@Override
+	public void asetaTulokset() {
+		for (Palvelupiste p : palvelupisteet) {
+			p.setSuoritusteho(getSimulointiaika());
 		}
 	}
 }

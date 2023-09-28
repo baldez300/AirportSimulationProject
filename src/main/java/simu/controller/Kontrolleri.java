@@ -1,5 +1,7 @@
 package simu.controller;
 
+import simu.model.Palvelupiste;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.time.LocalDate;
@@ -246,14 +248,12 @@ public class Kontrolleri {
         simulaationAika.setValueFactory(simulaationAikaSpinner);
         simulaationViive.setValueFactory(simulaationViiveSpinner);
 
-
         SpinnerValueFactory<Integer> lentojenValiSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(60, 240,
                 60);
         SpinnerValueFactory<Integer> lentojenVali2Spinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 240,
                 10);
         lentojenVali.setValueFactory(lentojenValiSpinner);
         lentojenVali2.setValueFactory(lentojenVali2Spinner);
-
 
         // Asetetaan päivämäärä
         pvm.setText(LocalDate.now().toString());
@@ -298,6 +298,7 @@ public class Kontrolleri {
                 // Check the condition
                 if (Kello.getInstance().getAika() >= simulointiAika) {
                     // Update the UI on the JavaFX application thread
+                    asetaTulokset(((OmaMoottori)moottori).getPalvelupisteet());
                     simulaatioSivu.setVisible(false);
                     TuloksetSivu.setVisible(true);
                     timer.cancel();
@@ -402,6 +403,7 @@ public class Kontrolleri {
     public int getLentojenVali() {
         return lentojenVali.getValue();
     }
+
     public int getLentojenVali2() {
         return lentojenVali2.getValue();
     }
@@ -412,5 +414,22 @@ public class Kontrolleri {
 
     public int getSimulointiViive() {
         return simulaationViive.getValue();
+    }
+
+    // Esimerkki Baldelle jatka tästä...
+    public void asetaTulokset(Palvelupiste[] palvelupisteet) {
+        for (Palvelupiste p : palvelupisteet) {
+            if (p.getNimi().equals("LS")) {
+                LSsuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
+            } else if (p.getNimi().equals("PT")) {
+                PTSuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
+            } else if (p.getNimi().equals("TT")) {
+                TTSuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
+            } else if (p.getNimi().equals("T1")) {
+                T1Suoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
+            } else if (p.getNimi().equals("T2")) {
+                T2Suoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
+            }
+        }
     }
 }
