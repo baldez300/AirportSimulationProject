@@ -188,6 +188,9 @@ public class OmaMoottori extends Moottori {
 	public void asetaTulokset() {
 		for (Palvelupiste p : palvelupisteet) {
 			p.setSuoritusteho(getSimulointiaika());
+			p.setJononPituus(getSimulointiaika());
+			p.setKayttoaste(getSimulointiaika());
+			p.setJonotusaika(getSimulointiaika());
 		}
 	}
 }

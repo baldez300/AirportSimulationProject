@@ -28,7 +28,7 @@ public class Palvelupiste {
 	private static double kokoJarjestelmanPalveluaika = 0;
 	private double palvelupisteenPalveluAika, suoritusTeho;
 	private static int palvellutAsiakkaatTotal = 0;
-	private int palvelupisteessaPalvellutAsiakkaat;
+	private double palvelupisteessaPalvellutAsiakkaat;
 	private final int x, y;
 	private int pisteidenMaara;
 	private final String nimi;
@@ -98,13 +98,39 @@ public class Palvelupiste {
 
 	// Esimerkki Baldelle jatka tästä...
 	public void setSuoritusteho(double kokonaisAika) {
-		this.suoritusTeho = palvelupisteessaPalvellutAsiakkaat / kokonaisAika;
+		this.suoritusTeho = (palvelupisteessaPalvellutAsiakkaat / kokonaisAika) * 100;
 	}
 	public double getSuoritusteho() {
 		return suoritusTeho;
 	}
 
-	public int getPalvelupisteessaPalvellutAsiakkaat() {
+	public void setJononPituus(double jononPituus) {
+		this.palvelupisteessaPalvellutAsiakkaat = jononPituus;
+	}
+
+	public double getJononPituus() {
+		return palvelupisteessaPalvellutAsiakkaat;
+	}
+
+	public void setKayttoaste(double simulointiAika) {
+		this.palvelupisteenPalveluAika = (palvelupisteenPalveluAika / simulointiAika) * 100;
+	}
+
+	public double getKayttoaste() {
+		return palvelupisteenPalveluAika;
+	}
+
+	public void setJonotusaika(double jonotusAika) {
+		this.kokonaisOdottamisaika = jonotusAika;
+	}
+
+	public double getJonotusaika() {
+		return kokonaisOdottamisaika;
+	}
+
+
+
+	public double getPalvelupisteessaPalvellutAsiakkaat() {
 		return palvelupisteessaPalvellutAsiakkaat;
 	}
 
