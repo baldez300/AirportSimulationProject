@@ -1,4 +1,4 @@
-package simu.controller;
+package simu.view;
 
 import java.time.LocalDate;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package simu.framework;
 
-import simu.controller.Kontrolleri;
+import simu.view.Kontrolleri;
 
 public abstract class Moottori extends Thread implements IMoottori {
 

@@ -1,11 +1,11 @@
 package simu.model;
 
-import simu.controller.Kontrolleri;
 import simu.eduni.distributions.Normal;
 import simu.framework.Kello;
 import simu.framework.Moottori;
 import simu.framework.Saapumisprosessi;
 import simu.framework.Tapahtuma;
+import simu.view.Kontrolleri;
 import simu.view.Visualisointi;
 
 public class OmaMoottori extends Moottori {
