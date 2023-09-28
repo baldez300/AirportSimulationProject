@@ -1,5 +1,7 @@
 package simu.controller;
 
+import simu.model.Palvelupiste;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.time.LocalDate;
@@ -26,7 +28,7 @@ import simu.model.OmaMoottori;
 
 public class Kontrolleri {
     // Oletusarvot asetuksille jotta pysyvät muistissa
-    private static double simulointiAika = 1440;
+    private static double simulointiAika = 1000;
     private static int simulointiViive = 100;
 
     @FXML
@@ -135,6 +137,9 @@ public class Kontrolleri {
     private Spinner<Integer> lentojenVali;
 
     @FXML
+    private Spinner<Integer> lentojenVali2;
+
+    @FXML
     private Button lopetaNappi;
 
     @FXML
@@ -202,48 +207,58 @@ public class Kontrolleri {
         // Spinnrien arvojen asettaminen
         SpinnerValueFactory<Integer> lahtoSelvitysSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20,
                 1);
+        SpinnerValueFactory<Integer> lahtoselvitysKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100,
+                5);
+        SpinnerValueFactory<Integer> lahtoselvitysVarSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20,
+                3);
         lahtoselvitysMaara.setValueFactory(lahtoSelvitysSpinner);
+        lahtoselvitysKA.setValueFactory(lahtoselvitysKASpinner);
+        lahtoselvitysVar.setValueFactory(lahtoselvitysVarSpinner);
+
         SpinnerValueFactory<Integer> passintarkastusSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20,
                 1);
-        passintarkastusMaara.setValueFactory(passintarkastusSpinner);
-        SpinnerValueFactory<Integer> turvatarkastusSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20,
-                1);
-        turvatarkastusMaara.setValueFactory(turvatarkastusSpinner);
-        SpinnerValueFactory<Integer> LahtoselvitysSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20,
-                3);
-        lahtoselvitysVar.setValueFactory(LahtoselvitysSpinner);
+        SpinnerValueFactory<Integer> passintarkastusKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
+                100, 10);
         SpinnerValueFactory<Integer> passintarkastusVarSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
                 20, 3);
+        passintarkastusKA.setValueFactory(passintarkastusKASpinner);
         passintarkastusVar.setValueFactory(passintarkastusVarSpinner);
+        passintarkastusMaara.setValueFactory(passintarkastusSpinner);
+
+        SpinnerValueFactory<Integer> turvatarkastusSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20,
+                1);
+        SpinnerValueFactory<Integer> turvatarkastusKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
+                100, 9);
         SpinnerValueFactory<Integer> turvatarkastusVarSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
                 20, 3);
+        turvatarkastusMaara.setValueFactory(turvatarkastusSpinner);
         turvatarkastusVar.setValueFactory(turvatarkastusVarSpinner);
-        SpinnerValueFactory<Integer> kotimaaVarSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 3);
-        kotimaaVar.setValueFactory(kotimaaVarSpinner);
-        SpinnerValueFactory<Integer> ulkomaaVarSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 3);
-        ulkomaaVar.setValueFactory(ulkomaaVarSpinner);
-        SpinnerValueFactory<Integer> kotimaaKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 5);
-        kotimaaKA.setValueFactory(kotimaaKASpinner);
-        SpinnerValueFactory<Integer> ulkomaaKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 5);
-        ulkomaaKA.setValueFactory(ulkomaaKASpinner);
-        SpinnerValueFactory<Integer> passintarkastusKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
-                100, 15);
-        passintarkastusKA.setValueFactory(passintarkastusKASpinner);
-        SpinnerValueFactory<Integer> turvatarkastusKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
-                100, 20);
         turvatarkastusKA.setValueFactory(turvatarkastusKASpinner);
-        SpinnerValueFactory<Integer> lahtoselvitysKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100,
-                15);
-        lahtoselvitysKA.setValueFactory(lahtoselvitysKASpinner);
+
+        SpinnerValueFactory<Integer> kotimaaKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 5);
+        SpinnerValueFactory<Integer> kotimaaVarSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 1);
+        kotimaaVar.setValueFactory(kotimaaVarSpinner);
+        kotimaaKA.setValueFactory(kotimaaKASpinner);
+
+        SpinnerValueFactory<Integer> ulkomaaKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 5);
+        SpinnerValueFactory<Integer> ulkomaaVarSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 1);
+        ulkomaaVar.setValueFactory(ulkomaaVarSpinner);
+        ulkomaaKA.setValueFactory(ulkomaaKASpinner);
+
         SpinnerValueFactory<Double> simulaationAikaSpinner = new SpinnerValueFactory.DoubleSpinnerValueFactory(1,
                 Double.MAX_VALUE, simulointiAika);
-        simulaationAika.setValueFactory(simulaationAikaSpinner);
         SpinnerValueFactory<Integer> simulaationViiveSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
                 2000, simulointiViive);
+        simulaationAika.setValueFactory(simulaationAikaSpinner);
         simulaationViive.setValueFactory(simulaationViiveSpinner);
-        SpinnerValueFactory<Integer> lentojenValiSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(120, 240,
-                120);
+
+        SpinnerValueFactory<Integer> lentojenValiSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(60, 240,
+                60);
+        SpinnerValueFactory<Integer> lentojenVali2Spinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 240,
+                10);
         lentojenVali.setValueFactory(lentojenValiSpinner);
+        lentojenVali2.setValueFactory(lentojenVali2Spinner);
+
         // Asetetaan päivämäärä
         pvm.setText(LocalDate.now().toString());
 
@@ -256,9 +271,8 @@ public class Kontrolleri {
         });
 
         lopetaNappi.setOnAction(e -> {
-            ((Thread) moottori).interrupt();
+            lopetaSaie();
         });
-
     }
 
     @FXML
@@ -288,6 +302,7 @@ public class Kontrolleri {
                 // Check the condition
                 if (Kello.getInstance().getAika() >= simulointiAika) {
                     // Update the UI on the JavaFX application thread
+                    asetaTulokset(((OmaMoottori)moottori).getPalvelupisteet());
                     simulaatioSivu.setVisible(false);
                     TuloksetSivu.setVisible(true);
                     timer.cancel();
@@ -402,11 +417,32 @@ public class Kontrolleri {
         return lentojenVali.getValue();
     }
 
+    public int getLentojenVali2() {
+        return lentojenVali2.getValue();
+    }
+
     public double getSimulointiAika() {
         return simulaationAika.getValue();
     }
 
     public int getSimulointiViive() {
         return simulaationViive.getValue();
+    }
+
+    // Esimerkki Baldelle jatka tästä...
+    public void asetaTulokset(Palvelupiste[] palvelupisteet) {
+        for (Palvelupiste p : palvelupisteet) {
+            if (p.getNimi().equals("LS")) {
+                LSsuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
+            } else if (p.getNimi().equals("PT")) {
+                PTSuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
+            } else if (p.getNimi().equals("TT")) {
+                TTSuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
+            } else if (p.getNimi().equals("T1")) {
+                T1Suoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
+            } else if (p.getNimi().equals("T2")) {
+                T2Suoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
+            }
+        }
     }
 }

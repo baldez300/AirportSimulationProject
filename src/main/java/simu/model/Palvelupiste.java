@@ -1,9 +1,11 @@
 package simu.model;
 
-import simu.framework.*;
-import java.util.LinkedList;
-
 import javafx.scene.canvas.GraphicsContext;
+import simu.framework.Kello;
+import simu.framework.Trace;
+import simu.framework.Tapahtuma;
+import simu.framework.Tapahtumalista;
+import java.util.LinkedList;
 import simu.eduni.distributions.ContinuousGenerator;
 
 // TODO:
@@ -19,7 +21,7 @@ public class Palvelupiste {
 
 	// Laskutoimituksien tarvitsemat muuttujat
 	private static double kokoJarjestelmanPalveluaika = 0;
-	private double palvelupisteenPalveluAika;
+	private double palvelupisteenPalveluAika, suoritusTeho;
 	private static int palvellutAsiakkaatTotal = 0;
 	private int palvelupisteessaPalvellutAsiakkaat;
 	private final int x, y;
@@ -27,16 +29,6 @@ public class Palvelupiste {
 	private final String nimi;
 
 	private boolean varattu = false;
-
-	public Palvelupiste(int x, int y, String nimi, ContinuousGenerator generator, Tapahtumalista tapahtumalista,
-			TapahtumanTyyppi tyyppi) {
-		this.x = x;
-		this.y = y;
-		this.nimi = nimi;
-		this.tapahtumalista = tapahtumalista;
-		this.generator = generator;
-		this.skeduloitavanTapahtumanTyyppi = tyyppi;
-	}
 
 	public Palvelupiste(int x, int y, String nimi, int pisteidenMaara, ContinuousGenerator generator,
 			Tapahtumalista tapahtumalista,
@@ -50,47 +42,55 @@ public class Palvelupiste {
 		this.skeduloitavanTapahtumanTyyppi = tyyppi;
 	}
 
-	public void lisaaJonoon(Asiakas a) { // Jonon 1. asiakas aina palvelussa
-		jono.add(a);
-	}
-
 	public LinkedList<Asiakas> getAsiakasJono() {
 		return jono;
 	}
 
-	public int getKoko() {
-		return jono.size();
-	}
-
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public String getNimi() {
-		return nimi;
+	public void lisaaJonoon(Asiakas a) { // Jonon 1. asiakas aina palvelussa
+		jono.add(a);
 	}
 
 	public Asiakas otaJonosta() { // Poistetaan palvelussa ollut
 		varattu = false;
-		palvelupisteessaPalvellutAsiakkaat++;
+		// System.out.println("+1");
+		palvelupisteessaPalvellutAsiakkaat += 1;
 		return jono.poll();
 	}
 
 	public void aloitaPalvelu() { // Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
+
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
+
 		varattu = true;
 		double palveluaika = generator.sample();
 		palvelupisteenPalveluAika += palveluaika;
 		kokoJarjestelmanPalveluaika += palveluaika;
-		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
+
+		if (jono.peek().isUlkomaanlento()) {
+			tapahtumalista.lisaa(
+					new Tapahtuma(skeduloitavanTapahtumanTyyppi, (Kello.getInstance().getAika() + palveluaika), true));
+
+		} else {
+			tapahtumalista.lisaa(
+					new Tapahtuma(skeduloitavanTapahtumanTyyppi, (Kello.getInstance().getAika() + palveluaika), false));
+
+		}
 	}
 
 	public boolean onVarattu() {
 		return varattu;
+	}
+
+	public boolean eiVarattu() {
+		return !varattu;
+	}
+
+	// Esimerkki Baldelle jatka tästä...
+	public void setSuoritusteho(double kokonaisAika) {
+		this.suoritusTeho = palvelupisteessaPalvellutAsiakkaat / kokonaisAika;
+	}
+	public double getSuoritusteho() {
+		return suoritusTeho;
 	}
 
 	public int getPalvelupisteessaPalvellutAsiakkaat() {
@@ -112,7 +112,27 @@ public class Palvelupiste {
 	public boolean onJonossa() {
 		return jono.size() != 0;
 	}
-	
+
+	public void removeAsiakasARR1(Asiakas a) {
+		jono.removeIf(b -> a.isUlkomaanlento());
+	}
+
+	public void removeAsiakasARR2(Asiakas a) {
+		jono.removeIf(b -> !a.isUlkomaanlento());
+	}
+
+	public String getNimi() {
+		return this.nimi;
+	}
+
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
 	// Piirretään infoa palvelupisteiden päälle
 	public void piirra(GraphicsContext gc) {
 		gc.setFont(javafx.scene.text.Font.font("Verdana", 15));
@@ -121,4 +141,5 @@ public class Palvelupiste {
 		else if (this.pisteidenMaara != 0 && this.nimi.equals("TT"))
 			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x - 160, this.y + 15);
 	}
+
 }

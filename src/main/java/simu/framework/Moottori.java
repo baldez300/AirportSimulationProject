@@ -43,11 +43,11 @@ public abstract class Moottori extends Thread implements IMoottori {
 		return viive;
 	}
 
-	@Override
 	public void run() {
 		alustukset(); // luodaan mm. ensimmäinen tapahtuma
 		while (!Thread.interrupted() && simuloidaan()) {
 			viive();
+
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
 			kello.setAika(nykyaika());
 
@@ -58,8 +58,8 @@ public abstract class Moottori extends Thread implements IMoottori {
 			yritaCTapahtumat();
 
 		}
+		asetaTulokset();
 		tulokset();
-
 	}
 
 	private void viive() { // UUSI
@@ -72,8 +72,19 @@ public abstract class Moottori extends Thread implements IMoottori {
 	}
 
 	private void suoritaBTapahtumat() {
-		while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
-			suoritaTapahtuma(tapahtumalista.poista());
+		try {
+			while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
+				suoritaTapahtuma(tapahtumalista.poista());
+			}
+		} catch (NullPointerException e) {
+			System.out.println("Ei seuraavia tapahtumia.. ");
+
+			System.out.println("Ulkomaille ja sisälle lähtevät lennot ovat lähteneet..");
+
+			System.out.println("Genetoidaan seuraavia lentoja.. jatketaan simulointia..");
+
+			// Generoidaan uudet lennot ja niiden yhteydessä myös uudet tapahtumat
+			alustukset();
 		}
 	}
 
@@ -83,6 +94,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 	private boolean simuloidaan() {
 		return kello.getAika() < simulointiaika;
+
 	}
 
 	protected abstract void suoritaTapahtuma(Tapahtuma t); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
@@ -92,5 +104,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 	protected abstract void alustukset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 	protected abstract void tulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+
+	protected abstract void asetaTulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 }
