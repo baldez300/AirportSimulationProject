@@ -58,6 +58,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 			yritaCTapahtumat();
 
 		}
+		asetaTulokset();
 		tulokset();
 	}
 
@@ -103,5 +104,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 	protected abstract void alustukset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 	protected abstract void tulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+
+	protected abstract void asetaTulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 }
