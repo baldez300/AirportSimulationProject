@@ -409,7 +409,8 @@ public class Kontrolleri {
         Palvelupiste[] palvelupisteet = ((OmaMoottori) moottori).getPalvelupisteet(); // hae palvelupisteet
 
         Tulokset tulokset = new Tulokset(LocalDate.now(), simulointiAika,
-                Asiakas.i, 10.0, Asiakas.T1myohastyneet + Asiakas.T2myohastyneet, Asiakas.T1myohastyneet,
+                Asiakas.i, Asiakas.lennolleEhtineet, Asiakas.T1myohastyneet + Asiakas.T2myohastyneet,
+                Asiakas.T1myohastyneet,
                 Asiakas.T2myohastyneet); // luo uusi tulokset entity
 
         Map<String, Object> tuloksetMap = new HashMap<>();
@@ -540,6 +541,7 @@ public class Kontrolleri {
     // Esimerkki Baldelle jatka tästä...
     public void asetaTulokset(Palvelupiste[] palvelupisteet) {
         for (Palvelupiste p : palvelupisteet) {
+            pvm.setText(LocalDate.now().toString());
             kokonaisAika.setText(simulointiAika + " min");
             kaikkiAsiakkaat.setText(Asiakas.i + " kpl");
             ehtineet.setText(Asiakas.lennolleEhtineet + " kpl");
@@ -562,6 +564,7 @@ public class Kontrolleri {
 
     // Asetetaan tallennetut tulokset näkymään tulokset sivulle
     public void asetaTallennetutTulokset(HashMap<Object, Object> tuloksetMap) {
+        pvm.setText(((Tulokset) tuloksetMap.get("SL")).getPaivamaara().toString());
         kokonaisAika.setText(((Tulokset) tuloksetMap.get("SL")).getAika() + " min");
         kaikkiAsiakkaat.setText(((Tulokset) tuloksetMap.get("SL")).getAsiakkaat() + " kpl");
         ehtineet.setText(((Tulokset) tuloksetMap.get("SL")).getLennolle_ehtineet() + " kpl");
