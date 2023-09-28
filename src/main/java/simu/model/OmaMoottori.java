@@ -95,12 +95,14 @@ public class OmaMoottori extends Moottori {
 				a = (Asiakas) palvelupisteet[3].otaJonosta();
 				a.setPoistumisaika(Kello.getInstance().getAika());
 				a.raportti();
+				Asiakas.lennolleEhtineet++;
 				visualisointi.piirra(palvelupisteet);
 				break;
 			case DEP5:
 				a = (Asiakas) palvelupisteet[4].otaJonosta();
 				a.setPoistumisaika(Kello.getInstance().getAika());
 				a.raportti();
+				Asiakas.lennolleEhtineet++;
 				visualisointi.piirra(palvelupisteet);
 				break;
 			case ULKO:
@@ -109,7 +111,7 @@ public class OmaMoottori extends Moottori {
 					for (Asiakas asiakas : palvelupiste.getAsiakasJono()) {
 						if (asiakas.getTyyppi().equals(TapahtumanTyyppi.ARR1)) {
 							palvelupiste.removeAsiakasARR1(asiakas);
-							asiakas.setMyohastuneet();
+							Asiakas.T2myohastyneet++;
 						}
 					}
 				}
@@ -123,7 +125,7 @@ public class OmaMoottori extends Moottori {
 					for (Asiakas asiakas : palvelupiste.getAsiakasJono()) {
 						if (asiakas.isUlkomaanlento()) {
 							palvelupiste.removeAsiakasARR2(asiakas);
-							asiakas.setMyohastuneet();
+							Asiakas.T1myohastyneet++;
 						}
 					}
 				}
