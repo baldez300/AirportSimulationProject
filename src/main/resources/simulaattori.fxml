@@ -4,6 +4,7 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -550,9 +551,10 @@
                   </VBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="71.0" prefWidth="1380.0" spacing="1150.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="71.0" prefWidth="1380.0" spacing="540.0">
                <children>
                   <Button fx:id="uusiNappi" mnemonicParsing="false" onAction="#uusiSimulointi" prefHeight="30.0" prefWidth="71.0" text="UUSI" />
+                  <Button fx:id="tuloksetPoistu" mnemonicParsing="false" onAction="#palaaTallennettuihin" prefHeight="30.0" prefWidth="78.0" text="POISTU" visible="false" />
                   <Button fx:id="tallennaNappi" mnemonicParsing="false" onAction="#tallenna" prefHeight="30.0" prefWidth="136.0" text="TALLENNA TULOKSET" />
                </children>
                <VBox.margin>
@@ -855,6 +857,136 @@
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
+      </VBox>
+      <VBox fx:id="tallennetut" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
+         <children>
+            <HBox alignment="CENTER" prefHeight="51.0" prefWidth="1400.0">
+               <children>
+                  <Label text="Tallennetut Tulokset" underline="true">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="TOP_CENTER" prefHeight="530.0" prefWidth="1000.0" spacing="100.0">
+               <children>
+                  <ListView fx:id="tuloksetLista" prefHeight="518.0" prefWidth="370.0" />
+                  <VBox prefHeight="311.0" prefWidth="370.0">
+                     <children>
+                        <VBox prefHeight="219.0" prefWidth="370.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="370.0">
+                                 <children>
+                                    <Label prefHeight="38.0" prefWidth="180.0" text="Käynnissä oloaika:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="TkokonaisAika" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="370.0">
+                                 <children>
+                                    <Label prefHeight="38.0" prefWidth="180.0" text="Kaikki asiakaat:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="TkaikkiAsiakkaat" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="370.0">
+                                 <children>
+                                    <Label prefHeight="38.0" prefWidth="180.0" text="Lennolle ehtineet:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="Tehtineet" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="370.0">
+                                 <children>
+                                    <Label prefHeight="38.0" prefWidth="180.0" text="Lennolta myöhästyneet:">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Text fx:id="Tmyohastyneet" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="370.0">
+                                 <children>
+                                    <Label prefHeight="26.0" prefWidth="180.0" text="Kotimaa (T1):">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Text fx:id="TmyohastyneetT1" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="370.0">
+                                 <children>
+                                    <Label prefHeight="35.0" prefWidth="180.0" text="Ulkomaa (T2):">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Text fx:id="TmyohastyneetT2" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Button fx:id="tarkemmatTiedotNappi" mnemonicParsing="false" onAction="#naytaTarkemmatTiedot" prefHeight="34.0" prefWidth="146.0" text="TARKEMMAT TIEDOT" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="200.0" right="200.0" />
+               </VBox.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <Button fx:id="postuNappi" mnemonicParsing="false" onAction="#palaaAsetuksiin" prefHeight="35.0" prefWidth="104.0" text="POISTU" />
+         </children>
       </VBox>
    </children>
 </StackPane>
