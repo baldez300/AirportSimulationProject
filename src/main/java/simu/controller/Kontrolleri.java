@@ -380,6 +380,7 @@ public class Kontrolleri {
     @FXML
     // Haetaan tarkemmat tiedot tietokannasta valitun tuloksen id:n perusteella
     void naytaTarkemmatTiedot(ActionEvent event) {
+        try {
         Tulokset valittuTulos = tuloksetLista.getSelectionModel().getSelectedItem();
         HashMap<Object, Object> tarkemmatTiedot = tuloksetDao.lataaTarkemmatTiedot(valittuTulos.getId());
         asetaTallennetutTulokset(tarkemmatTiedot);
@@ -388,6 +389,9 @@ public class Kontrolleri {
         tuloksetPoistu.setVisible(true);
         uusiNappi.setVisible(false);
         tallennaNappi.setVisible(false);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
