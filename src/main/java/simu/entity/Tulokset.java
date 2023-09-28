@@ -5,6 +5,7 @@ import java.sql.Date;
 
 import jakarta.persistence.*;
 
+// Tietokantataulu
 @Entity
 @Table(name = "tulokset")
 
@@ -91,5 +92,11 @@ public class Tulokset {
     }
     public double getMyohastyneet_t2() {
         return myohastyneet_t2;
+    }
+
+    // Override toString jotta saadaan ListViewiin paivamaara näkyviin Objectin sijaan
+    @Override
+    public String toString() {
+        return this.paivamaara.toString();
     }
 }
