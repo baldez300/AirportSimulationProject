@@ -7,19 +7,18 @@ import simu.framework.Kello;
 import static simu.model.TapahtumanTyyppi.*;
 
 public class Asiakas {
-	private TapahtumanTyyppi tyypi;
+	private TapahtumanTyyppi tyyppi;
 	private double saapumisaika, poistumisaika, width, height;
 	private int id;
-	private static int i = 1;
 	private static long sum = 0;
 	private boolean ulkomaanlento; // Uusi kenttä, määrittää onko asiakas ulkomaanlennon asiakas
-	private static int myohastuneet = 0;
+	public static int lennolleEhtineet = 0, T1myohastyneet = 0, T2myohastyneet = 0, i = 0;
 
 	public Asiakas(TapahtumanTyyppi tyyppi) {
-		id = i++;
+		id = ++i;
 		saapumisaika = Kello.getInstance().getAika();
-		this.tyypi = tyyppi;
-		this.ulkomaanlento = this.tyypi.equals(ARR1);
+		this.tyyppi = tyyppi;
+		this.ulkomaanlento = this.tyyppi.equals(ARR1);
 		this.width = 25;
 		this.height = 25;
 		Trace.out(Trace.Level.INFO, "Uusi asiakas nro " + id + " saapui klo " + saapumisaika);
@@ -45,16 +44,8 @@ public class Asiakas {
 		return this.id;
 	}
 
-	public void setMyohastuneet() {
-		myohastuneet += 1;
-	}
-
-	public int getMyohastuneet() {
-		return myohastuneet;
-	}
-
 	public TapahtumanTyyppi getTyyppi() {
-		return tyypi;
+		return tyyppi;
 	}
 
 	public boolean isUlkomaanlento() {

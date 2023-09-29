@@ -17,27 +17,17 @@ public class Palvelupiste {
 	private final Tapahtumalista tapahtumalista;
 	private final TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
 
-	// Muuttujat metriikkojen tallentamiseen
-	private double kokonaisOdottamisaika = 0;
-	private double kokonaisPalveluaika = 0;
-	private double kokonaisSimulaatioaika = 0;
-
-	// JonoStartegia strategia; //optio: asiakkaiden järjestys
-
 	// Laskutoimituksien tarvitsemat muuttujat
-	private static double kokoJarjestelmanPalveluaika = 0;
-	private double palvelupisteenPalveluAika, suoritusTeho;
-	private static int palvellutAsiakkaatTotal = 0;
-	private double palvelupisteessaPalvellutAsiakkaat;
+	public static int palvellutAsiakkaatTotal = 0;
 	private final int x, y;
-	private int pisteidenMaara;
+	private double palvelupisteenPalveluAika = 0, suoritusTeho = 0, kokonaisJonotusaika = 0, kokonaisLapimenoaika = 0,
+			jononPituus = 0, kayttoaste = 0, jonotusAika = 0;
+	private int pisteidenMaara, palvelupisteessaPalvellutAsiakkaat;
 	private final String nimi;
-
 	private boolean varattu = false;
 
 	public Palvelupiste(int x, int y, String nimi, int pisteidenMaara, ContinuousGenerator generator,
-			Tapahtumalista tapahtumalista,
-			TapahtumanTyyppi tyyppi) {
+			Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi) {
 		this.x = x;
 		this.y = y;
 		this.nimi = nimi;
@@ -59,12 +49,10 @@ public class Palvelupiste {
 
 	public Asiakas otaJonosta() { // Poistetaan palvelussa ollut
 		varattu = false;
-		// System.out.println("+1");
-		palvelupisteessaPalvellutAsiakkaat += 1;
-		// Toteutus asiakkaan poistamiseksi jonosta
-		double odotusaika = Kello.getInstance().getAika() - jono.peek().getSaapumisaika();
-		kokonaisOdottamisaika += odotusaika;
-		palvellutAsiakkaatTotal += 1;
+		// lasketaan kokonaisLapimenoaika kun asiakas poistuu jonosta
+		kokonaisLapimenoaika += Kello.getInstance().getAika() - jono.peek().getSaapumisaika();
+		palvelupisteessaPalvellutAsiakkaat += 1; // pisteessä palvellut asiakkaat
+		palvellutAsiakkaatTotal += 1; // järjestelmässä palvellut asiakkaat
 		return jono.poll();
 	}
 
@@ -74,8 +62,11 @@ public class Palvelupiste {
 
 		varattu = true;
 		double palveluaika = generator.sample();
+
+		// Lasketaan palvelupisteen kokonaisJonotusaikaa kun palvelu alkaa
+		kokonaisJonotusaika += Kello.getInstance().getAika() - jono.peek().getSaapumisaika();
+		// Lasketaan palvelupisteen palveluaikaa kun palvelu alkaa
 		palvelupisteenPalveluAika += palveluaika;
-		kokoJarjestelmanPalveluaika += palveluaika;
 
 		if (jono.peek().isUlkomaanlento()) {
 			tapahtumalista.lisaa(
@@ -84,70 +75,7 @@ public class Palvelupiste {
 		} else {
 			tapahtumalista.lisaa(
 					new Tapahtuma(skeduloitavanTapahtumanTyyppi, (Kello.getInstance().getAika() + palveluaika), false));
-
 		}
-	}
-
-	public boolean onVarattu() {
-		return varattu;
-	}
-
-	public boolean eiVarattu() {
-		return !varattu;
-	}
-
-	// Esimerkki Baldelle jatka tästä...
-	public void setSuoritusteho(double kokonaisAika) {
-		this.suoritusTeho = (palvelupisteessaPalvellutAsiakkaat / kokonaisAika) * 100;
-	}
-	public double getSuoritusteho() {
-		return suoritusTeho;
-	}
-
-	public void setJononPituus(double jononPituus) {
-		this.palvelupisteessaPalvellutAsiakkaat = jononPituus;
-	}
-
-	public double getJononPituus() {
-		return palvelupisteessaPalvellutAsiakkaat;
-	}
-
-	public void setKayttoaste(double simulointiAika) {
-		this.palvelupisteenPalveluAika = (palvelupisteenPalveluAika / simulointiAika) * 100;
-	}
-
-	public double getKayttoaste() {
-		return palvelupisteenPalveluAika;
-	}
-
-	public void setJonotusaika(double jonotusAika) {
-		this.kokonaisOdottamisaika = jonotusAika;
-	}
-
-	public double getJonotusaika() {
-		return kokonaisOdottamisaika;
-	}
-
-
-
-	public double getPalvelupisteessaPalvellutAsiakkaat() {
-		return palvelupisteessaPalvellutAsiakkaat;
-	}
-
-	public static int getPalvellutAsiakkaatTotal() {
-		return palvellutAsiakkaatTotal;
-	}
-
-	public double getPalvelupisteenPalveluAika() {
-		return palvelupisteenPalveluAika;
-	}
-
-	public static double getKokoJarjestelmanPalveluAika() {
-		return kokoJarjestelmanPalveluaika;
-	}
-
-	public boolean onJonossa() {
-		return jono.size() != 0;
 	}
 
 	public void removeAsiakasARR1(Asiakas a) {
@@ -158,6 +86,7 @@ public class Palvelupiste {
 		jono.removeIf(b -> !a.isUlkomaanlento());
 	}
 
+	// Getterit
 	public String getNimi() {
 		return this.nimi;
 	}
@@ -170,22 +99,70 @@ public class Palvelupiste {
 		return y;
 	}
 
-	// Laske keskimääräinen odotusaika
-	public double getKeskimaarainenOdotusaika() {
-		return kokonaisOdottamisaika / palvellutAsiakkaatTotal;
+	public double getSuoritusteho() {
+		return suoritusTeho;
 	}
 
-	// Laske palvelutehokkuus
-	public double getSuoritusTeho() {
-		return (palvellutAsiakkaatTotal / kokonaisSimulaatioaika) * 100;
+	public double getJononPituus() {
+		return this.jononPituus;
 	}
 
-	// Laske palvelupisteen käyttöaste
-	public double getPalvelupisteenKayttoaste(double simulointAika) {
-		return (palvelupisteenPalveluAika / simulointAika) * 100;
+	public double getKayttoaste() {
+		return this.kayttoaste;
 	}
 
-	// Loput luokasta...
+	public double getJonotusaika() {
+		return this.jonotusAika;
+	}
+
+	public double getPalvelupisteessaPalvellutAsiakkaat() {
+		return palvelupisteessaPalvellutAsiakkaat;
+	}
+
+	public double getPalvelupisteenPalveluAika() {
+		return palvelupisteenPalveluAika;
+	}
+
+	// Setterit
+	public void setSuoritusteho(double simulointiAika) {
+		// Tästä tulee asiakasta / minuutissa. Muutetaan asiakasta / tunti kertomalla
+		// 60:llä
+		this.suoritusTeho = (palvelupisteessaPalvellutAsiakkaat / simulointiAika) * 60;
+	}
+
+	public void setJononPituus(double simulointiAika) {
+		this.jononPituus = kokonaisLapimenoaika / simulointiAika;
+	}
+
+	public void setKayttoaste(double simulointiAika) {
+		// palautetaan kayyttoaste prosentteina
+		this.kayttoaste = (palvelupisteenPalveluAika / simulointiAika) * 100;
+	}
+
+	public void setJonotusaika() {
+		this.jonotusAika = kokonaisJonotusaika / palvelupisteessaPalvellutAsiakkaat;
+	}
+
+	// Booleanit
+	public boolean onVarattu() {
+		return varattu;
+	}
+
+	public boolean eiVarattu() {
+		return !varattu;
+	}
+
+	public boolean onJonossa() {
+		return jono.size() != 0;
+	}
+
+	// Asetetaan palvelupisteen tulokset palvelupisteen olion muuttujiin
+	public void asetaPalvelupisteenTulokset(Palvelupiste p, double simulointiAika) {
+		p.setJononPituus(simulointiAika);
+		p.setKayttoaste(simulointiAika);
+		p.setJonotusaika();
+		p.setSuoritusteho(simulointiAika);
+	}
 
 	// Piirretään infoa palvelupisteiden päälle
 	public void piirra(GraphicsContext gc) {

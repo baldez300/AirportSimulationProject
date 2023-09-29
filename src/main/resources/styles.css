@@ -1,0 +1,29 @@
+.tuloksetItem {
+    -fx-background-color: rgba(165, 165, 165, 0.067);
+    background-color: rgba(165, 165, 165, 0.067);
+    -fx-border-color: #000000;
+    border-color: #000000;
+    -fx-border-width: 1px;
+    border-width: 1px;
+    -fx-border-style: solid;
+    border-style: solid;
+    -fx-border-radius: 5px;
+    border-radius: 5px;
+    -fx-padding: 5px;
+    padding: 5px;
+}
+
+.asetuksetItem {
+    -fx-background-color: rgba(165, 165, 165, 0.067);
+    background-color: rgba(165, 165, 165, 0.067);
+    -fx-border-color: #000000;
+    border-color: #000000;
+    -fx-border-width: 1px;
+    border-width: 1px;
+    -fx-border-style: solid;
+    border-style: solid;
+    -fx-border-radius: 5px;
+    border-radius: 5px;
+    -fx-padding: 10px;
+    padding: 10px;
+}

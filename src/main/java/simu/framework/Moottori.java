@@ -1,6 +1,7 @@
 package simu.framework;
 
-import simu.controller.Kontrolleri;
+import simu.dao.TuloksetDao;
+import simu.view.Kontrolleri;
 
 public abstract class Moottori extends Thread implements IMoottori {
 
@@ -13,15 +14,17 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 	private Kontrolleri kontrolleri;
 
+	public TuloksetDao tuloksetDao;
+
 	public Moottori(Kontrolleri kontrolleri) {
 
 		this.kontrolleri = kontrolleri;
 
+		this.tuloksetDao = new TuloksetDao();
+
 		kello = Kello.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
 
 		tapahtumalista = new Tapahtumalista();
-
-		// Palvelupisteet luodaan simu.model-pakkauksessa Moottorin aliluokassa
 
 	}
 

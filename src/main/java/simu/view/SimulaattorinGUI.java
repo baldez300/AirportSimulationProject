@@ -14,6 +14,7 @@ public class SimulaattorinGUI extends Application {
         try {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/simulaattori.fxml"));
         Parent root = fxmlLoader.load();
+        root.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         stage.setTitle("Simulaation asetukset");
         stage.setResizable(false);
         stage.setScene(new Scene(root));
