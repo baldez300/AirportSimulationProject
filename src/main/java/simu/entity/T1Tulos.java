@@ -17,8 +17,6 @@ public class T1Tulos {
     @JoinColumn(name = "tulokset_id")
     @Column(name = "id")
     private int id;
-    @Column(name = "nimi")
-    private String nimi;
     @Column(name = "kayttoaste")
     private double kayttoaste;
     @Column(name = "suoritusteho")
