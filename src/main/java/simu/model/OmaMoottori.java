@@ -154,12 +154,26 @@ public class OmaMoottori extends Moottori {
 	protected void tulokset() {
 
 		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
-		// System.out.println("Tulokset ... puuttuvat vielä");
-		System.out.println(
-				"Koko järjestelmässä palvellut asiakkaat: " + (palvelupisteet[3].getPalvelupisteessaPalvellutAsiakkaat()
-						+ palvelupisteet[4].getPalvelupisteessaPalvellutAsiakkaat()));
-		System.out.println("Koko järjestelmän palveluaika: " + Palvelupiste.getKokoJarjestelmanPalveluAika());
+
+		// Laske ja näytä mittareita jokaiselle Palvelupisteelle
 		for (int i = 0; i < palvelupisteet.length; i++) {
+			Palvelupiste p = palvelupisteet[i];
+
+			// Laske ja näytä nykyisen Palvelupisteen mittarit
+			System.out.println("Tulokset Palvelupisteelle " + p.getNimi() + ":");
+
+			// Laske ja näytä keskimääräinen odotusaika;
+			System.out.println("Keskimääräinen odotusaika: " + p.getJonotusaika());
+
+			// Laske ja näytä palvelun tehokkuus;
+			System.out.println("Palvelutehokkuus: " + p.getSuoritusteho() + "%");
+
+			// Palvelupisteiden käyttöasteen laskeminen ja näyttö;
+			System.out
+					.println("Palvelupisteen käyttöaste: " + p.getKayttoaste() + "%");
+
+			// Lisämittareita voi tarvittaessa laskea täältä...
+
 			System.out.println("Palvelupiste " + (i + 1) + " palvellut asiakkaat: "
 					+ palvelupisteet[i].getPalvelupisteessaPalvellutAsiakkaat());
 			System.out.println(
@@ -177,6 +191,7 @@ public class OmaMoottori extends Moottori {
 	// Asetetaan tulokset HashMapiin
 	@Override
 	public void asetaTulokset() {
+
 		HashMap<Object, Object> tuloksetMap = new HashMap<>();
 
 		Tulokset tulokset = new Tulokset(LocalDate.now(), getSimulointiaika(),
@@ -187,17 +202,29 @@ public class OmaMoottori extends Moottori {
 		tuloksetMap.put("SL", tulokset);
 
 		for (Palvelupiste p : palvelupisteet) {
+
 			if (p.getNimi().equals("LS")) {
-				tuloksetMap.put("LS", new LSTulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
+				tuloksetMap.put("LS",
+						new LSTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
 			} else if (p.getNimi().equals("PT")) {
-				tuloksetMap.put("PT", new PTTulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
+				tuloksetMap.put("PT",
+						new PTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
 			} else if (p.getNimi().equals("TT")) {
-				tuloksetMap.put("TT", new TTTulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
+				tuloksetMap.put("TT",
+						new TTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
 			} else if (p.getNimi().equals("T1")) {
-				tuloksetMap.put("T1", new T1Tulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
+				tuloksetMap.put("T1",
+						new T1Tulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
 			} else if (p.getNimi().equals("T2")) {
-				tuloksetMap.put("T2", new T2Tulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
+				tuloksetMap.put("T2",
+						new T2Tulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
 			}
+
 		}
 		this.tulokset = tuloksetMap;
 	}

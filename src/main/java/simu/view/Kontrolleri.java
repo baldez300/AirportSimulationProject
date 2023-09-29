@@ -512,30 +512,6 @@ public class Kontrolleri {
         return simulaationViive.getValue();
     }
 
-    // Esimerkki Baldelle jatka tästä...
-    public void asetaTulokset(Palvelupiste[] palvelupisteet) {
-        for (Palvelupiste p : palvelupisteet) {
-            pvm.setText(LocalDate.now().toString());
-            kokonaisAika.setText(simulointiAika + " min");
-            kaikkiAsiakkaat.setText(Asiakas.i + " kpl");
-            ehtineet.setText(Asiakas.lennolleEhtineet + " kpl");
-            myohastyneet.setText(Asiakas.T1myohastyneet + Asiakas.T2myohastyneet + " kpl");
-            myohastyneetT1.setText(Asiakas.T1myohastyneet + " kpl");
-            myohastyneetT2.setText(Asiakas.T2myohastyneet + " kpl");
-            if (p.getNimi().equals("LS")) {
-                LSsuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
-            } else if (p.getNimi().equals("PT")) {
-                PTSuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
-            } else if (p.getNimi().equals("TT")) {
-                TTSuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
-            } else if (p.getNimi().equals("T1")) {
-                T1Suoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
-            } else if (p.getNimi().equals("T2")) {
-                T2Suoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
-            }
-        }
-    }
-
     // Asetetaan tallennetut tulokset näkymään tulokset sivulle
     public void asetaTallennetutTulokset(HashMap<Object, Object> tuloksetMap) {
         pvm.setText(((Tulokset) tuloksetMap.get("SL")).getPaivamaara().toString());
@@ -587,5 +563,6 @@ public class Kontrolleri {
         Asiakas.T2myohastyneet = 0;
         Asiakas.lennolleEhtineet = 0;
         Asiakas.i = 0;
+        Palvelupiste.palvellutAsiakkaatTotal = 0;
     }
 }
