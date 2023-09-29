@@ -14,7 +14,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 	private Kontrolleri kontrolleri;
 
-	protected TuloksetDao tuloksetDao;
+	public TuloksetDao tuloksetDao;
 
 	public Moottori(Kontrolleri kontrolleri) {
 
