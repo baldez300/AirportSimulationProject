@@ -419,16 +419,41 @@ public class Kontrolleri {
     // Esimerkki Baldelle jatka tästä...
     public void asetaTulokset(Palvelupiste[] palvelupisteet) {
         for (Palvelupiste p : palvelupisteet) {
-            if (p.getNimi().equals("LS")) {
-                LSsuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
-            } else if (p.getNimi().equals("PT")) {
-                PTSuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
-            } else if (p.getNimi().equals("TT")) {
-                TTSuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
-            } else if (p.getNimi().equals("T1")) {
-                T1Suoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
-            } else if (p.getNimi().equals("T2")) {
-                T2Suoritusteho.setText(String.format("%.2f", p.getSuoritusteho()));
+            switch (p.getNimi()) {
+                case "LS" -> LSsuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()) + "%");
+                case "PT" -> PTSuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()) + "%");
+                case "TT" -> TTSuoritusteho.setText(String.format("%.2f", p.getSuoritusteho()) + "%");
+                case "T1" -> T1Suoritusteho.setText(String.format("%.2f", p.getSuoritusteho()) + "%");
+                case "T2" -> T2Suoritusteho.setText(String.format("%.2f", p.getSuoritusteho()) + "%");
+            }
+
+
+            // TODO: Lisää muut tulokset
+            switch (p.getNimi()) {
+                case "LS" -> LSJononPituus.setText(String.format("%.0f", p.getJononPituus()));
+                case "PT" -> PTJononPituus.setText(String.format("%.0f", p.getJononPituus()));
+                case "TT" -> TTJononPituus.setText(String.format("%.0f", p.getJononPituus()));
+                case "T1" -> T1JononPituus.setText(String.format("%.0f", p.getJononPituus()));
+                case "T2" -> T2JononPituus.setText(String.format("%.0f", p.getJononPituus()));
+            }
+
+
+            // TODO: Lisää muut tulokset
+            switch (p.getNimi()) {
+                case "LS" -> LSkayttoaste.setText(String.format("%.2f", p.getKayttoaste()) + "%");
+                case "PT" -> PTKayttoaste.setText(String.format("%.2f", p.getKayttoaste()) + "%");
+                case "TT" -> TTKayttoaste.setText(String.format("%.2f", p.getKayttoaste()) + "%");
+                case "T1" -> T1Kayttoaste.setText(String.format("%.2f", p.getKayttoaste()) + "%");
+                case "T2" -> T2Kayttoaste.setText(String.format("%.2f", p.getKayttoaste()) + "%");
+            }
+
+            // TODO: Lisää muut tulokset
+            switch (p.getNimi()) {
+                case "LS" -> LSjonotusaika.setText(String.format("%.2f", p.getJonotusaika()));
+                case "PT" -> PTJonotusaika.setText(String.format("%.2f", p.getJonotusaika()));
+                case "TT" -> TTJonotusaika.setText(String.format("%.2f", p.getJonotusaika()));
+                case "T1" -> T1Jonotusaika.setText(String.format("%.2f", p.getJonotusaika()));
+                case "T2" -> T2Jonotusaika.setText(String.format("%.2f", p.getJonotusaika()));
             }
         }
     }
