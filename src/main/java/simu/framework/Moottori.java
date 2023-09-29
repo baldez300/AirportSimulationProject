@@ -26,10 +26,6 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 		tapahtumalista = new Tapahtumalista();
 
-
-
-		// Palvelupisteet luodaan simu.model-pakkauksessa Moottorin aliluokassa
-
 	}
 
 	public void setSimulointiaika(double aika) {
