@@ -3,7 +3,6 @@ package simu.view;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -356,7 +355,7 @@ public class Kontrolleri {
                 // Check the condition
                 if (Kello.getInstance().getAika() >= simulointiAika) {
                     // Update the UI on the JavaFX application thread
-                    asetaTulokset(((OmaMoottori) moottori).getPalvelupisteet());
+                    asetaTallennetutTulokset(((OmaMoottori) moottori).getTulokset());
                     simulaatioSivu.setVisible(false);
                     TuloksetSivu.setVisible(true);
                     timer.cancel();
@@ -410,36 +409,7 @@ public class Kontrolleri {
     // Tallennetaan tulokset tietokantaan
     void tallenna(ActionEvent event) {
         tallennaNappi.setDisable(true);
-        Palvelupiste[] palvelupisteet = ((OmaMoottori) moottori).getPalvelupisteet(); // hae palvelupisteet
-
-        Tulokset tulokset = new Tulokset(LocalDate.now(), simulointiAika,
-                Asiakas.i, Asiakas.lennolleEhtineet, Asiakas.T1myohastyneet + Asiakas.T2myohastyneet,
-                Asiakas.T1myohastyneet,
-                Asiakas.T2myohastyneet); // luo uusi tulokset entity
-
-        Map<String, Object> tuloksetMap = new HashMap<>();
-
-        tuloksetMap.put("SL", tulokset); // lisää tulokset entity map:iin
-
-        // Lisää palvelupisteiden tulokset map:iin
-        // TODO BALDE: lisää saadut tulokset palvelupisteiden mukaan
-        for (Palvelupiste p : palvelupisteet) {
-            if (p.getNimi().equals("LS")) {
-                tuloksetMap.put("LS", new LSTulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
-            } else if (p.getNimi().equals("PT")) {
-                tuloksetMap.put("PT", new PTTulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
-            } else if (p.getNimi().equals("TT")) {
-                tuloksetMap.put("TT", new TTTulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
-            } else if (p.getNimi().equals("T1")) {
-                tuloksetMap.put("T1", new T1Tulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
-            } else if (p.getNimi().equals("T2")) {
-                tuloksetMap.put("T2", new T2Tulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
-            }
-        }
-        // Tallenna tulokset tietokantaan
-        tuloksetDao.tallenna((Tulokset) tuloksetMap.get("SL"), (LSTulos) tuloksetMap.get("LS"),
-                (TTTulos) tuloksetMap.get("TT"), (PTTulos) tuloksetMap.get("PT"), (T1Tulos) tuloksetMap.get("T1"),
-                (T2Tulos) tuloksetMap.get("T2"));
+        ((OmaMoottori) moottori).tallennaTulokset();
     }
 
     @FXML

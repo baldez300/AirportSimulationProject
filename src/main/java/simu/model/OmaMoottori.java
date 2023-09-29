@@ -1,5 +1,8 @@
 package simu.model;
 
+import java.time.LocalDate;
+import java.util.HashMap;
+
 import simu.eduni.distributions.Normal;
 import simu.framework.Kello;
 import simu.framework.Moottori;
@@ -7,6 +10,7 @@ import simu.framework.Saapumisprosessi;
 import simu.framework.Tapahtuma;
 import simu.view.Kontrolleri;
 import simu.view.Visualisointi;
+import simu.entity.*;
 
 public class OmaMoottori extends Moottori {
 
@@ -14,6 +18,7 @@ public class OmaMoottori extends Moottori {
 	private Palvelupiste[] palvelupisteet;
 	private boolean kaikkiAsiakkaatValmiit = false; // Lisätty lippu seuraamaan, ovatko kaikki asiakkaat valmiita
 	Visualisointi visualisointi;
+	HashMap<Object, Object> tulokset;
 
 	public OmaMoottori(Kontrolleri kontrolleri) {
 		super(kontrolleri);
@@ -167,12 +172,43 @@ public class OmaMoottori extends Moottori {
 			}
 		}
 	}
-	
+
 	// Esimerkki Baldelle jatka tästä...
+	// Asetetaan tulokset HashMapiin
 	@Override
 	public void asetaTulokset() {
+		HashMap<Object, Object> tuloksetMap = new HashMap<>();
+
+		Tulokset tulokset = new Tulokset(LocalDate.now(), getSimulointiaika(),
+				Asiakas.i, Asiakas.lennolleEhtineet, Asiakas.T1myohastyneet + Asiakas.T2myohastyneet,
+				Asiakas.T1myohastyneet,
+				Asiakas.T2myohastyneet);
+
+		tuloksetMap.put("SL", tulokset);
+
 		for (Palvelupiste p : palvelupisteet) {
-			p.setSuoritusteho(getSimulointiaika());
+			if (p.getNimi().equals("LS")) {
+				tuloksetMap.put("LS", new LSTulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+			} else if (p.getNimi().equals("PT")) {
+				tuloksetMap.put("PT", new PTTulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+			} else if (p.getNimi().equals("TT")) {
+				tuloksetMap.put("TT", new TTTulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+			} else if (p.getNimi().equals("T1")) {
+				tuloksetMap.put("T1", new T1Tulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+			} else if (p.getNimi().equals("T2")) {
+				tuloksetMap.put("T2", new T2Tulos(100.0, p.getSuoritusteho(), 100.0, 100.0));
+			}
 		}
+		this.tulokset = tuloksetMap;
+	}
+
+	// Tallennetaan tulokset tietokantaan
+	public void tallennaTulokset() {
+		tuloksetDao.tallenna(this.tulokset);
+	}
+
+	// Tuloksien getteri käyttöliitymää varten
+	public HashMap<Object, Object> getTulokset() {
+		return tulokset;
 	}
 }
