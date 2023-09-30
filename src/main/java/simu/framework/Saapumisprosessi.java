@@ -39,13 +39,13 @@ public class Saapumisprosessi {
 
 		// Luodaan 10 tapahtumaa "Saapuva asiakas ulkomaalle"
 		for (int i=0; i<10; i++) {
-			Tapahtuma t1 = new Tapahtuma(ARR1, lahtoAika - (new Normal(200, 20).sample()), true);
+			Tapahtuma t1 = new Tapahtuma(ARR1, lahtoAika - (new Normal(ulkoLahtoAika * 0.8, 20).sample()), true);
 			tapahtumalista.lisaa(t1);
 		}
 
 		// Luodaan 10 tapahtumaa "Saapuva asiakas sisälennolle"
 		for (int i=0; i<10; i++) {
-			Tapahtuma t2 = new Tapahtuma(ARR2, lahtoAika - (new Normal(200, 15).sample()), false);
+			Tapahtuma t2 = new Tapahtuma(ARR2, lahtoAika - (new Normal(lahtoAika * 0.8, 15).sample()), false);
 			tapahtumalista.lisaa(t2);
 		}
 	}

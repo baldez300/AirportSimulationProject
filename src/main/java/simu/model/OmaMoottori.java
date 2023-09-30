@@ -166,11 +166,11 @@ public class OmaMoottori extends Moottori {
 			System.out.println("Keskimääräinen odotusaika: " + p.getJonotusaika());
 
 			// Laske ja näytä palvelun tehokkuus;
-			System.out.println("Palvelutehokkuus: " + p.getSuoritusteho() + "%");
+			System.out.println("Palvelutehokkuus: " + p.getSuoritusteho() + " %");
 
 			// Palvelupisteiden käyttöasteen laskeminen ja näyttö;
 			System.out
-					.println("Palvelupisteen käyttöaste: " + p.getKayttoaste() + "%");
+					.println("Palvelupisteen käyttöaste: " + p.getKayttoaste() + " %");
 
 			// Lisämittareita voi tarvittaessa laskea täältä...
 
