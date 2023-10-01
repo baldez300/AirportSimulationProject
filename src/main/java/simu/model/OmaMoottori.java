@@ -40,13 +40,14 @@ public class OmaMoottori extends Moottori {
 		palvelupisteet[2] = new Palvelupiste(1187, 165, "PT", kontrolleri.getPassintarkastusMaara(),
 				new Normal(kontrolleri.getPTpalveluNopeus(), kontrolleri.getPassintarkastusVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP3);
-		// Lähtöportti ulkomaat
-		palvelupisteet[3] = new Palvelupiste(127, 12, "T2", 1,
-				new Normal(kontrolleri.getUlkomaaKA(), kontrolleri.getUlkomaaVar()), tapahtumalista,
-				TapahtumanTyyppi.DEP4);
-		// Lähtöportti kotimaa
-		palvelupisteet[4] = new Palvelupiste(1360, 12, "T1", 1,
+		// Lähtöportti kotimaanlennot
+		System.out.println(kontrolleri.getKotimaaKA());
+		palvelupisteet[3] = new Palvelupiste(127, 12, "T1", 1,
 				new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista,
+				TapahtumanTyyppi.DEP4);
+		// Lähtöportti ulkomaanlennot
+		palvelupisteet[4] = new Palvelupiste(1360, 12, "T2", 1,
+				new Normal(kontrolleri.getUlkomaaKA(), kontrolleri.getUlkomaaVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP5);
 		// Saapumisprosessi
 		saapumisprosessi = new Saapumisprosessi(tapahtumalista, TapahtumanTyyppi.ULKO, kontrolleri.getLentojenVali(),
@@ -88,13 +89,13 @@ public class OmaMoottori extends Moottori {
 					palvelupisteet[2].lisaaJonoon(a);
 					visualisointi.piirra(palvelupisteet);
 				} else {
-					palvelupisteet[4].lisaaJonoon(a);
+					palvelupisteet[3].lisaaJonoon(a);
 					visualisointi.piirra(palvelupisteet);
 				}
 				break;
 			case DEP3:
 				a = (Asiakas) palvelupisteet[2].otaJonosta();
-				palvelupisteet[3].lisaaJonoon(a);
+				palvelupisteet[4].lisaaJonoon(a);
 				visualisointi.piirra(palvelupisteet);
 				break;
 			case DEP4:
