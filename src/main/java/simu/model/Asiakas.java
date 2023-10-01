@@ -4,7 +4,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import simu.framework.Trace;
 import simu.framework.Kello;
-import static simu.model.TapahtumanTyyppi.*;
 
 public class Asiakas {
 	private TapahtumanTyyppi tyyppi;
