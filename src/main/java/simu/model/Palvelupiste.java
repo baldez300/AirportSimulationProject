@@ -5,6 +5,8 @@ import simu.framework.Kello;
 import simu.framework.Trace;
 import simu.framework.Tapahtuma;
 import simu.framework.Tapahtumalista;
+
+import java.util.Iterator;
 import java.util.LinkedList;
 import simu.eduni.distributions.ContinuousGenerator;
 
@@ -78,13 +80,30 @@ public class Palvelupiste {
 		}
 	}
 
-	public void removeAsiakasARR1(Asiakas a) {
-		jono.removeIf(b -> a.isUlkomaanlento());
+	public void removeAsiakasARR1() {
+		Iterator<Asiakas> iterator = jono.iterator();
+		while (iterator.hasNext()) {
+			Asiakas a = iterator.next();
+			if (a.isUlkomaanlento()) {
+				iterator.remove();
+				Asiakas.T2myohastyneet++;
+				Asiakas.i++;
+			}
+		}
 	}
 
-	public void removeAsiakasARR2(Asiakas a) {
-		jono.removeIf(b -> !a.isUlkomaanlento());
+	public void removeAsiakasARR2() {
+		Iterator<Asiakas> iterator = jono.iterator();
+		while (iterator.hasNext()) {
+			Asiakas a = iterator.next();
+			if (!a.isUlkomaanlento()) {
+				iterator.remove();
+				Asiakas.T1myohastyneet++;
+				Asiakas.i++;
+			}
+		}
 	}
+
 
 	// Getterit
 	public String getNimi() {
@@ -148,8 +167,8 @@ public class Palvelupiste {
 		return varattu;
 	}
 
-	public boolean eiVarattu() {
-		return !varattu;
+	public void eiVarattu() {
+		varattu = false;
 	}
 
 	public boolean onJonossa() {

@@ -12,13 +12,14 @@ public class Asiakas {
 	private int id;
 	private static long sum = 0;
 	private boolean ulkomaanlento; // Uusi kenttä, määrittää onko asiakas ulkomaanlennon asiakas
-	public static int lennolleEhtineet = 0, T1myohastyneet = 0, T2myohastyneet = 0, i = 0;
+	public static int lennolleEhtineet = 0, T1myohastyneet = 0, T2myohastyneet = 0;
+	public static int i = 0;
 
 	public Asiakas(TapahtumanTyyppi tyyppi) {
-		id = ++i;
+		++id;
 		saapumisaika = Kello.getInstance().getAika();
 		this.tyyppi = tyyppi;
-		this.ulkomaanlento = this.tyyppi.equals(ARR1);
+		this.ulkomaanlento = false;
 		this.width = 25;
 		this.height = 25;
 		Trace.out(Trace.Level.INFO, "Uusi asiakas nro " + id + " saapui klo " + saapumisaika);
@@ -52,6 +53,10 @@ public class Asiakas {
 		return ulkomaanlento;
 	}
 
+	public void setUlkomaanlento() {
+		this.ulkomaanlento = true;
+	}
+
 	public double getWidth() {
 		return width;
 	}
@@ -65,8 +70,8 @@ public class Asiakas {
 		Trace.out(Trace.Level.INFO, "Asiakas " + id + " saapui: " + saapumisaika);
 		Trace.out(Trace.Level.INFO, "Asiakas " + id + " poistui: " + poistumisaika);
 		Trace.out(Trace.Level.INFO, "Asiakas " + id + " viipyi: " + (poistumisaika - saapumisaika));
-		sum += (poistumisaika - saapumisaika);
-		double keskiarvo = sum / id;
+		sum += (long) (poistumisaika - saapumisaika);
+		double keskiarvo = (double) sum / id;
 		System.out.println("Asiakkaiden läpimenoaikojen keskiarvo tähän asti " + keskiarvo);
 	}
 
