@@ -104,7 +104,6 @@ public class Palvelupiste {
 		}
 	}
 
-
 	// Getterit
 	public String getNimi() {
 		return this.nimi;
@@ -150,16 +149,21 @@ public class Palvelupiste {
 	}
 
 	public void setJononPituus(double simulointiAika) {
-		this.jononPituus = kokonaisLapimenoaika / simulointiAika;
+		if (kokonaisLapimenoaika > 0)
+			this.jononPituus = kokonaisLapimenoaika / simulointiAika;
+		else
+			this.jononPituus = 0;
 	}
 
 	public void setKayttoaste(double simulointiAika) {
-		// palautetaan kayyttoaste prosentteina
 		this.kayttoaste = (palvelupisteenPalveluAika / simulointiAika) * 100;
 	}
 
 	public void setJonotusaika() {
-		this.jonotusAika = kokonaisJonotusaika / palvelupisteessaPalvellutAsiakkaat;
+		if (kokonaisJonotusaika > 0)
+			this.jonotusAika = kokonaisJonotusaika / palvelupisteessaPalvellutAsiakkaat;
+		else
+			this.jonotusAika = 0;
 	}
 
 	// Booleanit
@@ -186,10 +190,9 @@ public class Palvelupiste {
 	// Piirretään infoa palvelupisteiden päälle
 	public void piirra(GraphicsContext gc) {
 		gc.setFont(javafx.scene.text.Font.font("Verdana", 15));
-		if (this.pisteidenMaara != 0 && !this.nimi.equals("TT"))
+		if (this.nimi.equals("LS") || this.nimi.equals("PT"))
 			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x + 43, this.y + 20);
-		else if (this.pisteidenMaara != 0 && this.nimi.equals("TT"))
+		else if (this.nimi.equals("TT"))
 			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x - 160, this.y + 15);
 	}
-
 }
