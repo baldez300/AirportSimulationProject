@@ -33,7 +33,7 @@ public class Visualisointi {
 
 		// Piirretään asiakkaat palvelupisteiden jonoihin
 		for (Palvelupiste p : palvelupisteet) {
-			int suunta = (p.getNimi().equals("LS") || p.getNimi().equals("T1") || p.getNimi().equals("PT")) ? -1 : 1;
+			int suunta = (p.getNimi().equals("LS") || p.getNimi().equals("T2") || p.getNimi().equals("PT")) ? -1 : 1;
 			int row = 0;
 			int rowBreak = 4;
 			int line = 0;
