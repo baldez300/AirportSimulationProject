@@ -463,7 +463,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="12.0" prefWidth="200.0">
                            <children>
-                              <Label prefHeight="51.0" prefWidth="180.0" text="Jonon pistuus (KA):">
+                              <Label prefHeight="51.0" prefWidth="180.0" text="Jonon pituus (KA):">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
