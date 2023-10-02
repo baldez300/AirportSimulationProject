@@ -4,55 +4,48 @@ import java.time.LocalDate;
 import java.util.HashMap;
 
 import simu.eduni.distributions.Normal;
-import simu.entity.LSTulos;
-import simu.entity.PTTulos;
-import simu.entity.T1Tulos;
-import simu.entity.T2Tulos;
-import simu.entity.TTTulos;
-import simu.entity.Tulokset;
 import simu.framework.Kello;
-import simu.framework.Moottori;
+import simu.framework.MoottoriForTest;
 import simu.framework.Saapumisprosessi;
 import simu.framework.Tapahtuma;
-import simu.view.Kontrolleri;
+import simu.entity.*;
 
-public class OmaMoottori extends Moottori {
+
+// Luodaan OmaMoottoriForTest jotta ei tarvita GUI:ta testaukseen
+public class OmaMoottoriForTest extends MoottoriForTest {
 
 	private Saapumisprosessi saapumisprosessi;
 	private Palvelupiste[] palvelupisteet;
 	private boolean kaikkiAsiakkaatValmiit = false; // Lisätty lippu seuraamaan, ovatko kaikki asiakkaat valmiita
 	HashMap<Object, Object> tulokset;
 
-	public OmaMoottori(Kontrolleri kontrolleri) {
-		super(kontrolleri);
-		// TODO:
-		// Määritä palvelupisteille jotain järkeviä paveluaikoja ?
+	public OmaMoottoriForTest() {
 
 		palvelupisteet = new Palvelupiste[5];
 
 		// Lähtöselvitys
-		palvelupisteet[0] = new Palvelupiste(1187, 500, "LS", kontrolleri.getLahtoselvitysMaara(),
-				new Normal(kontrolleri.getLSpalveluNopeus(), kontrolleri.getLahtoselvitysVar()), tapahtumalista,
+		palvelupisteet[0] = new Palvelupiste(1187, 500, "LS", 1,
+				new Normal(5, 3), tapahtumalista,
 				TapahtumanTyyppi.DEP1);
 		// Turvatarkastus
-		palvelupisteet[1] = new Palvelupiste(288, 338, "TT", kontrolleri.getTurvatarkastusMaara(),
-				new Normal(kontrolleri.getTTpalveluNopeus(), kontrolleri.getTurvatarkastusVar()), tapahtumalista,
+		palvelupisteet[1] = new Palvelupiste(288, 338, "TT", 1,
+				new Normal(5, 3), tapahtumalista,
 				TapahtumanTyyppi.DEP2);
 		// Passintarkistus
-		palvelupisteet[2] = new Palvelupiste(1187, 165, "PT", kontrolleri.getPassintarkastusMaara(),
-				new Normal(kontrolleri.getPTpalveluNopeus(), kontrolleri.getPassintarkastusVar()), tapahtumalista,
+		palvelupisteet[2] = new Palvelupiste(1187, 165, "PT", 1,
+				new Normal(5, 3), tapahtumalista,
 				TapahtumanTyyppi.DEP3);
 		// Lähtöportti kotimaanlennot
 		palvelupisteet[3] = new Palvelupiste(127, 12, "T1", 1,
-				new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista,
+				new Normal(5, 3), tapahtumalista,
 				TapahtumanTyyppi.DEP4);
 		// Lähtöportti ulkomaanlennot
 		palvelupisteet[4] = new Palvelupiste(1360, 12, "T2", 1,
-				new Normal(kontrolleri.getUlkomaaKA(), kontrolleri.getUlkomaaVar()), tapahtumalista,
+				new Normal(5, 3), tapahtumalista,
 				TapahtumanTyyppi.DEP5);
 		// Saapumisprosessi
-		saapumisprosessi = new Saapumisprosessi(tapahtumalista, TapahtumanTyyppi.ULKO, kontrolleri.getLentojenVali(),
-				kontrolleri.getLentojenVali2());
+		saapumisprosessi = new Saapumisprosessi(tapahtumalista, TapahtumanTyyppi.ULKO, 60,
+				5);
 	}
 
 	public Palvelupiste[] getPalvelupisteet() {
@@ -112,7 +105,7 @@ public class OmaMoottori extends Moottori {
 			case ULKO:
 				// Poistetaan jonoista kaikki ARR1-asiakkaat
 				for (Palvelupiste palvelupiste : palvelupisteet) {
-					// palvelupiste.removeAsiakasARR1();
+					palvelupiste.removeAsiakasARR1();
 					palvelupiste.eiVarattu();
 				}
 				// Poistetaan tapahtumalistan "Ulkomaalentojen"-tapahtuma
@@ -136,27 +129,6 @@ public class OmaMoottori extends Moottori {
 			if (!p.onVarattu() && p.onJonossa()) {
 				p.aloitaPalvelu();
 			}
-		}
-	}
-
-	@Override
-	protected void tulostPalvelupisteidenkoko() {
-		for (Palvelupiste p : palvelupisteet) {
-			System.out.println("Palvelupiste " + p.getNimi() + " jono koko: " + p.getAsiakasJono().size());
-		}
-	}
-
-	@Override
-	protected boolean jarjestelmaOnTyhja() {
-		for (Palvelupiste p : palvelupisteet) {
-			if (p.onJonossa() || p.onVarattu()) {
-				return false;
-			}
-		}
-		if (tapahtumalista.getKoko() == 0) {
-			return true;
-		} else {
-			return false;
 		}
 	}
 
@@ -247,5 +219,18 @@ public class OmaMoottori extends Moottori {
 	// Tuloksien getteri käyttöliitymää varten
 	public HashMap<Object, Object> getTulokset() {
 		return tulokset;
+	}
+
+	public boolean jarjestelmaOnTyhja() {
+		for (Palvelupiste p : palvelupisteet) {
+			if (p.onJonossa() || p.onVarattu()) {
+				return false;
+			}
+		}
+		if (tapahtumalista.getKoko() == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

@@ -1,10 +1,8 @@
 package simu.framework;
-
 import simu.dao.TuloksetDao;
-import simu.model.Palvelupiste;
-import simu.view.Kontrolleri;
 
-public abstract class Moottori extends Thread implements IMoottori {
+// Luodaan MoottoriForTest jotta ei tarvita GUI:ta testaukseen
+public abstract class MoottoriForTest extends Thread implements IMoottori {
 
 	private double simulointiaika = 0;
 	private long viive = 0;
@@ -13,23 +11,17 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 	protected Tapahtumalista tapahtumalista;
 
-	private Kontrolleri kontrolleri;
-
 	public TuloksetDao tuloksetDao;
 
 	public boolean generoidaanUusiaLentoja = false;
 
-	public Moottori(Kontrolleri kontrolleri) {
-
-		this.kontrolleri = kontrolleri;
+	public MoottoriForTest() {
 
 		this.tuloksetDao = new TuloksetDao();
 
 		kello = Kello.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
 
 		tapahtumalista = new Tapahtumalista();
-
-		Palvelupiste[] palvelupisteet;
 
 	}
 
@@ -52,10 +44,11 @@ public abstract class Moottori extends Thread implements IMoottori {
 	}
 
 	public void run() {
+		
 		alustukset(); // luodaan mm. ensimmäinen tapahtuma
-		while (!Thread.interrupted() && simuloidaan()) {
-			viive();
-
+		generoidaanUusiaLentoja = true;
+		while (simuloidaan()) {
+			generoidaanUusiaLentoja = true;
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
 			kello.setAika(nykyaika());
 
@@ -70,16 +63,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 		tulokset();
 	}
 
-	private void viive() { // UUSI
-		Trace.out(Trace.Level.INFO, "Viive " + viive);
-		try {
-			sleep(viive);
-		} catch (InterruptedException e) {
-			kontrolleri.lopetaSaie();
-		}
-	}
-
-	private void suoritaBTapahtumat() {
+	public void suoritaBTapahtumat() {
 		try {
 			while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
 				suoritaTapahtuma(tapahtumalista.poista());
@@ -93,8 +77,6 @@ public abstract class Moottori extends Thread implements IMoottori {
 			System.out.println("Genetoidaan seuraavia lentoja.. jatketaan simulointia..");
 
 			// Generoidaan uudet lennot ja niiden yhteydessä myös uudet tapahtumat
-			if (generoidaanUusiaLentoja)
-			System.out.println(jarjestelmaOnTyhja());
 			alustukset();
 			generoidaanUusiaLentoja = false;
 		}
@@ -118,9 +100,5 @@ public abstract class Moottori extends Thread implements IMoottori {
 	protected abstract void tulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 	protected abstract void asetaTulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
-
-	protected abstract void tulostPalvelupisteidenkoko(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
-
-	protected abstract boolean jarjestelmaOnTyhja();
 
 }
