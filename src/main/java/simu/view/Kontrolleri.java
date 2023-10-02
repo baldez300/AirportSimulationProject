@@ -26,6 +26,7 @@ import simu.entity.T1Tulos;
 import simu.entity.T2Tulos;
 import simu.entity.TTTulos;
 import simu.entity.Tulokset;
+import simu.framework.Moottori;
 import simu.framework.IMoottori;
 import simu.framework.Kello;
 import simu.framework.Trace;
@@ -241,6 +242,8 @@ public class Kontrolleri {
 
     private TuloksetDao tuloksetDao = new TuloksetDao();
 
+    private Visualisointi visualisointi;
+
     // Asetetaan oletusarvot spinnereille
     @FXML
     void initialize() {
@@ -320,10 +323,12 @@ public class Kontrolleri {
          * muuttuu
          */
         tuloksetLista.getSelectionModel().selectedItemProperty().addListener(this::valintaMuuttui);
+
+        visualisointi = new Visualisointi(this, contentCanvas);
     }
 
     @FXML
-    void aloita(ActionEvent event) {
+    private void aloita(ActionEvent event) {
         // Resetoidaan kellon aika ja staattiset muuttujat
         Kello.getInstance().setAika(0);
         resetoiStaattisetMuuttujat();
@@ -338,6 +343,7 @@ public class Kontrolleri {
         tallennaNappi.setVisible(true);
         tuloksetPoistu.setVisible(false);
         ((Thread) moottori).start();
+        visualisointi.aloitaVisualisointi();
 
         // Suljetaan ohjelma jos ikkuna suljetaan
         Stage stage = (Stage) simulaatioSivu.getScene().getWindow();
@@ -366,7 +372,7 @@ public class Kontrolleri {
 
     @FXML
     // Haetaan tulokset tietokannasta ja asetetaan ne listaan
-    void naytaTulokset(ActionEvent event) {
+    private void naytaTulokset(ActionEvent event) {
         List<Tulokset> tulokset = tuloksetDao.lataaKaikki();
         tuloksetLista.getItems().clear();
         for (Tulokset t : tulokset) {
@@ -378,42 +384,42 @@ public class Kontrolleri {
 
     @FXML
     // Haetaan tarkemmat tiedot tietokannasta valitun tuloksen id:n perusteella
-    void naytaTarkemmatTiedot(ActionEvent event) {
+    private void naytaTarkemmatTiedot(ActionEvent event) {
         try {
-        Tulokset valittuTulos = tuloksetLista.getSelectionModel().getSelectedItem();
-        HashMap<Object, Object> tarkemmatTiedot = tuloksetDao.lataaTarkemmatTiedot(valittuTulos.getId());
-        asetaTallennetutTulokset(tarkemmatTiedot);
-        TuloksetSivu.setVisible(true);
-        tallennetut.setVisible(false);
-        tuloksetPoistu.setVisible(true);
-        uusiNappi.setVisible(false);
-        tallennaNappi.setVisible(false);
+            Tulokset valittuTulos = tuloksetLista.getSelectionModel().getSelectedItem();
+            HashMap<Object, Object> tarkemmatTiedot = tuloksetDao.lataaTarkemmatTiedot(valittuTulos.getId());
+            asetaTallennetutTulokset(tarkemmatTiedot);
+            TuloksetSivu.setVisible(true);
+            tallennetut.setVisible(false);
+            tuloksetPoistu.setVisible(true);
+            uusiNappi.setVisible(false);
+            tallennaNappi.setVisible(false);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    void palaaAsetuksiin(ActionEvent event) {
+    private void palaaAsetuksiin(ActionEvent event) {
         tallennetut.setVisible(false);
         AsetuksetSivu.setVisible(true);
     }
 
     @FXML
-    void palaaTallennettuihin(ActionEvent event) {
+    private void palaaTallennettuihin(ActionEvent event) {
         TuloksetSivu.setVisible(false);
         tallennetut.setVisible(true);
     }
 
     @FXML
     // Tallennetaan tulokset tietokantaan
-    void tallenna(ActionEvent event) {
+    private void tallenna(ActionEvent event) {
         tallennaNappi.setDisable(true);
         ((OmaMoottori) moottori).tallennaTulokset();
     }
 
     @FXML
-    void uusiSimulointi(ActionEvent event) {
+    private void uusiSimulointi(ActionEvent event) {
         ((Thread) moottori).interrupt();
         TuloksetSivu.setVisible(false);
         AsetuksetSivu.setVisible(true);
@@ -512,8 +518,16 @@ public class Kontrolleri {
         return simulaationViive.getValue();
     }
 
+    protected Palvelupiste[] getPalvelupisteet() {
+        return ((OmaMoottori) moottori).getPalvelupisteet();
+    }
+
+    protected boolean onHengissa() {
+        return ((Moottori) moottori).isAlive();
+    }
+
     // Asetetaan tallennetut tulokset näkymään tulokset sivulle
-    public void asetaTallennetutTulokset(HashMap<Object, Object> tuloksetMap) {
+    private void asetaTallennetutTulokset(HashMap<Object, Object> tuloksetMap) {
         pvm.setText(((Tulokset) tuloksetMap.get("SL")).getPaivamaara().toString());
         kokonaisAika.setText(((Tulokset) tuloksetMap.get("SL")).getAika() + " min");
         kaikkiAsiakkaat.setText(((Tulokset) tuloksetMap.get("SL")).getAsiakkaat() + " kpl");
@@ -544,8 +558,8 @@ public class Kontrolleri {
         T2Kayttoaste.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getKayttoaste()));
     }
 
-    // Asetetaan tulokset näkymään kun valinta muuttuu viereseen Vboxiin
-    public void valintaMuuttui(ObservableValue<? extends Tulokset> observable, Tulokset oldValue, Tulokset newValue) {
+    // Asetetaan tulokset näkymään viereseen Vboxiin kun valinta muuttuu
+    private void valintaMuuttui(ObservableValue<? extends Tulokset> observable, Tulokset oldValue, Tulokset newValue) {
         // Asennetaan tulokset näkymään
         if (newValue != null) {
             TkokonaisAika.setText(newValue.getAika() + " min");
@@ -558,7 +572,7 @@ public class Kontrolleri {
     }
 
     // Resetoidaan staattiset muuttujat
-    public void resetoiStaattisetMuuttujat() {
+    private void resetoiStaattisetMuuttujat() {
         Asiakas.T1myohastyneet = 0;
         Asiakas.T2myohastyneet = 0;
         Asiakas.lennolleEhtineet = 0;
