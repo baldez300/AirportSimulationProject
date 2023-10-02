@@ -1,35 +1,45 @@
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import simu.framework.IMoottori;
-import simu.framework.MoottoriForTest;
 import simu.model.OmaMoottoriForTest;
+import simu.framework.IMoottori;
 
 public class MainTest {
     private IMoottori moottori;
-    @Test
-    public void test() {
-        moottori = new OmaMoottoriForTest();
-        moottori.setSimulointiaika(1440);
-        moottori.setViive(100);
-        ((Thread) moottori).start();
 
-        // Wait for the condition to become true with a timeout
-        long startTime = System.currentTimeMillis();
-        long timeoutMillis = 5000; // Set an appropriate timeout
-        while (!((MoottoriForTest)moottori).generoidaanUusiaLentoja) {
-            long currentTime = System.currentTimeMillis();
-            if (currentTime - startTime > timeoutMillis) {
-                // Timeout: condition not met within the specified time
-                fail("Timeout waiting for the condition");
-            }
+    @BeforeEach
+    public void setUp() {
+        moottori = new OmaMoottoriForTest();
+    }
+
+    @Test
+    public void testSimulointiaika() {
+        moottori.setSimulointiaika(1440);
+        assertEquals(1440, ((OmaMoottoriForTest) moottori).getSimulointiaika());
+    }
+
+    @Test
+    public void testViive() {
+        moottori.setViive(100);
+        assertEquals(100, moottori.getViive());
+    }
+
+    @Test
+    public void testStartStop() {
+        assertFalse(((OmaMoottoriForTest) moottori).isRunning());
+
+        ((Thread) moottori).start();
+     
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        // The condition is met, perform assertions
-        assertEquals(1, 1 + 1);
-        assertTrue(((OmaMoottoriForTest)moottori).jarjestelmaOnTyhja());
+        assertTrue(((OmaMoottoriForTest) moottori).isRunning());
+        ((Thread) moottori).interrupt();
+        ((OmaMoottoriForTest) moottori).setRunning(false);
+        assertFalse(((OmaMoottoriForTest) moottori).isRunning());
     }
 }

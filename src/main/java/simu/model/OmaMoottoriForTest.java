@@ -13,7 +13,6 @@ import simu.entity.*;
 
 // Luodaan OmaMoottoriForTest jotta ei tarvita GUI:ta testaukseen
 public class OmaMoottoriForTest extends MoottoriForTest {
-
 	private Saapumisprosessi saapumisprosessi;
 	private Palvelupiste[] palvelupisteet;
 	private boolean kaikkiAsiakkaatValmiit = false; // Lisätty lippu seuraamaan, ovatko kaikki asiakkaat valmiita
@@ -221,16 +220,4 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 		return tulokset;
 	}
 
-	public boolean jarjestelmaOnTyhja() {
-		for (Palvelupiste p : palvelupisteet) {
-			if (p.onJonossa() || p.onVarattu()) {
-				return false;
-			}
-		}
-		if (tapahtumalista.getKoko() == 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 }

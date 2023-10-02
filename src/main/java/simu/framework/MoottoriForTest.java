@@ -1,19 +1,19 @@
 package simu.framework;
+
 import simu.dao.TuloksetDao;
 
 // Luodaan MoottoriForTest jotta ei tarvita GUI:ta testaukseen
-public abstract class MoottoriForTest extends Thread implements IMoottori {
+public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 
 	private double simulointiaika = 0;
 	private long viive = 0;
+	public boolean running = false;
 
 	private Kello kello;
 
 	protected Tapahtumalista tapahtumalista;
 
 	public TuloksetDao tuloksetDao;
-
-	public boolean generoidaanUusiaLentoja = false;
 
 	public MoottoriForTest() {
 
@@ -44,11 +44,12 @@ public abstract class MoottoriForTest extends Thread implements IMoottori {
 	}
 
 	public void run() {
-		
+
+		running = true;
+
 		alustukset(); // luodaan mm. ensimmäinen tapahtuma
-		generoidaanUusiaLentoja = true;
-		while (simuloidaan()) {
-			generoidaanUusiaLentoja = true;
+
+		while (simuloidaan() && !Thread.interrupted()) {
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
 			kello.setAika(nykyaika());
 
@@ -57,7 +58,6 @@ public abstract class MoottoriForTest extends Thread implements IMoottori {
 
 			Trace.out(Trace.Level.INFO, "\nC-vaihe:");
 			yritaCTapahtumat();
-
 		}
 		asetaTulokset();
 		tulokset();
@@ -69,7 +69,7 @@ public abstract class MoottoriForTest extends Thread implements IMoottori {
 				suoritaTapahtuma(tapahtumalista.poista());
 			}
 		} catch (NullPointerException e) {
-			generoidaanUusiaLentoja = true;
+
 			System.out.println("Ei seuraavia tapahtumia.. ");
 
 			System.out.println("Ulkomaille ja sisälle lähtevät lennot ovat lähteneet..");
@@ -78,7 +78,7 @@ public abstract class MoottoriForTest extends Thread implements IMoottori {
 
 			// Generoidaan uudet lennot ja niiden yhteydessä myös uudet tapahtumat
 			alustukset();
-			generoidaanUusiaLentoja = false;
+
 		}
 	}
 
@@ -88,7 +88,14 @@ public abstract class MoottoriForTest extends Thread implements IMoottori {
 
 	private boolean simuloidaan() {
 		return kello.getAika() < simulointiaika;
+	}
 
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean value) {
+		running = value;
 	}
 
 	protected abstract void suoritaTapahtuma(Tapahtuma t); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
