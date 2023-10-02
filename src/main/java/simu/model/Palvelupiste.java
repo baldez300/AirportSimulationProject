@@ -80,6 +80,15 @@ public class Palvelupiste {
 		}
 	}
 
+	public void tarkistaSeuraavaAsiakas(){
+        if(jono.peekFirst().isUlkomaanlento()) {
+			removeAsiakasARR1();
+			eiVarattu();
+		}else {
+			removeAsiakasARR1();
+		}
+	}
+
 	public void removeAsiakasARR1() {
 		Iterator<Asiakas> iterator = jono.iterator();
 		while (iterator.hasNext()) {
@@ -172,7 +181,7 @@ public class Palvelupiste {
 	}
 
 	public void eiVarattu() {
-		varattu = false;
+		this.varattu = false;
 	}
 
 	public boolean onJonossa() {

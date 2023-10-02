@@ -1,17 +1,20 @@
 package simu.framework;
 
+import simu.model.Asiakas;
+
+import java.util.Iterator;
 import java.util.PriorityQueue;
 
 public class Tapahtumalista {
 	private PriorityQueue<Tapahtuma> lista = new PriorityQueue<Tapahtuma>();
 
 	public Tapahtuma poista(){
-		Trace.out(Trace.Level.INFO,"Tapahtumalistasta poisto " + lista.peek().getTyyppi() + " " + lista.peek().getAika() );
+		Trace.out(Trace.Level.INFO,"Tapahtumalistasta poisto " + lista.peek().getTyyppi()+" Ulkomaalle:"+ lista.peek().isUlkomaanlento() + " " + lista.peek().getAika() );
 		return lista.remove();
 	}
 
 	public void lisaa(Tapahtuma t){
-		Trace.out(Trace.Level.INFO,"Tapahtumalistaan lisätään uusi " + t.getTyyppi() + " " + t.getAika());
+		Trace.out(Trace.Level.INFO,"Tapahtumalistaan lisätään uusi " + t.getTyyppi() + " Ulkomaalle:"+ t.isUlkomaanlento() + " " + t.getAika());
 		lista.add(t);
 	}
 
@@ -28,10 +31,27 @@ public class Tapahtumalista {
 	}
 
 	public void removeUlkoTapahtumia(){
-		lista.removeIf(Tapahtuma::isUlkomaanTyyppi);
+		PriorityQueue<Tapahtuma> uusiLista = new PriorityQueue<Tapahtuma>();
+		Iterator<Tapahtuma> iterator = lista.iterator();
+		while (iterator.hasNext()) {
+			Tapahtuma t = iterator.next();
+			if (!t.isUlkomaanlento()) {
+				uusiLista.add(t);
+			}
+		}
+		lista = uusiLista;
 	}
 	public void removeTapahtumia(){
-		lista.removeIf(tapahtuma -> !tapahtuma.isUlkomaanTyyppi());
+		PriorityQueue<Tapahtuma> uusiLista = new PriorityQueue<Tapahtuma>();
+		Iterator<Tapahtuma> iterator = lista.iterator();
+		while (iterator.hasNext()) {
+			Tapahtuma t = iterator.next();
+			if (t.isUlkomaanlento()) {
+				uusiLista.add(t);
+			}
+		}
+		lista = uusiLista;
 	}
+
 }
 

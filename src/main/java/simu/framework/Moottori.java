@@ -74,6 +74,22 @@ public abstract class Moottori extends Thread implements IMoottori {
 		}
 	}
 
+	/*private void suoritaBTapahtumat() {
+		try {
+			while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
+				suoritaTapahtuma(tapahtumalista.poista());
+			}
+		} catch (NullPointerException e) {
+			System.out.println("Ei seuraavia tapahtumia.. ");
+
+			System.out.println("Ulkomaille ja sisälle lähtevät lennot ovat lähteneet..");
+
+			System.out.println("Genetoidaan seuraavia lentoja.. jatketaan simulointia..");
+
+			// Generoidaan uudet lennot ja niiden yhteydessä myös uudet tapahtumat
+			alustukset();
+		}
+	}*/
 	private void suoritaBTapahtumat() {
 		try {
 			while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {

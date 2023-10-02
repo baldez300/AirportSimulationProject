@@ -42,12 +42,12 @@ public class OmaMoottori extends Moottori {
 				TapahtumanTyyppi.DEP3);
 		// Lähtöportti kotimaanlennot
 		System.out.println(kontrolleri.getKotimaaKA());
-		palvelupisteet[3] = new Palvelupiste(127, 12, "T1", 1,
-				new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista,
+		palvelupisteet[3] = new Palvelupiste(127, 12, "T2", 1,
+				new Normal(kontrolleri.getUlkomaaKA(), kontrolleri.getUlkomaaVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP4);
 		// Lähtöportti ulkomaanlennot
-		palvelupisteet[4] = new Palvelupiste(1360, 12, "T2", 1,
-				new Normal(kontrolleri.getUlkomaaKA(), kontrolleri.getUlkomaaVar()), tapahtumalista,
+		palvelupisteet[4] = new Palvelupiste(1360, 12, "T1", 1,
+				new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP5);
 		// Saapumisprosessi
 		saapumisprosessi = new Saapumisprosessi(tapahtumalista, TapahtumanTyyppi.ULKO, kontrolleri.getLentojenVali(),
@@ -89,13 +89,13 @@ public class OmaMoottori extends Moottori {
 					palvelupisteet[2].lisaaJonoon(a);
 					visualisointi.piirra(palvelupisteet);
 				} else {
-					palvelupisteet[3].lisaaJonoon(a);
+					palvelupisteet[4].lisaaJonoon(a);
 					visualisointi.piirra(palvelupisteet);
 				}
 				break;
 			case DEP3:
 				a = (Asiakas) palvelupisteet[2].otaJonosta();
-				palvelupisteet[4].lisaaJonoon(a);
+				palvelupisteet[3].lisaaJonoon(a);
 				visualisointi.piirra(palvelupisteet);
 				break;
 			case DEP4:
@@ -117,8 +117,9 @@ public class OmaMoottori extends Moottori {
 			case ULKO:
 				// Poistetaan jonoista kaikki ARR1-asiakkaat
 				for (Palvelupiste palvelupiste : palvelupisteet) {
-					palvelupiste.removeAsiakasARR1();
-					palvelupiste.eiVarattu();
+					palvelupiste.tarkistaSeuraavaAsiakas();
+					//palvelupiste.removeAsiakasARR1();
+
 				}
 				// Poistetaan tapahtumalistan "Ulkomaalentojen"-tapahtuma
 				tapahtumalista.removeUlkoTapahtumia();
