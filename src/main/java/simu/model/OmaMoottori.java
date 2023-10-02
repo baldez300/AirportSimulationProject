@@ -9,7 +9,6 @@ import simu.framework.Moottori;
 import simu.framework.Saapumisprosessi;
 import simu.framework.Tapahtuma;
 import simu.view.Kontrolleri;
-import simu.view.Visualisointi;
 import simu.entity.*;
 
 public class OmaMoottori extends Moottori {
@@ -17,12 +16,10 @@ public class OmaMoottori extends Moottori {
 	private Saapumisprosessi saapumisprosessi;
 	private Palvelupiste[] palvelupisteet;
 	private boolean kaikkiAsiakkaatValmiit = false; // Lisätty lippu seuraamaan, ovatko kaikki asiakkaat valmiita
-	Visualisointi visualisointi;
 	HashMap<Object, Object> tulokset;
 
 	public OmaMoottori(Kontrolleri kontrolleri) {
 		super(kontrolleri);
-		visualisointi = new Visualisointi(kontrolleri.getCanvas());
 		// TODO:
 		// Määritä palvelupisteille jotain järkeviä paveluaikoja ?
 
@@ -41,7 +38,6 @@ public class OmaMoottori extends Moottori {
 				new Normal(kontrolleri.getPTpalveluNopeus(), kontrolleri.getPassintarkastusVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP3);
 		// Lähtöportti kotimaanlennot
-		System.out.println(kontrolleri.getKotimaaKA());
 		palvelupisteet[3] = new Palvelupiste(127, 12, "T1", 1,
 				new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP4);
@@ -71,32 +67,28 @@ public class OmaMoottori extends Moottori {
 				a = new Asiakas(TapahtumanTyyppi.ARR1);
 				a.setUlkomaanlento();
 				palvelupisteet[0].lisaaJonoon(a);
-				visualisointi.piirra(palvelupisteet);
 				break;
 			case ARR2:
 				a = new Asiakas(TapahtumanTyyppi.ARR2);
 				palvelupisteet[0].lisaaJonoon(a);
-				visualisointi.piirra(palvelupisteet);
 				break;
 			case DEP1:
 				a = (Asiakas) palvelupisteet[0].otaJonosta();
 				palvelupisteet[1].lisaaJonoon(a);
-				visualisointi.piirra(palvelupisteet);
 				break;
 			case DEP2:
 				a = (Asiakas) palvelupisteet[1].otaJonosta();
 				if (a.isUlkomaanlento()) {
 					palvelupisteet[2].lisaaJonoon(a);
-					visualisointi.piirra(palvelupisteet);
+
 				} else {
 					palvelupisteet[3].lisaaJonoon(a);
-					visualisointi.piirra(palvelupisteet);
+
 				}
 				break;
 			case DEP3:
 				a = (Asiakas) palvelupisteet[2].otaJonosta();
 				palvelupisteet[4].lisaaJonoon(a);
-				visualisointi.piirra(palvelupisteet);
 				break;
 			case DEP4:
 				a = (Asiakas) palvelupisteet[3].otaJonosta();
@@ -104,7 +96,6 @@ public class OmaMoottori extends Moottori {
 				a.raportti();
 				Asiakas.lennolleEhtineet++;
 				Asiakas.i++;
-				visualisointi.piirra(palvelupisteet);
 				break;
 			case DEP5:
 				a = (Asiakas) palvelupisteet[4].otaJonosta();
@@ -112,7 +103,6 @@ public class OmaMoottori extends Moottori {
 				a.raportti();
 				Asiakas.lennolleEhtineet++;
 				Asiakas.i++;
-				visualisointi.piirra(palvelupisteet);
 				break;
 			case ULKO:
 				// Poistetaan jonoista kaikki ARR1-asiakkaat
@@ -122,7 +112,6 @@ public class OmaMoottori extends Moottori {
 				}
 				// Poistetaan tapahtumalistan "Ulkomaalentojen"-tapahtuma
 				tapahtumalista.removeUlkoTapahtumia();
-				visualisointi.piirra(palvelupisteet);
 				break;
 			case SISA:
 				// Poistetaan jonoista kaikki ARR2-asiakkaat
@@ -132,7 +121,6 @@ public class OmaMoottori extends Moottori {
 				}
 				// Poistetaan tapahtumalistan "Sisälentojen"-tapahtuma
 				tapahtumalista.removeTapahtumia();
-				visualisointi.piirra(palvelupisteet);
 				break;
 		}
 	}
