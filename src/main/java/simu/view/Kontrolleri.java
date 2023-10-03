@@ -272,7 +272,7 @@ public class Kontrolleri {
         SpinnerValueFactory<Integer> turvatarkastusSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20,
                 1);
         SpinnerValueFactory<Integer> turvatarkastusKASpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
-                100, 20);
+                100, 15);
         SpinnerValueFactory<Integer> turvatarkastusVarSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
                 15, 3);
         turvatarkastusMaara.setValueFactory(turvatarkastusSpinner);
