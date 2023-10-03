@@ -536,26 +536,26 @@ public class Kontrolleri {
                 + ((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t2() + " kpl");
         myohastyneetT1.setText(((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t1() + " kpl");
         myohastyneetT2.setText(((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t2() + " kpl");
-        LSsuoritusteho.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getSuoritusteho()));
-        PTSuoritusteho.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getSuoritusteho()));
-        TTSuoritusteho.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getSuoritusteho()));
-        T1Suoritusteho.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getSuoritusteho()));
-        T2Suoritusteho.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getSuoritusteho()));
-        LSJononPituus.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getJononpituus()));
-        PTJononPituus.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getJononpituus()));
-        TTJononPituus.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getJononpituus()));
-        T1JononPituus.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getJononpituus()));
-        T2JononPituus.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getJononpituus()));
-        LSjonotusaika.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getJonotusaika()));
-        PTJonotusaika.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getJonotusaika()));
-        TTJonotusaika.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getJonotusaika()));
-        T1Jonotusaika.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getJonotusaika()));
-        T2Jonotusaika.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getJonotusaika()));
-        LSkayttoaste.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getKayttoaste()));
-        PTKayttoaste.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getKayttoaste()));
-        TTKayttoaste.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getKayttoaste()));
-        T1Kayttoaste.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getKayttoaste()));
-        T2Kayttoaste.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getKayttoaste()));
+        LSsuoritusteho.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getSuoritusteho())+" kpl/min");
+        PTSuoritusteho.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getSuoritusteho())+" kpl/min");
+        TTSuoritusteho.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getSuoritusteho())+" kpl/min");
+        T1Suoritusteho.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getSuoritusteho())+" kpl/min");
+        T2Suoritusteho.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getSuoritusteho())+" kpl/min");
+        LSJononPituus.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getJononpituus())+" %");
+        PTJononPituus.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getJononpituus())+" %");
+        TTJononPituus.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getJononpituus())+" %");
+        T1JononPituus.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getJononpituus())+" %");
+        T2JononPituus.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getJononpituus())+" %");
+        LSjonotusaika.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getJonotusaika())+" min");
+        PTJonotusaika.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getJonotusaika())+" min");
+        TTJonotusaika.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getJonotusaika())+" min");
+        T1Jonotusaika.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getJonotusaika())+" min");
+        T2Jonotusaika.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getJonotusaika())+" min");
+        LSkayttoaste.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getKayttoaste())+" %");
+        PTKayttoaste.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getKayttoaste())+" %");
+        TTKayttoaste.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getKayttoaste())+" %");
+        T1Kayttoaste.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getKayttoaste())+" %");
+        T2Kayttoaste.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getKayttoaste())+" %");
     }
 
     // Asetetaan tulokset näkymään viereseen Vboxiin kun valinta muuttuu
