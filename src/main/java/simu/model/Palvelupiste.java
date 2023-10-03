@@ -92,25 +92,33 @@ public class Palvelupiste {
 	}
 
 	public void removeAsiakasARR1() {
-		Iterator<Asiakas> iterator = jono.iterator();
-		while (iterator.hasNext()) {
-			Asiakas a = iterator.next();
-			if (a.isUlkomaanlento()) {
-				iterator.remove();
-				Asiakas.T2myohastyneet++;
-				Asiakas.i++;
+		if (!jono.isEmpty()) {
+			if (jono.peek().isUlkomaanlento())
+				varattu = false;
+			Iterator<Asiakas> iterator = jono.iterator();
+			while (iterator.hasNext()) {
+				Asiakas a = iterator.next();
+				if (a.isUlkomaanlento()) {
+					iterator.remove();
+					Asiakas.T2myohastyneet++;
+					Asiakas.i++;
+				}
 			}
 		}
 	}
 
 	public void removeAsiakasARR2() {
-		Iterator<Asiakas> iterator = jono.iterator();
-		while (iterator.hasNext()) {
-			Asiakas a = iterator.next();
-			if (!a.isUlkomaanlento()) {
-				iterator.remove();
-				Asiakas.T1myohastyneet++;
-				Asiakas.i++;
+		if (!jono.isEmpty()) {
+			if (!jono.peek().isUlkomaanlento())
+				varattu = false;
+			Iterator<Asiakas> iterator = jono.iterator();
+			while (iterator.hasNext()) {
+				Asiakas a = iterator.next();
+				if (!a.isUlkomaanlento()) {
+					iterator.remove();
+					Asiakas.T1myohastyneet++;
+					Asiakas.i++;
+				}
 			}
 		}
 	}

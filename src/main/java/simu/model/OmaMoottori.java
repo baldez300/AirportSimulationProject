@@ -110,8 +110,6 @@ public class OmaMoottori extends Moottori {
 				for (Palvelupiste palvelupiste : palvelupisteet) {
 					palvelupiste.tarkistaSeuraavaAsiakas();
 					palvelupiste.removeAsiakasARR1();
-					lento1lahtenyt = true;
-
 				}
 				// Poistetaan tapahtumalistan "Ulkomaalentojen"-tapahtuma
 				tapahtumalista.removeUlkoTapahtumia();
@@ -120,7 +118,6 @@ public class OmaMoottori extends Moottori {
 				// Poistetaan jonoista kaikki ARR2-asiakkaat
 				for (Palvelupiste palvelupiste : palvelupisteet) {
 					palvelupiste.removeAsiakasARR2();
-					palvelupiste.eiVarattu();
 				}
 				lento2lahtenyt = true;
 				// Poistetaan tapahtumalistan "Sisälentojen"-tapahtuma
