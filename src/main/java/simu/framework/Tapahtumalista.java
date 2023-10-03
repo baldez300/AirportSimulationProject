@@ -32,12 +32,13 @@ public class Tapahtumalista {
 
 	public void removeUlkoTapahtumia(){
 		PriorityQueue<Tapahtuma> uusiLista = new PriorityQueue<Tapahtuma>();
-		Iterator<Tapahtuma> iterator = lista.iterator();
-		while (iterator.hasNext()) {
-			Tapahtuma t = iterator.next();
-			if (!t.isUlkomaanlento()) {
-				uusiLista.add(t);
-			}
+
+		while (lista.size()>0) {
+			Tapahtuma t = lista.poll();
+			if(t.getAika()>0)
+				if (!t.isUlkomaanlento()) {
+					uusiLista.add(t);
+				}
 		}
 		lista = uusiLista;
 	}

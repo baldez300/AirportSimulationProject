@@ -16,6 +16,9 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 	public TuloksetDao tuloksetDao;
 
+	public boolean lento1lahtenyt = false;
+	public boolean lento2lahtenyt = false;
+
 	public Moottori(Kontrolleri kontrolleri) {
 
 		this.kontrolleri = kontrolleri;
@@ -56,6 +59,15 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 			Trace.out(Trace.Level.INFO, "\nB-vaihe:");
 			suoritaBTapahtumat();
+			if(lento1lahtenyt) {
+				tapahtumalista.removeUlkoTapahtumia();
+				lento1lahtenyt = false;
+			}
+			else if (lento2lahtenyt){
+				tapahtumalista.removeTapahtumia();
+				lento2lahtenyt = false;
+				alustukset();
+			}
 
 			Trace.out(Trace.Level.INFO, "\nC-vaihe:");
 			yritaCTapahtumat();
@@ -97,15 +109,9 @@ public abstract class Moottori extends Thread implements IMoottori {
 			}
 		} catch (NullPointerException e) {
 			System.out.println("Ei seuraavia tapahtumia.. ");
-
-			System.out.println("Ulkomaille ja sisälle lähtevät lennot ovat lähteneet..");
-
-			System.out.println("Genetoidaan seuraavia lentoja.. jatketaan simulointia..");
-
-			// Generoidaan uudet lennot ja niiden yhteydessä myös uudet tapahtumat
-			alustukset();
 		}
 	}
+
 
 	private double nykyaika() {
 		return tapahtumalista.getSeuraavanAika();

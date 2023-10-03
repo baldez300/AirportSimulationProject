@@ -118,11 +118,12 @@ public class OmaMoottori extends Moottori {
 				// Poistetaan jonoista kaikki ARR1-asiakkaat
 				for (Palvelupiste palvelupiste : palvelupisteet) {
 					palvelupiste.tarkistaSeuraavaAsiakas();
-					//palvelupiste.removeAsiakasARR1();
+					palvelupiste.removeAsiakasARR1();
+					lento1lahtenyt = true;
 
 				}
 				// Poistetaan tapahtumalistan "Ulkomaalentojen"-tapahtuma
-				tapahtumalista.removeUlkoTapahtumia();
+				//tapahtumalista.removeUlkoTapahtumia();
 				visualisointi.piirra(palvelupisteet);
 				break;
 			case SISA:
@@ -131,9 +132,11 @@ public class OmaMoottori extends Moottori {
 					palvelupiste.removeAsiakasARR2();
 					palvelupiste.eiVarattu();
 				}
+				lento2lahtenyt = true;
 				// Poistetaan tapahtumalistan "Sisälentojen"-tapahtuma
-				tapahtumalista.removeTapahtumia();
+				//tapahtumalista.removeTapahtumia();
 				visualisointi.piirra(palvelupisteet);
+				//alustukset();
 				break;
 		}
 	}
