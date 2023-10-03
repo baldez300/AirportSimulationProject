@@ -81,16 +81,6 @@ public class Palvelupiste {
 		}
 	}
 
-	public void tarkistaSeuraavaAsiakas(){
-        if(jono.peekFirst().isUlkomaanlento()) {
-			eiVarattu();
-
-		/*}else {
-			removeAsiakasARR1();
-		}*/
-		}
-	}
-
 	public void removeAsiakasARR1() {
 		if (!jono.isEmpty()) {
 			if (jono.peek().isUlkomaanlento())
