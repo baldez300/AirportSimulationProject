@@ -96,17 +96,6 @@ public abstract class Moottori extends Thread implements IMoottori {
 		}
   }
 
-	private void suoritaBTapahtumat() {
-		try {
-			while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
-				suoritaTapahtuma(tapahtumalista.poista());
-			}
-		} catch (NullPointerException e) {
-			System.out.println("Ei seuraavia tapahtumia.. ");
-		}
-	}
-
-
 	private double nykyaika() {
 		return tapahtumalista.getSeuraavanAika();
 	}
