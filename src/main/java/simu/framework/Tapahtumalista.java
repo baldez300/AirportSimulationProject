@@ -16,7 +16,8 @@ public class Tapahtumalista {
 	}
 
 	public double getSeuraavanAika(){
-		return lista.peek().getAika();
+		if (!lista.isEmpty()) return lista.peek().getAika();
+		else return 0.0;
 	}
 
 	public Tapahtuma getSeuraava(){
