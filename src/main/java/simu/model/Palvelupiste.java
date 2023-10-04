@@ -26,7 +26,7 @@ public class Palvelupiste {
 			jononPituus = 0, kayttoaste = 0, jonotusAika = 0;
 	private int pisteidenMaara, palvelupisteessaPalvellutAsiakkaat;
 	private final String nimi;
-	private boolean varattu = false;
+	private boolean varattu;
 
 	public Palvelupiste(int x, int y, String nimi, int pisteidenMaara, ContinuousGenerator generator,
 			Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi) {
@@ -37,6 +37,7 @@ public class Palvelupiste {
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
 		this.skeduloitavanTapahtumanTyyppi = tyyppi;
+		this.varattu = false;
 	}
 
 	public LinkedList<Asiakas> getAsiakasJono() {
@@ -50,7 +51,7 @@ public class Palvelupiste {
 	}
 
 	public Asiakas otaJonosta() { // Poistetaan palvelussa ollut
-		varattu = false;
+		this.varattu = false;
 		// lasketaan kokonaisLapimenoaika kun asiakas poistuu jonosta
 		kokonaisLapimenoaika += Kello.getInstance().getAika() - jono.peek().getSaapumisaika();
 		palvelupisteessaPalvellutAsiakkaat += 1; // pisteessä palvellut asiakkaat
@@ -62,7 +63,7 @@ public class Palvelupiste {
 
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
 
-		varattu = true;
+		this.varattu = true;
 		double palveluaika = generator.sample();
 
 		// Lasketaan palvelupisteen kokonaisJonotusaikaa kun palvelu alkaa
@@ -81,25 +82,33 @@ public class Palvelupiste {
 	}
 
 	public void removeAsiakasARR1() {
-		Iterator<Asiakas> iterator = jono.iterator();
-		while (iterator.hasNext()) {
-			Asiakas a = iterator.next();
-			if (a.isUlkomaanlento()) {
-				iterator.remove();
-				Asiakas.T2myohastyneet++;
-				Asiakas.i++;
+		if (!jono.isEmpty()) {
+			if (jono.peek().isUlkomaanlento())
+				varattu = false;
+			Iterator<Asiakas> iterator = jono.iterator();
+			while (iterator.hasNext()) {
+				Asiakas a = iterator.next();
+				if (a.isUlkomaanlento()) {
+					iterator.remove();
+					Asiakas.T2myohastyneet++;
+					Asiakas.i++;
+				}
 			}
 		}
 	}
 
 	public void removeAsiakasARR2() {
-		Iterator<Asiakas> iterator = jono.iterator();
-		while (iterator.hasNext()) {
-			Asiakas a = iterator.next();
-			if (!a.isUlkomaanlento()) {
-				iterator.remove();
-				Asiakas.T1myohastyneet++;
-				Asiakas.i++;
+		if (!jono.isEmpty()) {
+			if (!jono.peek().isUlkomaanlento())
+				varattu = false;
+			Iterator<Asiakas> iterator = jono.iterator();
+			while (iterator.hasNext()) {
+				Asiakas a = iterator.next();
+				if (!a.isUlkomaanlento()) {
+					iterator.remove();
+					Asiakas.T1myohastyneet++;
+					Asiakas.i++;
+				}
 			}
 		}
 	}
@@ -168,11 +177,11 @@ public class Palvelupiste {
 
 	// Booleanit
 	public boolean onVarattu() {
-		return varattu;
+		return this.varattu;
 	}
 
 	public void eiVarattu() {
-		varattu = false;
+		this.varattu = false;
 	}
 
 	public boolean onJonossa() {

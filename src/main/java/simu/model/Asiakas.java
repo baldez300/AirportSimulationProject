@@ -12,10 +12,10 @@ public class Asiakas {
 	private static long sum = 0;
 	private boolean ulkomaanlento; // Uusi kenttä, määrittää onko asiakas ulkomaanlennon asiakas
 	public static int lennolleEhtineet = 0, T1myohastyneet = 0, T2myohastyneet = 0;
-	public static int i = 0;
+	public static int i = 0, j = 0;
 
 	public Asiakas(TapahtumanTyyppi tyyppi) {
-		++id;
+		this.id = ++j;
 		saapumisaika = Kello.getInstance().getAika();
 		this.tyyppi = tyyppi;
 		this.ulkomaanlento = false;

@@ -17,8 +17,6 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 	public TuloksetDao tuloksetDao;
 
-	public boolean generoidaanUusiaLentoja = false;
-
 	public Moottori(Kontrolleri kontrolleri) {
 
 		this.kontrolleri = kontrolleri;
@@ -61,6 +59,15 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 			Trace.out(Trace.Level.INFO, "\nB-vaihe:");
 			suoritaBTapahtumat();
+			if(lento1lahtenyt) {
+				tapahtumalista.removeUlkoTapahtumia();
+				lento1lahtenyt = false;
+			}
+			else if (lento2lahtenyt){
+				tapahtumalista.removeTapahtumia();
+				lento2lahtenyt = false;
+				alustukset();
+			}
 
 			Trace.out(Trace.Level.INFO, "\nC-vaihe:");
 			yritaCTapahtumat();
@@ -80,25 +87,13 @@ public abstract class Moottori extends Thread implements IMoottori {
 	}
 
 	private void suoritaBTapahtumat() {
-		try {
-			while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
-				suoritaTapahtuma(tapahtumalista.poista());
+		while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
+			suoritaTapahtuma(tapahtumalista.poista());
+			if (tapahtumalista.getKoko() == 0) {
+				alustukset();
 			}
-		} catch (NullPointerException e) {
-			generoidaanUusiaLentoja = true;
-			System.out.println("Ei seuraavia tapahtumia.. ");
-
-			System.out.println("Ulkomaille ja sisälle lähtevät lennot ovat lähteneet..");
-
-			System.out.println("Genetoidaan seuraavia lentoja.. jatketaan simulointia..");
-
-			// Generoidaan uudet lennot ja niiden yhteydessä myös uudet tapahtumat
-			if (generoidaanUusiaLentoja)
-			System.out.println(jarjestelmaOnTyhja());
-			alustukset();
-			generoidaanUusiaLentoja = false;
 		}
-	}
+  }
 
 	private double nykyaika() {
 		return tapahtumalista.getSeuraavanAika();

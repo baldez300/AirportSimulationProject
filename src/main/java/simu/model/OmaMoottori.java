@@ -112,8 +112,7 @@ public class OmaMoottori extends Moottori {
 			case ULKO:
 				// Poistetaan jonoista kaikki ARR1-asiakkaat
 				for (Palvelupiste palvelupiste : palvelupisteet) {
-					// palvelupiste.removeAsiakasARR1();
-					palvelupiste.eiVarattu();
+					palvelupiste.removeAsiakasARR1();
 				}
 				// Poistetaan tapahtumalistan "Ulkomaalentojen"-tapahtuma
 				tapahtumalista.removeUlkoTapahtumia();
@@ -122,7 +121,6 @@ public class OmaMoottori extends Moottori {
 				// Poistetaan jonoista kaikki ARR2-asiakkaat
 				for (Palvelupiste palvelupiste : palvelupisteet) {
 					palvelupiste.removeAsiakasARR2();
-					palvelupiste.eiVarattu();
 				}
 				// Poistetaan tapahtumalistan "Sisälentojen"-tapahtuma
 				tapahtumalista.removeTapahtumia();
