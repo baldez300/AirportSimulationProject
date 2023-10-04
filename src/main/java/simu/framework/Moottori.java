@@ -1,7 +1,6 @@
 package simu.framework;
 
 import simu.dao.TuloksetDao;
-import simu.model.Palvelupiste;
 import simu.view.Kontrolleri;
 
 public abstract class Moottori extends Thread implements IMoottori {
@@ -26,8 +25,6 @@ public abstract class Moottori extends Thread implements IMoottori {
 		kello = Kello.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
 
 		tapahtumalista = new Tapahtumalista();
-
-		Palvelupiste[] palvelupisteet;
 
 	}
 
@@ -59,15 +56,6 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 			Trace.out(Trace.Level.INFO, "\nB-vaihe:");
 			suoritaBTapahtumat();
-			if(lento1lahtenyt) {
-				tapahtumalista.removeUlkoTapahtumia();
-				lento1lahtenyt = false;
-			}
-			else if (lento2lahtenyt){
-				tapahtumalista.removeTapahtumia();
-				lento2lahtenyt = false;
-				alustukset();
-			}
 
 			Trace.out(Trace.Level.INFO, "\nC-vaihe:");
 			yritaCTapahtumat();
@@ -93,7 +81,7 @@ public abstract class Moottori extends Thread implements IMoottori {
 				alustukset();
 			}
 		}
-  }
+	}
 
 	private double nykyaika() {
 		return tapahtumalista.getSeuraavanAika();
@@ -113,9 +101,5 @@ public abstract class Moottori extends Thread implements IMoottori {
 	protected abstract void tulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 	protected abstract void asetaTulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
-
-	protected abstract void tulostPalvelupisteidenkoko(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
-
-	protected abstract boolean jarjestelmaOnTyhja();
 
 }
