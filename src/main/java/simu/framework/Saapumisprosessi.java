@@ -19,7 +19,7 @@ public class Saapumisprosessi {
 	}
 
 	public void generoiSeuraava() {
-
+		
 		// Lähtöaika ulkomaalennoille
 		double ulkoLahtoAika = Kello.getInstance().getAika() + new Normal(this.ulkoLahtoAika, 5).sample();
 

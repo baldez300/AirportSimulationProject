@@ -1,33 +1,31 @@
-package simu.framework;
+package simu.test;
 
 import simu.dao.TuloksetDao;
-import simu.model.Palvelupiste;
-import simu.view.Kontrolleri;
+import simu.framework.IMoottori;
+import simu.framework.Kello;
+import simu.framework.Tapahtuma;
+import simu.framework.Tapahtumalista;
 
-public abstract class Moottori extends Thread implements IMoottori {
+// Luodaan MoottoriForTest jotta ei tarvita GUI:ta testaukseen
+public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 
 	private double simulointiaika = 0;
 	private long viive = 0;
+	public boolean running = false;
 
 	private Kello kello;
 
 	protected Tapahtumalista tapahtumalista;
 
-	private Kontrolleri kontrolleri;
-
 	public TuloksetDao tuloksetDao;
 
-	public Moottori(Kontrolleri kontrolleri) {
-
-		this.kontrolleri = kontrolleri;
+	public MoottoriForTest() {
 
 		this.tuloksetDao = new TuloksetDao();
 
 		kello = Kello.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
 
 		tapahtumalista = new Tapahtumalista();
-
-		Palvelupiste[] palvelupisteet;
 
 	}
 
@@ -50,50 +48,43 @@ public abstract class Moottori extends Thread implements IMoottori {
 	}
 
 	public void run() {
-		alustukset(); // luodaan mm. ensimmäinen tapahtuma
-		while (!Thread.interrupted() && simuloidaan()) {
-			viive();
 
-			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
+		running = true;
+
+		alustukset(); // luodaan mm. ensimmäinen tapahtuma
+
+		while (simuloidaan() && !Thread.interrupted()) {
+
 			kello.setAika(nykyaika());
 
-			Trace.out(Trace.Level.INFO, "\nB-vaihe:");
+
 			suoritaBTapahtumat();
-			if(lento1lahtenyt) {
-				tapahtumalista.removeUlkoTapahtumia();
-				lento1lahtenyt = false;
-			}
-			else if (lento2lahtenyt){
-				tapahtumalista.removeTapahtumia();
-				lento2lahtenyt = false;
-				alustukset();
-			}
 
-			Trace.out(Trace.Level.INFO, "\nC-vaihe:");
+
 			yritaCTapahtumat();
-
 		}
 		asetaTulokset();
 		tulokset();
 	}
 
-	private void viive() { // UUSI
-		Trace.out(Trace.Level.INFO, "Viive " + viive);
+	public void suoritaBTapahtumat() {
 		try {
-			sleep(viive);
-		} catch (InterruptedException e) {
-			kontrolleri.lopetaSaie();
+			while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
+				suoritaTapahtuma(tapahtumalista.poista());
+			}
+		} catch (NullPointerException e) {
+
+			System.out.println("Ei seuraavia tapahtumia.. ");
+
+			System.out.println("Ulkomaille ja sisälle lähtevät lennot ovat lähteneet..");
+
+			System.out.println("Genetoidaan seuraavia lentoja.. jatketaan simulointia..");
+
+			// Generoidaan uudet lennot ja niiden yhteydessä myös uudet tapahtumat
+			alustukset();
+
 		}
 	}
-
-	private void suoritaBTapahtumat() {
-		while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
-			suoritaTapahtuma(tapahtumalista.poista());
-			if (tapahtumalista.getKoko() == 0) {
-				alustukset();
-			}
-		}
-  }
 
 	private double nykyaika() {
 		return tapahtumalista.getSeuraavanAika();
@@ -101,7 +92,14 @@ public abstract class Moottori extends Thread implements IMoottori {
 
 	private boolean simuloidaan() {
 		return kello.getAika() < simulointiaika;
+	}
 
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean value) {
+		running = value;
 	}
 
 	protected abstract void suoritaTapahtuma(Tapahtuma t); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
@@ -113,9 +111,5 @@ public abstract class Moottori extends Thread implements IMoottori {
 	protected abstract void tulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 	protected abstract void asetaTulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
-
-	protected abstract void tulostPalvelupisteidenkoko(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
-
-	protected abstract boolean jarjestelmaOnTyhja();
 
 }
