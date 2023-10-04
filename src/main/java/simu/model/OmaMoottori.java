@@ -4,17 +4,12 @@ import java.time.LocalDate;
 import java.util.HashMap;
 
 import simu.eduni.distributions.Normal;
-import simu.entity.LSTulos;
-import simu.entity.PTTulos;
-import simu.entity.T1Tulos;
-import simu.entity.T2Tulos;
-import simu.entity.TTTulos;
-import simu.entity.Tulokset;
 import simu.framework.Kello;
 import simu.framework.Moottori;
 import simu.framework.Saapumisprosessi;
 import simu.framework.Tapahtuma;
 import simu.view.Kontrolleri;
+import simu.entity.*;
 
 public class OmaMoottori extends Moottori {
 
@@ -112,8 +107,7 @@ public class OmaMoottori extends Moottori {
 			case ULKO:
 				// Poistetaan jonoista kaikki ARR1-asiakkaat
 				for (Palvelupiste palvelupiste : palvelupisteet) {
-					// palvelupiste.removeAsiakasARR1();
-					palvelupiste.eiVarattu();
+					palvelupiste.removeAsiakasARR1();
 				}
 				// Poistetaan tapahtumalistan "Ulkomaalentojen"-tapahtuma
 				tapahtumalista.removeUlkoTapahtumia();
@@ -122,7 +116,6 @@ public class OmaMoottori extends Moottori {
 				// Poistetaan jonoista kaikki ARR2-asiakkaat
 				for (Palvelupiste palvelupiste : palvelupisteet) {
 					palvelupiste.removeAsiakasARR2();
-					palvelupiste.eiVarattu();
 				}
 				// Poistetaan tapahtumalistan "Sisälentojen"-tapahtuma
 				tapahtumalista.removeTapahtumia();
