@@ -112,7 +112,8 @@ public class OmaMoottori extends Moottori {
 			case ULKO:
 				// Poistetaan jonoista kaikki ARR1-asiakkaat
 				for (Palvelupiste palvelupiste : palvelupisteet) {
-					palvelupiste.removeAsiakasARR1();
+					// palvelupiste.removeAsiakasARR1();
+					palvelupiste.eiVarattu();
 				}
 				// Poistetaan tapahtumalistan "Ulkomaalentojen"-tapahtuma
 				tapahtumalista.removeUlkoTapahtumia();
@@ -121,6 +122,7 @@ public class OmaMoottori extends Moottori {
 				// Poistetaan jonoista kaikki ARR2-asiakkaat
 				for (Palvelupiste palvelupiste : palvelupisteet) {
 					palvelupiste.removeAsiakasARR2();
+					palvelupiste.eiVarattu();
 				}
 				// Poistetaan tapahtumalistan "Sisälentojen"-tapahtuma
 				tapahtumalista.removeTapahtumia();
@@ -134,27 +136,6 @@ public class OmaMoottori extends Moottori {
 			if (!p.onVarattu() && p.onJonossa()) {
 				p.aloitaPalvelu();
 			}
-		}
-	}
-
-	@Override
-	protected void tulostPalvelupisteidenkoko() {
-		for (Palvelupiste p : palvelupisteet) {
-			System.out.println("Palvelupiste " + p.getNimi() + " jono koko: " + p.getAsiakasJono().size());
-		}
-	}
-
-	@Override
-	protected boolean jarjestelmaOnTyhja() {
-		for (Palvelupiste p : palvelupisteet) {
-			if (p.onJonossa() || p.onVarattu()) {
-				return false;
-			}
-		}
-		if (tapahtumalista.getKoko() == 0) {
-			return true;
-		} else {
-			return false;
 		}
 	}
 
