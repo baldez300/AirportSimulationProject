@@ -1,6 +1,10 @@
-package simu.framework;
+package simu.test;
 
 import simu.dao.TuloksetDao;
+import simu.framework.IMoottori;
+import simu.framework.Kello;
+import simu.framework.Tapahtuma;
+import simu.framework.Tapahtumalista;
 
 // Luodaan MoottoriForTest jotta ei tarvita GUI:ta testaukseen
 public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
@@ -50,13 +54,13 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 		alustukset(); // luodaan mm. ensimmäinen tapahtuma
 
 		while (simuloidaan() && !Thread.interrupted()) {
-			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
+
 			kello.setAika(nykyaika());
 
-			Trace.out(Trace.Level.INFO, "\nB-vaihe:");
+
 			suoritaBTapahtumat();
 
-			Trace.out(Trace.Level.INFO, "\nC-vaihe:");
+
 			yritaCTapahtumat();
 		}
 		asetaTulokset();

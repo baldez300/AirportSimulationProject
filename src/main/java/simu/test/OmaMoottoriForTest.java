@@ -1,15 +1,16 @@
-package simu.model;
+package simu.test;
 
 import java.time.LocalDate;
 import java.util.HashMap;
 
 import simu.eduni.distributions.Normal;
 import simu.framework.Kello;
-import simu.framework.MoottoriForTest;
 import simu.framework.Saapumisprosessi;
 import simu.framework.Tapahtuma;
+import simu.model.Asiakas;
+import simu.model.Palvelupiste;
+import simu.model.TapahtumanTyyppi;
 import simu.entity.*;
-
 
 // Luodaan OmaMoottoriForTest jotta ei tarvita GUI:ta testaukseen
 public class OmaMoottoriForTest extends MoottoriForTest {
