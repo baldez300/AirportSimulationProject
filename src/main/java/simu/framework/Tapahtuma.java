@@ -3,7 +3,7 @@ package simu.framework;
 public class Tapahtuma implements Comparable<Tapahtuma> {
 
 	private ITapahtumanTyyppi tyyppi;
-	private boolean ulkomaanlento; // Uusi kenttä, määrittää onko tapahtuma ulkomaanlennon tapahtuma
+	private boolean ulkomaanlento; // määrittää onko tapahtuma ulkomaanlennon tapahtuma
 	private double aika;
 
 	public Tapahtuma(ITapahtumanTyyppi tyyppi, double aika, boolean ulkomaanlento){
