@@ -18,4 +18,9 @@ public class SQLconnection {
         }
         return em;
     }
+
+    public static void testaaTietokantaYhteys() {
+            emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnit");
+            em = emf.createEntityManager();
+    }
 }
