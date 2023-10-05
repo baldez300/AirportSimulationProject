@@ -10,8 +10,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import simu.eduni.distributions.ContinuousGenerator;
 
-// TODO:
-// Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
 public class Palvelupiste {
 
 	private final LinkedList<Asiakas> jono = new LinkedList<>(); // Tietorakennetoteutus
@@ -78,38 +76,6 @@ public class Palvelupiste {
 		} else {
 			tapahtumalista.lisaa(
 					new Tapahtuma(skeduloitavanTapahtumanTyyppi, (Kello.getInstance().getAika() + palveluaika), false));
-		}
-	}
-
-	public void removeAsiakasARR1() {
-		if (!jono.isEmpty()) {
-			if (jono.peek().isUlkomaanlento())
-				varattu = false;
-			Iterator<Asiakas> iterator = jono.iterator();
-			while (iterator.hasNext()) {
-				Asiakas a = iterator.next();
-				if (a.isUlkomaanlento()) {
-					iterator.remove();
-					Asiakas.T2myohastyneet++;
-					Asiakas.i++;
-				}
-			}
-		}
-	}
-
-	public void removeAsiakasARR2() {
-		if (!jono.isEmpty()) {
-			if (!jono.peek().isUlkomaanlento())
-				varattu = false;
-			Iterator<Asiakas> iterator = jono.iterator();
-			while (iterator.hasNext()) {
-				Asiakas a = iterator.next();
-				if (!a.isUlkomaanlento()) {
-					iterator.remove();
-					Asiakas.T1myohastyneet++;
-					Asiakas.i++;
-				}
-			}
 		}
 	}
 
@@ -186,6 +152,39 @@ public class Palvelupiste {
 
 	public boolean onJonossa() {
 		return jono.size() != 0;
+	}
+
+	// Lennolta myöhästyneiden poisto jonosta
+	public void removeAsiakasARR1() {
+		if (!jono.isEmpty()) {
+			if (jono.peek().isUlkomaanlento())
+				varattu = false;
+			Iterator<Asiakas> iterator = jono.iterator();
+			while (iterator.hasNext()) {
+				Asiakas a = iterator.next();
+				if (a.isUlkomaanlento()) {
+					iterator.remove();
+					Asiakas.T2myohastyneet++;
+					Asiakas.i++;
+				}
+			}
+		}
+	}
+
+	public void removeAsiakasARR2() {
+		if (!jono.isEmpty()) {
+			if (!jono.peek().isUlkomaanlento())
+				varattu = false;
+			Iterator<Asiakas> iterator = jono.iterator();
+			while (iterator.hasNext()) {
+				Asiakas a = iterator.next();
+				if (!a.isUlkomaanlento()) {
+					iterator.remove();
+					Asiakas.T1myohastyneet++;
+					Asiakas.i++;
+				}
+			}
+		}
 	}
 
 	// Asetetaan palvelupisteen tulokset palvelupisteen olion muuttujiin
