@@ -5,7 +5,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
-
 import simu.model.Asiakas;
 import simu.model.Palvelupiste;
 
@@ -36,6 +35,7 @@ public class Visualisointi {
 			// long now tarkoittaa nanosekunteja joka annetaan metodille parametrina koska
 			// se on abstrakti metodi ja se pitää ylikirjoittaa
 			public void handle(long now) {
+				viive(kontrolleri.getMoottorinViive());
 				tyhjennaNaytto();
 				// Piirretään taustakuva
 				gc.drawImage(taustakuva, 0, 0, taustakuvaLeveys, taustakuvaKorkeus, 0, 0, canvas.getWidth(),
@@ -54,8 +54,9 @@ public class Visualisointi {
 					int vaihdaRivia = 4;
 					int jono = 0;
 					for (Asiakas asiakas : p.getAsiakasJono()) {
-						double destX = p.getX() + (jono * (asiakas.getWidth() + 5) * suunta);
-						double destY = p.getY() + (rivi * (asiakas.getHeight() + 5));
+						int offsetSuunta = (Math.random() > 0.5) ? -1 : 1;
+						double destX = p.getX() + (jono * (asiakas.getWidth() + 5) * suunta) + (offsetSuunta * Math.random() * 5);
+						double destY = p.getY() + (rivi * (asiakas.getHeight() + 5) + + (offsetSuunta * Math.random() * 5));
 						asiakas.piirra(gc, destX, destY);
 						rivi++;
 						if (rivi >= vaihdaRivia) {
@@ -70,5 +71,13 @@ public class Visualisointi {
 			}
 		};
 		timer.start();
+	}
+
+		private void viive(long aika) { // UUSI
+		try {
+			Thread.sleep(aika);
+		} catch (InterruptedException e) {
+			kontrolleri.lopetaSaie();
+		}
 	}
 }
