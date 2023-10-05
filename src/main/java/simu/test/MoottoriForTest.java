@@ -4,7 +4,6 @@ import simu.dao.TuloksetDao;
 import simu.framework.IMoottori;
 import simu.framework.Kello;
 import simu.framework.Tapahtuma;
-import simu.framework.Tapahtumalista;
 
 // Luodaan MoottoriForTest jotta ei tarvita GUI:ta testaukseen
 public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
@@ -15,7 +14,7 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 
 	private Kello kello;
 
-	protected Tapahtumalista tapahtumalista;
+	protected TapahtumalistaForTest tapahtumalista;
 
 	public TuloksetDao tuloksetDao;
 
@@ -25,7 +24,7 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 
 		kello = Kello.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
 
-		tapahtumalista = new Tapahtumalista();
+		tapahtumalista = new TapahtumalistaForTest();
 
 	}
 
@@ -63,8 +62,6 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 
 			yritaCTapahtumat();
 		}
-		asetaTulokset();
-		tulokset();
 	}
 
 	public void suoritaBTapahtumat() {
@@ -107,9 +104,4 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 	protected abstract void yritaCTapahtumat(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 	protected abstract void alustukset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
-
-	protected abstract void tulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
-
-	protected abstract void asetaTulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
-
 }

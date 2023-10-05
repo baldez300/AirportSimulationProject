@@ -337,6 +337,8 @@ public class Kontrolleri {
         simulointiAika = simulaationAika.getValue();
         moottori.setSimulointiaika(simulointiAika);
         moottori.setViive(simulaationViive.getValue());
+        Stage simulaationStage = (Stage) simulaatioSivu.getScene().getWindow();
+        simulaationStage.setTitle("Simuloidaan...");
         AsetuksetSivu.setVisible(false);
         simulaatioSivu.setVisible(true);
         uusiNappi.setVisible(true);
@@ -362,6 +364,10 @@ public class Kontrolleri {
                 if (Kello.getInstance().getAika() >= simulointiAika) {
                     // Update the UI on the JavaFX application thread
                     asetaTallennetutTulokset(((OmaMoottori) moottori).getTulokset());
+                    Platform.runLater(() -> {
+                    Stage tuloksetStage = (Stage) TuloksetSivu.getScene().getWindow();
+                    tuloksetStage.setTitle("Tulokset");
+                    });
                     simulaatioSivu.setVisible(false);
                     TuloksetSivu.setVisible(true);
                     timer.cancel();
@@ -378,6 +384,8 @@ public class Kontrolleri {
         for (Tulokset t : tulokset) {
             tuloksetLista.getItems().add(t);
         }
+        Stage tallennetutStage = (Stage) tallennetut.getScene().getWindow();
+        tallennetutStage.setTitle("Tallennetut tulokset");
         AsetuksetSivu.setVisible(false);
         tallennetut.setVisible(true);
     }
@@ -389,6 +397,8 @@ public class Kontrolleri {
             Tulokset valittuTulos = tuloksetLista.getSelectionModel().getSelectedItem();
             HashMap<Object, Object> tarkemmatTiedot = tuloksetDao.lataaTarkemmatTiedot(valittuTulos.getId());
             asetaTallennetutTulokset(tarkemmatTiedot);
+            Stage tuloksetStage = (Stage) TuloksetSivu.getScene().getWindow();
+            tuloksetStage.setTitle("Tarkemmat tiedot");
             TuloksetSivu.setVisible(true);
             tallennetut.setVisible(false);
             tuloksetPoistu.setVisible(true);
@@ -401,12 +411,16 @@ public class Kontrolleri {
 
     @FXML
     private void palaaAsetuksiin(ActionEvent event) {
+        Stage asetuksetStage = (Stage) AsetuksetSivu.getScene().getWindow();
+        asetuksetStage.setTitle("Simulaation asetukset");
         tallennetut.setVisible(false);
         AsetuksetSivu.setVisible(true);
     }
 
     @FXML
     private void palaaTallennettuihin(ActionEvent event) {
+        Stage tallennetutStage = (Stage) tallennetut.getScene().getWindow();
+        tallennetutStage.setTitle("Tallennetut tulokset");
         TuloksetSivu.setVisible(false);
         tallennetut.setVisible(true);
     }
@@ -421,6 +435,8 @@ public class Kontrolleri {
     @FXML
     private void uusiSimulointi(ActionEvent event) {
         ((Thread) moottori).interrupt();
+        Stage asetuksetStage = (Stage) AsetuksetSivu.getScene().getWindow();
+        asetuksetStage.setTitle("Simulaation asetukset");
         TuloksetSivu.setVisible(false);
         AsetuksetSivu.setVisible(true);
         tallennaNappi.setDisable(false);
@@ -428,6 +444,8 @@ public class Kontrolleri {
 
     public void lopetaSaie() {
         ((Thread) moottori).interrupt();
+        Stage asetuksetStage = (Stage) AsetuksetSivu.getScene().getWindow();
+        asetuksetStage.setTitle("Simulaation asetukset");
         simulaatioSivu.setVisible(false);
         AsetuksetSivu.setVisible(true);
     }
@@ -526,43 +544,47 @@ public class Kontrolleri {
         return ((Moottori) moottori).isAlive();
     }
 
+    protected long getMoottorinViive() {
+        return ((OmaMoottori) moottori).getViive();
+    }
+
     // Asetetaan tallennetut tulokset näkymään tulokset sivulle
     private void asetaTallennetutTulokset(HashMap<Object, Object> tuloksetMap) {
         pvm.setText(((Tulokset) tuloksetMap.get("SL")).getPaivamaara().toString());
-        kokonaisAika.setText(((Tulokset) tuloksetMap.get("SL")).getAika() + " min");
+        kokonaisAika.setText(String.format("%d h %02d min", (int)(((Tulokset) tuloksetMap.get("SL")).getAika() / 60), (int)(((Tulokset) tuloksetMap.get("SL")).getAika() % 60)));
         kaikkiAsiakkaat.setText(((Tulokset) tuloksetMap.get("SL")).getAsiakkaat() + " kpl");
         ehtineet.setText(((Tulokset) tuloksetMap.get("SL")).getLennolle_ehtineet() + " kpl");
         myohastyneet.setText(((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t1()
                 + ((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t2() + " kpl");
         myohastyneetT1.setText(((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t1() + " kpl");
         myohastyneetT2.setText(((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t2() + " kpl");
-        LSsuoritusteho.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getSuoritusteho())+" kpl/min");
-        PTSuoritusteho.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getSuoritusteho())+" kpl/min");
-        TTSuoritusteho.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getSuoritusteho())+" kpl/min");
-        T1Suoritusteho.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getSuoritusteho())+" kpl/min");
-        T2Suoritusteho.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getSuoritusteho())+" kpl/min");
-        LSJononPituus.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getJononpituus())+" %");
-        PTJononPituus.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getJononpituus())+" %");
-        TTJononPituus.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getJononpituus())+" %");
-        T1JononPituus.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getJononpituus())+" %");
-        T2JononPituus.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getJononpituus())+" %");
-        LSjonotusaika.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getJonotusaika())+" min");
-        PTJonotusaika.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getJonotusaika())+" min");
-        TTJonotusaika.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getJonotusaika())+" min");
-        T1Jonotusaika.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getJonotusaika())+" min");
-        T2Jonotusaika.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getJonotusaika())+" min");
-        LSkayttoaste.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getKayttoaste())+" %");
-        PTKayttoaste.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getKayttoaste())+" %");
-        TTKayttoaste.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getKayttoaste())+" %");
-        T1Kayttoaste.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getKayttoaste())+" %");
-        T2Kayttoaste.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getKayttoaste())+" %");
+        LSsuoritusteho.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getSuoritusteho()) + " kpl/1h");
+        PTSuoritusteho.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getSuoritusteho()) + " kpl/1h");
+        TTSuoritusteho.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getSuoritusteho()) + " kpl/1h");
+        T1Suoritusteho.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getSuoritusteho()) + " kpl/1h");
+        T2Suoritusteho.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getSuoritusteho()) + " kpl/1h");
+        LSJononPituus.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getJononpituus()) + " kpl");
+        PTJononPituus.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getJononpituus()) + " kpl");
+        TTJononPituus.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getJononpituus()) + " kpl");
+        T1JononPituus.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getJononpituus()) + " kpl");
+        T2JononPituus.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getJononpituus()) + " kpl");
+        LSjonotusaika.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getJonotusaika()) + " min");
+        PTJonotusaika.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getJonotusaika()) + " min");
+        TTJonotusaika.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getJonotusaika()) + " min");
+        T1Jonotusaika.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getJonotusaika()) + " min");
+        T2Jonotusaika.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getJonotusaika()) + " min");
+        LSkayttoaste.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getKayttoaste()) + " %");
+        PTKayttoaste.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getKayttoaste()) + " %");
+        TTKayttoaste.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getKayttoaste()) + " %");
+        T1Kayttoaste.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getKayttoaste()) + " %");
+        T2Kayttoaste.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getKayttoaste()) + " %");
     }
 
     // Asetetaan tulokset näkymään viereseen Vboxiin kun valinta muuttuu
     private void valintaMuuttui(ObservableValue<? extends Tulokset> observable, Tulokset oldValue, Tulokset newValue) {
         // Asennetaan tulokset näkymään
         if (newValue != null) {
-            TkokonaisAika.setText(newValue.getAika() + " min");
+            TkokonaisAika.setText(String.format("%d h %02d min", (int)(newValue.getAika() / 60), (int)(newValue.getAika()) % 60));;
             TkaikkiAsiakkaat.setText(newValue.getAsiakkaat() + " kpl");
             Tehtineet.setText(newValue.getLennolle_ehtineet() + " kpl");
             Tmyohastyneet.setText(newValue.getMyohastyneet_t1() + newValue.getMyohastyneet_t2() + " kpl");

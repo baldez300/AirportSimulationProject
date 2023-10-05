@@ -1,29 +1,49 @@
-.tuloksetItem {
-    -fx-background-color: rgba(165, 165, 165, 0.067);
+.asetukset-box {
+  -fx-background-color: rgba(156, 149, 149, 0.214);
+  background-color: rgba(156, 149, 149, 0.214);
+  -fx-background-radius: 5px 0 0 5px;
+}
+
+.ohjeet-box {
+  -fx-background-color: rgba(105, 104, 104, 0.067);
+  background-color: rgba(165, 165, 165, 0.067);
+  -fx-background-radius: 0 5px 5px 0;
+}
+
+.tulokset-box {
+    -fx-background-color: rgba(105, 104, 104, 0.067);
     background-color: rgba(165, 165, 165, 0.067);
-    -fx-border-color: #000000;
-    border-color: #000000;
-    -fx-border-width: 1px;
-    border-width: 1px;
-    -fx-border-style: solid;
-    border-style: solid;
-    -fx-border-radius: 5px;
-    border-radius: 5px;
-    -fx-padding: 5px;
-    padding: 5px;
+    -fx-background-radius: 10px;
+}
+
+.tuloksetItem {
+  -fx-background-color: rgba(165, 165, 165, 0.067);
+  background-color: rgba(165, 165, 165, 0.067);
+  -fx-border-color: #000000;
+  border-color: #000000;
+  -fx-border-width: 1px;
+  border-width: 1px;
+  -fx-border-style: solid;
+  border-style: solid;
+  -fx-border-radius: 5px;
+  border-radius: 5px;
+  -fx-padding: 5px;
+  -fx-background-radius: 5px;
+  padding: 5px;
 }
 
 .asetuksetItem {
-    -fx-background-color: rgba(165, 165, 165, 0.067);
-    background-color: rgba(165, 165, 165, 0.067);
-    -fx-border-color: #000000;
-    border-color: #000000;
-    -fx-border-width: 1px;
-    border-width: 1px;
-    -fx-border-style: solid;
-    border-style: solid;
-    -fx-border-radius: 5px;
-    border-radius: 5px;
-    -fx-padding: 10px;
-    padding: 10px;
+  -fx-background-color: rgb(246, 246, 246);
+  background-color: rgb(246, 246, 246);
+  -fx-border-color: #000000;
+  border-color: #000000;
+  -fx-border-width: 1px;
+  border-width: 1px;
+  -fx-border-style: solid;
+  border-style: solid;
+  -fx-border-radius: 5px;
+  border-radius: 5px;
+  -fx-background-radius: 5px;
+  -fx-padding: 10px;
+  padding: 10px;
 }

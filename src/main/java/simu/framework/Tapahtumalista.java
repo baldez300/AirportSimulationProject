@@ -1,7 +1,5 @@
 package simu.framework;
 
-import simu.model.Asiakas;
-
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
@@ -31,9 +29,9 @@ public class Tapahtumalista {
 		return lista.size();
 	}
 
-	public void removeUlkoTapahtumia(){
+	// Poistetaan kaikki tulevat ulkomaan lennon tapahtumat
+	public void removeUlkomaanTapahtumat(){
 		PriorityQueue<Tapahtuma> uusiLista = new PriorityQueue<Tapahtuma>();
-
 		while (lista.size()>0) {
 			Tapahtuma t = lista.poll();
 			if(t.getAika()>0)
@@ -43,7 +41,8 @@ public class Tapahtumalista {
 		}
 		lista = uusiLista;
 	}
-	public void removeTapahtumia(){
+
+	public void removeKotimaanTapahtumat(){
 		PriorityQueue<Tapahtuma> uusiLista = new PriorityQueue<Tapahtuma>();
 		Iterator<Tapahtuma> iterator = lista.iterator();
 		while (iterator.hasNext()) {

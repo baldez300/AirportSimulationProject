@@ -2,6 +2,7 @@ package simu.test;
 
 import simu.framework.Kello;
 import simu.framework.Tapahtuma;
+import simu.model.Asiakas;
 import simu.model.TapahtumanTyyppi;
 import simu.eduni.distributions.ContinuousGenerator;
 
@@ -68,25 +69,33 @@ public class PalvelupisteForTest {
 	}
 
 	public void removeAsiakasARR1() {
-		Iterator<AsiakasForTest> iterator = jono.iterator();
-		while (iterator.hasNext()) {
-			AsiakasForTest a = iterator.next();
-			if (a.isUlkomaanlento()) {
-				iterator.remove();
-				AsiakasForTest.T2myohastyneet++;
-				AsiakasForTest.i++;
+		if (!jono.isEmpty()) {
+			if (jono.peek().isUlkomaanlento())
+				varattu = false;
+			Iterator<AsiakasForTest> iterator = jono.iterator();
+			while (iterator.hasNext()) {
+				AsiakasForTest a = iterator.next();
+				if (a.isUlkomaanlento()) {
+					iterator.remove();
+					Asiakas.T2myohastyneet++;
+					Asiakas.i++;
+				}
 			}
 		}
 	}
 
 	public void removeAsiakasARR2() {
-		Iterator<AsiakasForTest> iterator = jono.iterator();
-		while (iterator.hasNext()) {
-			AsiakasForTest a = iterator.next();
-			if (!a.isUlkomaanlento()) {
-				iterator.remove();
-				AsiakasForTest.T1myohastyneet++;
-				AsiakasForTest.i++;
+		if (!jono.isEmpty()) {
+			if (!jono.peek().isUlkomaanlento())
+				varattu = false;
+			Iterator<AsiakasForTest> iterator = jono.iterator();
+			while (iterator.hasNext()) {
+				AsiakasForTest a = iterator.next();
+				if (!a.isUlkomaanlento()) {
+					iterator.remove();
+					Asiakas.T1myohastyneet++;
+					Asiakas.i++;
+				}
 			}
 		}
 	}

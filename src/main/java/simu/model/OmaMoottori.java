@@ -20,8 +20,6 @@ public class OmaMoottori extends Moottori {
 
 	public OmaMoottori(Kontrolleri kontrolleri) {
 		super(kontrolleri);
-		// TODO:
-		// Määritä palvelupisteille jotain järkeviä paveluaikoja ?
 
 		palvelupisteet = new Palvelupiste[5];
 
@@ -105,20 +103,20 @@ public class OmaMoottori extends Moottori {
 				Asiakas.i++;
 				break;
 			case ULKO:
-				// Poistetaan jonoista kaikki ARR1-asiakkaat
+				// Poistetaan jonoista kaikki ulkomaanlentojen asiakkaat
 				for (Palvelupiste palvelupiste : palvelupisteet) {
 					palvelupiste.removeAsiakasARR1();
 				}
 				// Poistetaan tapahtumalistan "Ulkomaalentojen"-tapahtuma
-				tapahtumalista.removeUlkoTapahtumia();
+				tapahtumalista.removeUlkomaanTapahtumat();
 				break;
 			case SISA:
-				// Poistetaan jonoista kaikki ARR2-asiakkaat
+				// Poistetaan jonoista kaikki kotimaanlentojen asiakkaat
 				for (Palvelupiste palvelupiste : palvelupisteet) {
 					palvelupiste.removeAsiakasARR2();
 				}
 				// Poistetaan tapahtumalistan "Sisälentojen"-tapahtuma
-				tapahtumalista.removeTapahtumia();
+				tapahtumalista.removeKotimaanTapahtumat();
 				break;
 		}
 	}
@@ -169,7 +167,6 @@ public class OmaMoottori extends Moottori {
 		}
 	}
 
-	// Esimerkki Baldelle jatka tästä...
 	// Asetetaan tulokset HashMapiin
 	@Override
 	public void asetaTulokset() {
