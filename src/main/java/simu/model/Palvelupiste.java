@@ -54,6 +54,7 @@ public class Palvelupiste {
 		kokonaisLapimenoaika += Kello.getInstance().getAika() - jono.peek().getSaapumisaika();
 		palvelupisteessaPalvellutAsiakkaat += 1; // pisteessä palvellut asiakkaat
 		palvellutAsiakkaatTotal += 1; // järjestelmässä palvellut asiakkaat
+		jono.peek().setPoistumisaika(Kello.getInstance().getAika());
 		return jono.poll();
 	}
 
