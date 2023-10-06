@@ -146,10 +146,6 @@ public class Palvelupiste {
 		return this.varattu;
 	}
 
-	public void eiVarattu() {
-		this.varattu = false;
-	}
-
 	public boolean onJonossa() {
 		return jono.size() != 0;
 	}
@@ -163,9 +159,11 @@ public class Palvelupiste {
 			while (iterator.hasNext()) {
 				Asiakas a = iterator.next();
 				if (a.isUlkomaanlento()) {
+					a.setPoistumisaika(Kello.getInstance().getAika());
 					iterator.remove();
 					Asiakas.T2myohastyneet++;
 					Asiakas.i++;
+
 				}
 			}
 		}
@@ -179,6 +177,7 @@ public class Palvelupiste {
 			while (iterator.hasNext()) {
 				Asiakas a = iterator.next();
 				if (!a.isUlkomaanlento()) {
+					a.setPoistumisaika(Kello.getInstance().getAika());
 					iterator.remove();
 					Asiakas.T1myohastyneet++;
 					Asiakas.i++;

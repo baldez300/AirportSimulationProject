@@ -51,7 +51,7 @@ public class Visualisointi {
 					int suunta = (p.getNimi().equals("LS") || p.getNimi().equals("T2") || p.getNimi().equals("PT")) ? -1
 							: 1;
 					int rivi = 0;
-					int vaihdaRivia = 4;
+					int vaihdaRivia = 2;
 					int jono = 0;
 					for (Asiakas asiakas : p.getAsiakasJono()) {
 						int offsetSuunta = (Math.random() > 0.5) ? -1 : 1;

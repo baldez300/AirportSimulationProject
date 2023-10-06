@@ -75,7 +75,8 @@ public class Asiakas {
 	}
 
 	public void piirra(GraphicsContext gc, double destX, double destY) {
-		gc.setFill(Color.RED);
+		if(this.ulkomaanlento) gc.setFill(Color.BLUE);
+		else gc.setFill(Color.RED);
 		gc.fillOval(destX, destY, this.width, this.height);
 	}
 }
