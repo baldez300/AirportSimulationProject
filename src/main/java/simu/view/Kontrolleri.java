@@ -19,7 +19,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.scene.shape.Circle;
 import simu.dao.TuloksetDao;
+import simu.datasource.SQLconnection;
 import simu.entity.LSTulos;
 import simu.entity.PTTulos;
 import simu.entity.T1Tulos;
@@ -238,11 +240,22 @@ public class Kontrolleri {
     @FXML
     private Button uusiNappi;
 
+    @FXML
+    private Circle tietokantaYhteysOnline;
+
+    @FXML
+    private Circle tietokantaYhteysOffline;
+
     private static IMoottori moottori;
 
     private TuloksetDao tuloksetDao = new TuloksetDao();
 
     private Visualisointi visualisointi;
+
+    // Apumuuttujat
+    private boolean tietokantaYhteys;
+    private boolean tulosValittu;
+    private boolean painettu;
 
     // Asetetaan oletusarvot spinnereille
     @FXML
@@ -325,6 +338,24 @@ public class Kontrolleri {
         tuloksetLista.getSelectionModel().selectedItemProperty().addListener(this::valintaMuuttui);
 
         visualisointi = new Visualisointi(this, contentCanvas);
+
+        // Tarkistetaan tietokanta yhteys 3 sekunnin välein
+        Timer tietokantaTimer = new Timer();
+        tietokantaTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                testaaTietokantaYhteys();
+                if (!painettu && tietokantaYhteys)
+                    tallennaNappi.setDisable(false);
+                else
+                    tallennaNappi.setDisable(true);
+                if (!tuloksetLista.getItems().isEmpty() && tietokantaYhteys && tulosValittu)
+                    tarkemmatTiedotNappi.setDisable(false);
+                else
+                    tarkemmatTiedotNappi.setDisable(true);
+                edellisetTulokset.setDisable(!tietokantaYhteys);
+            }
+        }, 0, 3000);
     }
 
     @FXML
@@ -342,7 +373,6 @@ public class Kontrolleri {
         AsetuksetSivu.setVisible(false);
         simulaatioSivu.setVisible(true);
         uusiNappi.setVisible(true);
-        tallennaNappi.setVisible(true);
         tuloksetPoistu.setVisible(false);
         ((Thread) moottori).start();
         visualisointi.aloitaVisualisointi();
@@ -365,8 +395,8 @@ public class Kontrolleri {
                     // Update the UI on the JavaFX application thread
                     asetaTallennetutTulokset(((OmaMoottori) moottori).getTulokset());
                     Platform.runLater(() -> {
-                    Stage tuloksetStage = (Stage) TuloksetSivu.getScene().getWindow();
-                    tuloksetStage.setTitle("Tulokset");
+                        Stage tuloksetStage = (Stage) TuloksetSivu.getScene().getWindow();
+                        tuloksetStage.setTitle("Tulokset");
                     });
                     simulaatioSivu.setVisible(false);
                     TuloksetSivu.setVisible(true);
@@ -403,7 +433,8 @@ public class Kontrolleri {
             tallennetut.setVisible(false);
             tuloksetPoistu.setVisible(true);
             uusiNappi.setVisible(false);
-            tallennaNappi.setVisible(false);
+            if (!painettu)
+                tallennaNappi.setVisible(false);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -412,9 +443,11 @@ public class Kontrolleri {
     @FXML
     private void palaaAsetuksiin(ActionEvent event) {
         Stage asetuksetStage = (Stage) AsetuksetSivu.getScene().getWindow();
+        tulosValittu = false;
         asetuksetStage.setTitle("Simulaation asetukset");
         tallennetut.setVisible(false);
         AsetuksetSivu.setVisible(true);
+        tallennaNappi.setVisible(true);
     }
 
     @FXML
@@ -428,6 +461,7 @@ public class Kontrolleri {
     @FXML
     // Tallennetaan tulokset tietokantaan
     private void tallenna(ActionEvent event) {
+        painettu = true;
         tallennaNappi.setDisable(true);
         ((OmaMoottori) moottori).tallennaTulokset();
     }
@@ -435,6 +469,7 @@ public class Kontrolleri {
     @FXML
     private void uusiSimulointi(ActionEvent event) {
         ((Thread) moottori).interrupt();
+        painettu = false;
         Stage asetuksetStage = (Stage) AsetuksetSivu.getScene().getWindow();
         asetuksetStage.setTitle("Simulaation asetukset");
         TuloksetSivu.setVisible(false);
@@ -551,7 +586,8 @@ public class Kontrolleri {
     // Asetetaan tallennetut tulokset näkymään tulokset sivulle
     private void asetaTallennetutTulokset(HashMap<Object, Object> tuloksetMap) {
         pvm.setText(((Tulokset) tuloksetMap.get("SL")).getPaivamaara().toString());
-        kokonaisAika.setText(String.format("%d h %02d min", (int)(((Tulokset) tuloksetMap.get("SL")).getAika() / 60), (int)(((Tulokset) tuloksetMap.get("SL")).getAika() % 60)));
+        kokonaisAika.setText(String.format("%d h %02d min", (int) (((Tulokset) tuloksetMap.get("SL")).getAika() / 60),
+                (int) (((Tulokset) tuloksetMap.get("SL")).getAika() % 60)));
         kaikkiAsiakkaat.setText(((Tulokset) tuloksetMap.get("SL")).getAsiakkaat() + " kpl");
         ehtineet.setText(((Tulokset) tuloksetMap.get("SL")).getLennolle_ehtineet() + " kpl");
         myohastyneet.setText(((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t1()
@@ -584,7 +620,10 @@ public class Kontrolleri {
     private void valintaMuuttui(ObservableValue<? extends Tulokset> observable, Tulokset oldValue, Tulokset newValue) {
         // Asennetaan tulokset näkymään
         if (newValue != null) {
-            TkokonaisAika.setText(String.format("%d h %02d min", (int)(newValue.getAika() / 60), (int)(newValue.getAika()) % 60));;
+            tulosValittu = true;
+            TkokonaisAika.setText(
+                    String.format("%d h %02d min", (int) (newValue.getAika() / 60), (int) (newValue.getAika()) % 60));
+            ;
             TkaikkiAsiakkaat.setText(newValue.getAsiakkaat() + " kpl");
             Tehtineet.setText(newValue.getLennolle_ehtineet() + " kpl");
             Tmyohastyneet.setText(newValue.getMyohastyneet_t1() + newValue.getMyohastyneet_t2() + " kpl");
@@ -600,5 +639,18 @@ public class Kontrolleri {
         Asiakas.lennolleEhtineet = 0;
         Asiakas.i = 0;
         Palvelupiste.palvellutAsiakkaatTotal = 0;
+    }
+
+    private void testaaTietokantaYhteys() {
+        try {
+            SQLconnection.testaaTietokantaYhteys();
+            tietokantaYhteysOnline.setVisible(true);
+            tietokantaYhteysOffline.setVisible(false);
+            tietokantaYhteys = true;
+        } catch (Exception e) {
+            tietokantaYhteys = false;
+            tietokantaYhteysOffline.setVisible(true);
+            tietokantaYhteysOnline.setVisible(false);
+        }
     }
 }
