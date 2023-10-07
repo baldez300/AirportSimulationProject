@@ -11,10 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -245,6 +242,13 @@ public class Kontrolleri {
 
     @FXML
     private Circle tietokantaYhteysOffline;
+
+    @FXML
+    private Text TT;
+    @FXML
+    private Text PT;
+    @FXML
+    private Text LS;
 
     private static IMoottori moottori;
 
@@ -614,6 +618,9 @@ public class Kontrolleri {
         TTKayttoaste.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getKayttoaste()) + " %");
         T1Kayttoaste.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getKayttoaste()) + " %");
         T2Kayttoaste.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getKayttoaste()) + " %");
+        LS.setText(String.format("%d kpl", getLahtoselvitysMaara()));
+        TT.setText(String.format("%d kpl", getTurvatarkastusMaara()));
+        PT.setText(String.format("%d kpl", getPassintarkastusMaara()));
     }
 
     // Asetetaan tulokset näkymään viereseen Vboxiin kun valinta muuttuu

@@ -606,14 +606,20 @@
                      <children>
                         <VBox prefHeight="170.0" prefWidth="300.0" styleClass="tuloksetItem">
                            <children>
-                              <Label prefHeight="43.0" prefWidth="113.0" text="Lentokenttä" underline="true">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Label>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label prefHeight="43.0" prefWidth="113.0" text="Lentokenttä" underline="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="LK" strokeType="OUTSIDE" strokeWidth="0.0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="13.0" prefWidth="478.0">
                                  <children>
                                     <Label prefHeight="38.0" prefWidth="180.0" text="Käynnissä oloaika:">
@@ -732,14 +738,20 @@
                         </VBox>
                         <VBox prefHeight="170.0" prefWidth="300.0" styleClass="tuloksetItem">
                            <children>
-                              <Label prefHeight="30.0" prefWidth="117.0" text="Lähtöselvitys" underline="true">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Label>
+                              <HBox prefHeight="55.0" prefWidth="284.0">
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="184.0" text="Lähtöselvitys" underline="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="LS" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="12.0" prefWidth="230.0">
                                  <children>
                                     <Label prefHeight="51.0" prefWidth="180.0" text="Käyttöaste: ">
@@ -803,14 +815,20 @@
                         </VBox>
                         <VBox prefHeight="170.0" prefWidth="300.0" styleClass="tuloksetItem">
                            <children>
-                              <Label prefHeight="30.0" prefWidth="132.0" text="Turvatarkastus" underline="true">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Label>
+                              <HBox prefHeight="55.0" prefWidth="284.0">
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="184.0" text="Turvatarkasut" underline="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="TT" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="12.0" prefWidth="230.0">
                                  <children>
                                     <Label prefHeight="51.0" prefWidth="180.0" text="Käyttöaste: ">
@@ -881,14 +899,20 @@
                      <children>
                         <VBox prefHeight="170.0" prefWidth="300.0" styleClass="tuloksetItem">
                            <children>
-                              <Label prefHeight="30.0" prefWidth="140.0" text="Passintarkastus" underline="true">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Label>
+                              <HBox prefHeight="55.0" prefWidth="284.0">
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="184.0" text="Passintarkastus" underline="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="PT" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="12.0" prefWidth="230.0">
                                  <children>
                                     <Label prefHeight="51.0" prefWidth="180.0" text="Käyttöaste: ">
@@ -955,14 +979,20 @@
                         </VBox>
                         <VBox prefHeight="170.0" prefWidth="300.0" styleClass="tuloksetItem">
                            <children>
-                              <Label prefHeight="20.0" prefWidth="24.0" text="T1" underline="true">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Label>
+                              <HBox prefHeight="55.0" prefWidth="284.0">
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="184.0" text="Lähtöportti T1" underline="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="LP1" strokeType="OUTSIDE" strokeWidth="0.0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="12.0" prefWidth="240.0">
                                  <children>
                                     <Label prefHeight="12.0" prefWidth="180.0" text="Käyttöaste: ">
@@ -1026,14 +1056,20 @@
                         </VBox>
                         <VBox prefHeight="170.0" prefWidth="300.0" styleClass="tuloksetItem">
                            <children>
-                              <Label prefHeight="19.0" prefWidth="24.0" text="T2" underline="true">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Label>
+                              <HBox prefHeight="55.0" prefWidth="284.0">
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="184.0" text="Lähtöportti T2" underline="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="LP2" strokeType="OUTSIDE" strokeWidth="0.0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="12.0" prefWidth="230.0">
                                  <children>
                                     <Label prefHeight="51.0" prefWidth="180.0" text="Käyttöaste: ">
