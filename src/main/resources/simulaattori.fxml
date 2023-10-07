@@ -817,7 +817,7 @@
                            <children>
                               <HBox prefHeight="55.0" prefWidth="284.0">
                                  <children>
-                                    <Label prefHeight="30.0" prefWidth="184.0" text="Turvatarkasut" underline="true">
+                                    <Label prefHeight="30.0" prefWidth="184.0" text="Turvatarkastus" underline="true">
                                        <font>
                                           <Font size="20.0" />
                                        </font>

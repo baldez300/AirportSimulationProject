@@ -25,13 +25,15 @@ public class TTTulos {
     private double jonotusaika;
     @Column(name = "jononpituus")
     private double jononpituus;
+    @Column(name = "maara")
+    private int maara;
 
-
-    public TTTulos(double kayttoaste, double suoritusteho, double jonotusaika, double jononpituus) {
+    public TTTulos(double kayttoaste, double suoritusteho, double jonotusaika, double jononpituus, int maara) {
         this.kayttoaste = kayttoaste;
         this.suoritusteho = suoritusteho;
         this.jonotusaika = jonotusaika;
         this.jononpituus = jononpituus;
+        this.maara = maara;
     }
 
     public TTTulos() {
@@ -58,6 +60,10 @@ public class TTTulos {
         this.jononpituus = jononpituus;
     }
 
+    public void setMaara(int maara) {
+        this.maara = maara;
+    }
+
     // Getterit
     public int getId() {
         return id;
@@ -77,5 +83,9 @@ public class TTTulos {
 
     public double getJononpituus() {
         return jononpituus;
+    }
+
+    public int getMaara() {
+        return maara;
     }
 }
