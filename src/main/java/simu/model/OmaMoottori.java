@@ -24,23 +24,23 @@ public class OmaMoottori extends Moottori {
 		palvelupisteet = new Palvelupiste[5];
 
 		// Lähtöselvitys
-		palvelupisteet[0] = new Palvelupiste(1187, 500, "LS", kontrolleri.getLahtoselvitysMaara(),
+		palvelupisteet[0] = new Palvelupiste(1187, 540, "LS", kontrolleri.getLahtoselvitysMaara(),
 				new Normal(kontrolleri.getLSpalveluNopeus(), kontrolleri.getLahtoselvitysVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP1);
 		// Turvatarkastus
-		palvelupisteet[1] = new Palvelupiste(288, 338, "TT", kontrolleri.getTurvatarkastusMaara(),
+		palvelupisteet[1] = new Palvelupiste(288, 368, "TT", kontrolleri.getTurvatarkastusMaara(),
 				new Normal(kontrolleri.getTTpalveluNopeus(), kontrolleri.getTurvatarkastusVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP2);
 		// Passintarkistus
-		palvelupisteet[2] = new Palvelupiste(1187, 165, "PT", kontrolleri.getPassintarkastusMaara(),
+		palvelupisteet[2] = new Palvelupiste(1187, 225, "PT", kontrolleri.getPassintarkastusMaara(),
 				new Normal(kontrolleri.getPTpalveluNopeus(), kontrolleri.getPassintarkastusVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP3);
 		// Lähtöportti kotimaanlennot
-		palvelupisteet[3] = new Palvelupiste(127, 12, "T1", 1,
+		palvelupisteet[3] = new Palvelupiste(127, 42, "T1", 1,
 				new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP4);
 		// Lähtöportti ulkomaanlennot
-		palvelupisteet[4] = new Palvelupiste(1360, 12, "T2", 1,
+		palvelupisteet[4] = new Palvelupiste(1360, 42, "T2", 1,
 				new Normal(kontrolleri.getUlkomaaKA(), kontrolleri.getUlkomaaVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP5);
 		// Saapumisprosessi
@@ -185,15 +185,15 @@ public class OmaMoottori extends Moottori {
 			if (p.getNimi().equals("LS")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
 				tuloksetMap.put("LS",
-						new LSTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
+						new LSTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara()));
 			} else if (p.getNimi().equals("PT")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
 				tuloksetMap.put("PT",
-						new PTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
+						new PTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara()));
 			} else if (p.getNimi().equals("TT")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
 				tuloksetMap.put("TT",
-						new TTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
+						new TTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara()));
 			} else if (p.getNimi().equals("T1")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
 				tuloksetMap.put("T1",
