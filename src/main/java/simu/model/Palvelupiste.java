@@ -203,10 +203,10 @@ public class Palvelupiste {
 	public void piirra(GraphicsContext gc) {
 		gc.setFont(javafx.scene.text.Font.font("Verdana", 15));
 		if (this.nimi.equals("LS"))
-			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x + 310, this.y + 80);
+			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x + 310, this.y + 60);
 		else if (this.nimi.equals("PT"))
-			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x + 190, this.y + 70);
+			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x + 190, this.y + 43);
 		else if (this.nimi.equals("TT"))
-			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x - 385, this.y + 80);
+			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x - 385, this.y + 60);
 	}
 }
