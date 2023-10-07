@@ -33,6 +33,9 @@ import simu.framework.Trace.Level;
 import simu.model.Asiakas;
 import simu.model.OmaMoottori;
 import simu.model.Palvelupiste;
+import javafx.util.converter.DoubleStringConverter;
+
+
 
 public class Kontrolleri {
     // Oletusarvot asetuksille jotta pysyvät muistissa
@@ -264,6 +267,22 @@ public class Kontrolleri {
     // Asetetaan oletusarvot spinnereille
     @FXML
     void initialize() {
+        // Alusta TextFormatter rajoittaaksesi syötteen numeerisiin arvoihin
+        TextFormatter<Double> textFormatter = new TextFormatter<>(
+                new DoubleStringConverter(),
+                0.0,  // Oletusarvo (voidään muuttaa tämän halutuksi oletusarvoksi)
+                change -> {
+                    String newText = change.getControlNewText();
+                    if (isValidDouble(newText)) {
+                        return change;
+                    } else {
+                        return null;  // Hylkää muutos, jos se ei ole kelvollinen tupla
+                    }
+                }
+        );
+
+        simulaationAika.getEditor().setTextFormatter(textFormatter);
+
         Trace.setTraceLevel(Level.INFO);
         // Spinnerien arvojen asettaminen
         SpinnerValueFactory<Integer> lahtoSelvitysSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20,
@@ -369,6 +388,8 @@ public class Kontrolleri {
         resetoiStaattisetMuuttujat();
         // Luodaan uusi moottori ja asetetaan sille asetukset
         moottori = new OmaMoottori(this);
+
+        // Hanki arvo Spinneristä (se on kelvollinen tupla)
         simulointiAika = simulaationAika.getValue();
         moottori.setSimulointiaika(simulointiAika);
         moottori.setViive(simulaationViive.getValue());
@@ -408,6 +429,16 @@ public class Kontrolleri {
                 }
             }
         }, 0, 1000); // Execute every 1000 milliseconds (1 second)
+    }
+
+    // Tarkista, voidaanko merkkijono jäsentää kelvolliseksi kaksoiskappaleeksi
+    private boolean isValidDouble(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @FXML

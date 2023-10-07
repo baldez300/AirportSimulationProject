@@ -464,7 +464,7 @@
                                                 <Font size="17.0" />
                                              </font>
                                           </Label>
-                                          <Spinner fx:id="simulaationAika" editable="true" prefHeight="26.0" prefWidth="80.0" />
+                                          <Spinner fx:id="simulaationAika" editable="true" prefHeight="26.0" prefWidth="90.0" />
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="26.0" prefWidth="123.0" spacing="10.0">
