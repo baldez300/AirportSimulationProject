@@ -117,6 +117,10 @@ public class Palvelupiste {
 		return palvelupisteenPalveluAika;
 	}
 
+	public int getMaara() {
+		return this.pisteidenMaara;
+	}
+
 	// Setterit
 	public void setSuoritusteho(double simulointiAika) {
 		// Tästä tulee asiakasta / minuutissa. Muutetaan asiakasta / tunti kertomalla

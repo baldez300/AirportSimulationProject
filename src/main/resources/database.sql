@@ -11,6 +11,7 @@ CREATE TABLE lahtoselvitys(
     jonotusaika DOUBLE,
     kayttoaste DOUBLE,
     suoritusteho DOUBLE,
+    maara INTEGER,
     PRIMARY KEY (id)
 );
 CREATE TABLE passintarkastus(
@@ -19,6 +20,7 @@ CREATE TABLE passintarkastus(
     jonotusaika DOUBLE,
     kayttoaste DOUBLE,
     suoritusteho DOUBLE,
+    maara INTEGER,
     PRIMARY KEY (id)
 );
 CREATE TABLE t1(
@@ -54,5 +56,6 @@ CREATE TABLE turvatarkastus(
     jonotusaika DOUBLE,
     kayttoaste DOUBLE,
     suoritusteho DOUBLE,
+    maara INTEGER,
     PRIMARY KEY (id)
 );

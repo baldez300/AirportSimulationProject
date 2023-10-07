@@ -25,13 +25,15 @@ public class PTTulos {
     private double jonotusaika;
     @Column(name = "jononpituus")
     private double jononpituus;
+    @Column(name = "maara")
+    private int maara;
 
-
-    public PTTulos(double kayttoaste, double suoritusteho, double jonotusaika, double jononpituus) {
+    public PTTulos(double kayttoaste, double suoritusteho, double jonotusaika, double jononpituus, int maara) {
         this.kayttoaste = kayttoaste;
         this.suoritusteho = suoritusteho;
         this.jonotusaika = jonotusaika;
         this.jononpituus = jononpituus;
+        this.maara = maara;
     }
 
     public PTTulos() {
@@ -58,6 +60,10 @@ public class PTTulos {
         this.jononpituus = jononpituus;
     }
 
+    public void setMaara(int maara) {
+        this.maara = maara;
+    }
+
     // Getterit
     public int getId() {
         return id;
@@ -77,5 +83,9 @@ public class PTTulos {
 
     public double getJononpituus() {
         return jononpituus;
+    }
+
+    public int getMaara() {
+        return maara;
     }
 }

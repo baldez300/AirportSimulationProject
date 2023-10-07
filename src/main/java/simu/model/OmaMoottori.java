@@ -185,15 +185,15 @@ public class OmaMoottori extends Moottori {
 			if (p.getNimi().equals("LS")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
 				tuloksetMap.put("LS",
-						new LSTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
+						new LSTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara()));
 			} else if (p.getNimi().equals("PT")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
 				tuloksetMap.put("PT",
-						new PTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
+						new PTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara()));
 			} else if (p.getNimi().equals("TT")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
 				tuloksetMap.put("TT",
-						new TTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
+						new TTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara()));
 			} else if (p.getNimi().equals("T1")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
 				tuloksetMap.put("T1",
