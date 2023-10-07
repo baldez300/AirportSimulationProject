@@ -165,6 +165,7 @@ public class Palvelupiste {
 				Asiakas a = iterator.next();
 				if (a.isUlkomaanlento()) {
 					a.setPoistumisaika(Kello.getInstance().getAika());
+					kokonaisJonotusaika += Kello.getInstance().getAika() - a.getSaapumisaika();
 					iterator.remove();
 					Asiakas.T2myohastyneet++;
 					Asiakas.i++;
@@ -183,6 +184,7 @@ public class Palvelupiste {
 				Asiakas a = iterator.next();
 				if (!a.isUlkomaanlento()) {
 					a.setPoistumisaika(Kello.getInstance().getAika());
+					kokonaisJonotusaika += Kello.getInstance().getAika() - a.getSaapumisaika();
 					iterator.remove();
 					Asiakas.T1myohastyneet++;
 					Asiakas.i++;
