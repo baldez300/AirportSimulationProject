@@ -48,7 +48,7 @@ public class Visualisointi {
 					p.piirra(gc);
 
 					// Piirretään asiakkaat jonoihin ja riveihin
-					int suunta = (p.getNimi().equals("LS") || p.getNimi().equals("T2") || p.getNimi().equals("PT")) ? -1
+					int suunta = (p.getNimi().equals("LS") || p.getNimi().equals("PT")) ? -1
 							: 1;
 					int rivi = 0;
 					int vaihdaRivia = 2;

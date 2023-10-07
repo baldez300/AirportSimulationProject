@@ -24,23 +24,23 @@ public class OmaMoottori extends Moottori {
 		palvelupisteet = new Palvelupiste[5];
 
 		// Lähtöselvitys
-		palvelupisteet[0] = new Palvelupiste(1187, 500, "LS", kontrolleri.getLahtoselvitysMaara(),
+		palvelupisteet[0] = new Palvelupiste(700, 510, "LS", kontrolleri.getLahtoselvitysMaara(),
 				new Normal(kontrolleri.getLSpalveluNopeus(), kontrolleri.getLahtoselvitysVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP1);
 		// Turvatarkastus
-		palvelupisteet[1] = new Palvelupiste(288, 338, "TT", kontrolleri.getTurvatarkastusMaara(),
+		palvelupisteet[1] = new Palvelupiste(590, 338, "TT", kontrolleri.getTurvatarkastusMaara(),
 				new Normal(kontrolleri.getTTpalveluNopeus(), kontrolleri.getTurvatarkastusVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP2);
 		// Passintarkistus
-		palvelupisteet[2] = new Palvelupiste(1187, 165, "PT", kontrolleri.getPassintarkastusMaara(),
+		palvelupisteet[2] = new Palvelupiste(880, 165, "PT", kontrolleri.getPassintarkastusMaara(),
 				new Normal(kontrolleri.getPTpalveluNopeus(), kontrolleri.getPassintarkastusVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP3);
 		// Lähtöportti kotimaanlennot
-		palvelupisteet[3] = new Palvelupiste(127, 12, "T1", 1,
+		palvelupisteet[3] = new Palvelupiste(300, 20, "T1", 1,
 				new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP4);
 		// Lähtöportti ulkomaanlennot
-		palvelupisteet[4] = new Palvelupiste(1360, 12, "T2", 1,
+		palvelupisteet[4] = new Palvelupiste(830, 20, "T2", 1,
 				new Normal(kontrolleri.getUlkomaaKA(), kontrolleri.getUlkomaaVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP5);
 		// Saapumisprosessi

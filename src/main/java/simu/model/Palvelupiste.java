@@ -198,9 +198,11 @@ public class Palvelupiste {
 	// Piirretään infoa palvelupisteiden päälle
 	public void piirra(GraphicsContext gc) {
 		gc.setFont(javafx.scene.text.Font.font("Verdana", 15));
-		if (this.nimi.equals("LS") || this.nimi.equals("PT"))
-			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x + 43, this.y + 20);
+		if (this.nimi.equals("LS"))
+			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x + 310, this.y + 80);
+		else if (this.nimi.equals("PT"))
+			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x + 190, this.y + 70);
 		else if (this.nimi.equals("TT"))
-			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x - 160, this.y + 15);
+			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x - 385, this.y + 80);
 	}
 }
