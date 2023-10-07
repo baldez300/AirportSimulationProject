@@ -56,7 +56,7 @@ public class Visualisointi {
 					for (Asiakas asiakas : p.getAsiakasJono()) {
 						int offsetSuunta = (Math.random() > 0.5) ? -1 : 1;
 						double destX = p.getX() + (jono * (asiakas.getWidth() + 5) * suunta) + (offsetSuunta * Math.random() * 5);
-						double destY = p.getY() + 25 + (rivi * (asiakas.getHeight() + 5) + + (offsetSuunta * Math.random() * 5));
+						double destY = p.getY() + (rivi * (asiakas.getHeight() + 5) + (offsetSuunta * Math.random() * 5));
 						asiakas.piirra(gc, destX, destY);
 						rivi++;
 						if (rivi >= vaihdaRivia) {
