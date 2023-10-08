@@ -11,12 +11,15 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.scene.shape.Circle;
+import javafx.scene.chart.XYChart;
 import simu.dao.TuloksetDao;
 import simu.datasource.SQLconnection;
 import simu.entity.LSTulos;
@@ -34,8 +37,6 @@ import simu.model.Asiakas;
 import simu.model.OmaMoottori;
 import simu.model.Palvelupiste;
 import javafx.util.converter.DoubleStringConverter;
-
-
 
 public class Kontrolleri {
     // Oletusarvot asetuksille jotta pysyvät muistissa
@@ -248,10 +249,34 @@ public class Kontrolleri {
 
     @FXML
     private Text TT;
+
     @FXML
     private Text PT;
+
     @FXML
     private Text LS;
+
+    @FXML
+    private BarChart<?, ?> jononpituusChart;
+
+    @FXML
+    private BarChart<?, ?> jonotusaikaChart;
+
+    @FXML
+    private BarChart<?, ?> kayttoasteChart;
+
+    @FXML
+    private BarChart<?, ?> suoritustehoChart;
+
+    @FXML
+    private PieChart myohastyneetPie;
+
+    @FXML
+    private Text T1_myohastyneet_pros;
+
+    @FXML
+    private Text T2_myohastyneet_pros;
+
 
     private static IMoottori moottori;
 
@@ -270,16 +295,15 @@ public class Kontrolleri {
         // Alusta TextFormatter rajoittaaksesi syötteen numeerisiin arvoihin
         TextFormatter<Double> textFormatter = new TextFormatter<>(
                 new DoubleStringConverter(),
-                0.0,  // Oletusarvo (voidään muuttaa tämän halutuksi oletusarvoksi)
+                0.0, // Oletusarvo (voidään muuttaa tämän halutuksi oletusarvoksi)
                 change -> {
                     String newText = change.getControlNewText();
                     if (isValidDouble(newText)) {
                         return change;
                     } else {
-                        return null;  // Hylkää muutos, jos se ei ole kelvollinen tupla
+                        return null; // Hylkää muutos, jos se ei ole kelvollinen tupla
                     }
-                }
-        );
+                });
 
         simulaationAika.getEditor().setTextFormatter(textFormatter);
 
@@ -339,6 +363,12 @@ public class Kontrolleri {
         lentojenVali.setValueFactory(lentojenValiSpinner);
         lentojenVali2.setValueFactory(lentojenVali2Spinner);
 
+        // Asetetaan graafien x-akselin arvot näkymättömiksi
+        jononpituusChart.getXAxis().setTickLabelsVisible(false);
+        jonotusaikaChart.getXAxis().setTickLabelsVisible(false);
+        kayttoasteChart.getXAxis().setTickLabelsVisible(false);
+        suoritustehoChart.getXAxis().setTickLabelsVisible(false);
+
         // Asetetaan päivämäärä
         pvm.setText(LocalDate.now().toString());
 
@@ -379,6 +409,12 @@ public class Kontrolleri {
                 edellisetTulokset.setDisable(!tietokantaYhteys);
             }
         }, 0, 3000);
+
+        // Asetetaan kaikki muut sivut näkymättömiksi paitsi asetukset
+        simulaatioSivu.setVisible(false);
+        TuloksetSivu.setVisible(false);
+        tallennetut.setVisible(false);
+        AsetuksetSivu.setVisible(true);
     }
 
     @FXML
@@ -487,6 +523,8 @@ public class Kontrolleri {
 
     @FXML
     private void palaaTallennettuihin(ActionEvent event) {
+        // Tyhjennetään kaikki graafit
+        tyhjennaGraafit();
         Stage tallennetutStage = (Stage) tallennetut.getScene().getWindow();
         tallennetutStage.setTitle("Tallennetut tulokset");
         TuloksetSivu.setVisible(false);
@@ -505,6 +543,8 @@ public class Kontrolleri {
     private void uusiSimulointi(ActionEvent event) {
         ((Thread) moottori).interrupt();
         painettu = false;
+        // Tyhjennetään kaikki graafit
+        tyhjennaGraafit();
         Stage asetuksetStage = (Stage) AsetuksetSivu.getScene().getWindow();
         asetuksetStage.setTitle("Simulaation asetukset");
         TuloksetSivu.setVisible(false);
@@ -620,38 +660,121 @@ public class Kontrolleri {
 
     // Asetetaan tallennetut tulokset näkymään tulokset sivulle
     private void asetaTallennetutTulokset(HashMap<Object, Object> tuloksetMap) {
-        pvm.setText(((Tulokset) tuloksetMap.get("SL")).getPaivamaara().toString());
-        kokonaisAika.setText(String.format("%d h %02d min", (int) (((Tulokset) tuloksetMap.get("SL")).getAika() / 60),
-                (int) (((Tulokset) tuloksetMap.get("SL")).getAika() % 60)));
-        kaikkiAsiakkaat.setText(((Tulokset) tuloksetMap.get("SL")).getAsiakkaat() + " kpl");
-        ehtineet.setText(((Tulokset) tuloksetMap.get("SL")).getLennolle_ehtineet() + " kpl");
-        myohastyneet.setText(((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t1()
-                + ((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t2() + " kpl");
-        myohastyneetT1.setText(((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t1() + " kpl");
-        myohastyneetT2.setText(((Tulokset) tuloksetMap.get("SL")).getMyohastyneet_t2() + " kpl");
-        LSsuoritusteho.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getSuoritusteho()) + " kpl/h");
-        PTSuoritusteho.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getSuoritusteho()) + " kpl/h");
-        TTSuoritusteho.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getSuoritusteho()) + " kpl/h");
-        T1Suoritusteho.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getSuoritusteho()) + " kpl/h");
-        T2Suoritusteho.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getSuoritusteho()) + " kpl/h");
-        LSJononPituus.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getJononpituus()) + " kpl");
-        PTJononPituus.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getJononpituus()) + " kpl");
-        TTJononPituus.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getJononpituus()) + " kpl");
-        T1JononPituus.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getJononpituus()) + " kpl");
-        T2JononPituus.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getJononpituus()) + " kpl");
-        LSjonotusaika.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getJonotusaika()) + " min");
-        PTJonotusaika.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getJonotusaika()) + " min");
-        TTJonotusaika.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getJonotusaika()) + " min");
-        T1Jonotusaika.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getJonotusaika()) + " min");
-        T2Jonotusaika.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getJonotusaika()) + " min");
-        LSkayttoaste.setText(String.format("%.2f", ((LSTulos) tuloksetMap.get("LS")).getKayttoaste()) + " %");
-        PTKayttoaste.setText(String.format("%.2f", ((PTTulos) tuloksetMap.get("PT")).getKayttoaste()) + " %");
-        TTKayttoaste.setText(String.format("%.2f", ((TTTulos) tuloksetMap.get("TT")).getKayttoaste()) + " %");
-        T1Kayttoaste.setText(String.format("%.2f", ((T1Tulos) tuloksetMap.get("T1")).getKayttoaste()) + " %");
-        T2Kayttoaste.setText(String.format("%.2f", ((T2Tulos) tuloksetMap.get("T2")).getKayttoaste()) + " %");
-        LS.setText(String.format("%d kpl", ((LSTulos) tuloksetMap.get("LS")).getMaara()));
-        TT.setText(String.format("%d kpl", ((TTTulos) tuloksetMap.get("TT")).getMaara()));
-        PT.setText(String.format("%d kpl", ((PTTulos) tuloksetMap.get("PT")).getMaara()));
+        Tulokset slTulos = (Tulokset) tuloksetMap.get("SL");
+        LSTulos lsTulos = (LSTulos) tuloksetMap.get("LS");
+        PTTulos ptTulos = (PTTulos) tuloksetMap.get("PT");
+        TTTulos ttTulos = (TTTulos) tuloksetMap.get("TT");
+        T1Tulos t1Tulos = (T1Tulos) tuloksetMap.get("T1");
+        T2Tulos t2Tulos = (T2Tulos) tuloksetMap.get("T2");
+    
+        pvm.setText(slTulos.getPaivamaara().toString());
+        kokonaisAika.setText(String.format("%d h %02d min", (int) (slTulos.getAika() / 60), (int) (slTulos.getAika() % 60)));
+        kaikkiAsiakkaat.setText(slTulos.getAsiakkaat() + " kpl");
+        ehtineet.setText(slTulos.getLennolle_ehtineet() + " kpl");
+        myohastyneet.setText(slTulos.getMyohastyneet_t1() + slTulos.getMyohastyneet_t2() + " kpl");
+        myohastyneetT1.setText(slTulos.getMyohastyneet_t1() + " kpl");
+        myohastyneetT2.setText(slTulos.getMyohastyneet_t2() + " kpl");
+        LSsuoritusteho.setText(String.format("%.2f", lsTulos.getSuoritusteho()) + " kpl/h");
+        PTSuoritusteho.setText(String.format("%.2f", ptTulos.getSuoritusteho()) + " kpl/h");
+        TTSuoritusteho.setText(String.format("%.2f", ttTulos.getSuoritusteho()) + " kpl/h");
+        T1Suoritusteho.setText(String.format("%.2f", t1Tulos.getSuoritusteho()) + " kpl/h");
+        T2Suoritusteho.setText(String.format("%.2f", t2Tulos.getSuoritusteho()) + " kpl/h");
+        LSJononPituus.setText(String.format("%.2f", lsTulos.getJononpituus()) + " kpl");
+        PTJononPituus.setText(String.format("%.2f", ptTulos.getJononpituus()) + " kpl");
+        TTJononPituus.setText(String.format("%.2f", ttTulos.getJononpituus()) + " kpl");
+        T1JononPituus.setText(String.format("%.2f", t1Tulos.getJononpituus()) + " kpl");
+        T2JononPituus.setText(String.format("%.2f", t2Tulos.getJononpituus()) + " kpl");
+        LSjonotusaika.setText(String.format("%.2f", lsTulos.getJonotusaika()) + " min");
+        PTJonotusaika.setText(String.format("%.2f", ptTulos.getJonotusaika()) + " min");
+        TTJonotusaika.setText(String.format("%.2f", ttTulos.getJonotusaika()) + " min");
+        T1Jonotusaika.setText(String.format("%.2f", t1Tulos.getJonotusaika()) + " min");
+        T2Jonotusaika.setText(String.format("%.2f", t2Tulos.getJonotusaika()) + " min");
+        LSkayttoaste.setText(String.format("%.2f", lsTulos.getKayttoaste()) + " %");
+        PTKayttoaste.setText(String.format("%.2f", ptTulos.getKayttoaste()) + " %");
+        TTKayttoaste.setText(String.format("%.2f", ttTulos.getKayttoaste()) + " %");
+        T1Kayttoaste.setText(String.format("%.2f", t1Tulos.getKayttoaste()) + " %");
+        T2Kayttoaste.setText(String.format("%.2f", t2Tulos.getKayttoaste()) + " %");
+        LS.setText(String.format("%d kpl", lsTulos.getMaara()));
+        TT.setText(String.format("%d kpl", ttTulos.getMaara()));
+        PT.setText(String.format("%d kpl", ptTulos.getMaara()));
+    
+        // Myöhästyneet prosentit
+        double myohastyneetT1Prosentti = slTulos.getMyohastyneet_t1() / (slTulos.getMyohastyneet_t1() + slTulos.getMyohastyneet_t2()) * 100;
+        double myohastyneetT2Prosentti = slTulos.getMyohastyneet_t2() / (slTulos.getMyohastyneet_t1() + slTulos.getMyohastyneet_t2()) * 100;
+    
+        if (slTulos.getMyohastyneet_t1() > 0) {
+            T1_myohastyneet_pros.setText(String.format("%.2f", myohastyneetT1Prosentti) + " %");
+        }
+        if (slTulos.getMyohastyneet_t2() > 0) {
+            T2_myohastyneet_pros.setText(String.format("%.2f", myohastyneetT2Prosentti) + " %");
+        }
+    
+        // Chartit
+        Platform.runLater(() -> {
+            XYChart.Series[] series = new XYChart.Series[5];
+            series[0] = createSeries("Lähtöselvitys", lsTulos.getJononpituus());
+            series[1] = createSeries("Passintarkastus", ptTulos.getJononpituus());
+            series[2] = createSeries("Turvatarkastus", ttTulos.getJononpituus());
+            series[3] = createSeries("T1", t1Tulos.getJononpituus());
+            series[4] = createSeries("T2", t2Tulos.getJononpituus());
+            jononpituusChart.getData().addAll(series);
+    
+            XYChart.Series[] series2 = new XYChart.Series[5];
+            series2[0] = createSeries("Lähtöselvitys", lsTulos.getJonotusaika());
+            series2[1] = createSeries("Passintarkastus", ptTulos.getJonotusaika());
+            series2[2] = createSeries("Turvatarkastus", ttTulos.getJonotusaika());
+            series2[3] = createSeries("T1", t1Tulos.getJonotusaika());
+            series2[4] = createSeries("T2", t2Tulos.getJonotusaika());
+            jonotusaikaChart.getData().addAll(series2);
+    
+            XYChart.Series[] series3 = new XYChart.Series[5];
+            series3[0] = createSeries("Lähtöselvitys", lsTulos.getSuoritusteho());
+            series3[1] = createSeries("Passintarkastus", ptTulos.getSuoritusteho());
+            series3[2] = createSeries("Turvatarkastus", ttTulos.getSuoritusteho());
+            series3[3] = createSeries("T1", t1Tulos.getSuoritusteho());
+            series3[4] = createSeries("T2", t2Tulos.getSuoritusteho());
+            suoritustehoChart.getData().addAll(series3);
+    
+            XYChart.Series[] series4 = new XYChart.Series[5];
+            series4[0] = createSeries("Lähtöselvitys", lsTulos.getKayttoaste());
+            series4[1] = createSeries("Passintarkastus", ptTulos.getKayttoaste());
+            series4[2] = createSeries("Turvatarkastus", ttTulos.getKayttoaste());
+            series4[3] = createSeries("T1", t1Tulos.getKayttoaste());
+            series4[4] = createSeries("T2", t2Tulos.getKayttoaste());
+            kayttoasteChart.getData().addAll(series4);
+    
+            // Pie chart
+            myohastyneetPie.getData().add(new PieChart.Data("T1", myohastyneetT1Prosentti));
+            myohastyneetPie.getData().add(new PieChart.Data("T2", myohastyneetT2Prosentti));
+    
+            // Asetetaan värit
+            for (PieChart.Data data : myohastyneetPie.getData()) {
+                if (data.getName().equals("T1")) {
+                    data.getNode().setStyle("-fx-pie-color: red;");
+                } else if (data.getName().equals("T2")) {
+                    data.getNode().setStyle("-fx-pie-color: blue;");
+                }
+            }
+        });
+    }
+    
+    // Luodaan uusi series bar chartteja varten
+    private XYChart.Series<String, Double> createSeries(String name, double value) {
+        XYChart.Series<String, Double> series = new XYChart.Series<>();
+        series.setName(name);
+        series.getData().add(new XYChart.Data<>("", value));
+        return series;
+    }
+
+    // Tyhjennä graaffien data
+    public void tyhjennaGraafit() {
+            jononpituusChart.getData().clear();
+            myohastyneetPie.getData().clear();
+            jonotusaikaChart.getData().clear();
+            kayttoasteChart.getData().clear();
+            suoritustehoChart.getData().clear();
+            T1_myohastyneet_pros.setText("0");
+            T2_myohastyneet_pros.setText("0");
     }
 
     // Asetetaan tulokset näkymään viereseen Vboxiin kun valinta muuttuu
