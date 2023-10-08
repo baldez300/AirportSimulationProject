@@ -24,7 +24,7 @@ public class OmaMoottori extends Moottori {
 		palvelupisteet = new Palvelupiste[5];
 
 		// Lähtöselvitys
-		palvelupisteet[0] = new Palvelupiste(700, 530, "LS", kontrolleri.getLahtoselvitysMaara(),
+		palvelupisteet[0] = new Palvelupiste(700, 533, "LS", kontrolleri.getLahtoselvitysMaara(),
 				new Normal(kontrolleri.getLSpalveluNopeus(), kontrolleri.getLahtoselvitysVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP1);
 		// Turvatarkastus
