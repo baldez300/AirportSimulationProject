@@ -1054,7 +1054,7 @@
                         </VBox>
                         <VBox fillWidth="false" prefHeight="260.0" prefWidth="650.0">
                            <children>
-                              <Label prefHeight="38.0" prefWidth="180.0" text="Jonon piitus keskiarvo">
+                              <Label prefHeight="38.0" prefWidth="180.0" text="Jonon pituus keskiarvo">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
