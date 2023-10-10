@@ -43,12 +43,13 @@ public class Visualisointi {
 				// Piirretään taustakuva
 				gc.drawImage(taustakuva, 0, 0, taustakuvaLeveys, taustakuvaKorkeus, 0, 0, canvas.getWidth(),
 						canvas.getHeight());
+
 				// Piireteään kellonaika
-				gc.setFont(Font.font("Arial", FontWeight.BOLD, 36)); // Fonttikoko 36
+				gc.setFont(Font.font("Arial", FontWeight.BOLD, 28)); // Fonttikoko 28
 				gc.setFill(Color.BLACK); // Fontin väri musta
-				String s = String.format("%d", (int)Kello.getAika()); // Aika muotoillaan kokonaisluvuksi
-				gc.fillText("Ajastin ",20,50);
-				gc.fillText(s,50,100);
+				String s = String.format("%d", (int)Kello.getInstance().getAika()); // Aika muotoillaan kokonaisluvuksi
+				gc.fillText("Aika: " + s,10,50);
+				
 				// Haetaan palvelupisteet
 				Palvelupiste[] palvelupisteet = kontrolleri.getPalvelupisteet();
 
