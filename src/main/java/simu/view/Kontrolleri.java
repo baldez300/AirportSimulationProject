@@ -283,6 +283,9 @@ public class Kontrolleri {
 
     private Visualisointi visualisointi;
 
+    // Timer tarkistamaan onko simulointi loppunut ja avaamaan tulokset näkymän
+    private Timer timer;
+
     // Apumuuttujat
     private boolean tietokantaYhteys;
     private boolean tulosValittu;
@@ -421,10 +424,9 @@ public class Kontrolleri {
         // Resetoidaan kellon aika ja staattiset muuttujat
         Kello.getInstance().setAika(0);
         resetoiStaattisetMuuttujat();
+        tyhjennaChartit();
         // Luodaan uusi moottori ja asetetaan sille asetukset
         moottori = new OmaMoottori(this);
-
-        // Hanki arvo Spinneristä (se on kelvollinen tupla)
         simulointiAika = simulaationAika.getValue();
         moottori.setSimulointiaika(simulointiAika);
         moottori.setViive(simulaationViive.getValue());
@@ -446,13 +448,13 @@ public class Kontrolleri {
 
         // Timer tarkistamaan onko simulointi loppunut
         // Jos on niin siirtyy tulokset näkymään
-        Timer timer = new Timer();
+        if (timer != null) timer.cancel();
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                // Check the condition
+                // Jos simulointi on loppunut, asetetaan tulokset
                 if (Kello.getInstance().getAika() >= simulointiAika) {
-                    // Update the UI on the JavaFX application thread
                     asetaTulokset(((OmaMoottori) moottori).getTulokset());
                     Platform.runLater(() -> {
                         Stage tuloksetStage = (Stage) TuloksetSivu.getScene().getWindow();
@@ -466,7 +468,7 @@ public class Kontrolleri {
         }, 0, 1000); // Execute every 1000 milliseconds (1 second)
     }
 
-    // Tarkista, voidaanko merkkijono jäsentää kelvolliseksi kaksoiskappaleeksi
+    // Tarkistetaan onko merkkijono numero
     private boolean isValidDouble(String str) {
         try {
             Double.parseDouble(str);
@@ -522,7 +524,7 @@ public class Kontrolleri {
     @FXML
     private void palaaTallennettuihin(ActionEvent event) {
         // Tyhjennetään kaikki graafit
-        tyhjennaGraafit();
+        tyhjennaChartit();
         Stage tallennetutStage = (Stage) tallennetut.getScene().getWindow();
         tallennetutStage.setTitle("Tallennetut tulokset");
         TuloksetSivu.setVisible(false);
@@ -541,8 +543,8 @@ public class Kontrolleri {
     private void uusiSimulointi(ActionEvent event) {
         ((Thread) moottori).interrupt();
         painettu = false;
-        // Tyhjennetään kaikki graafit
-        tyhjennaGraafit();
+        // Tyhjennetään kaikki chartit
+        tyhjennaChartit();
         Stage asetuksetStage = (Stage) AsetuksetSivu.getScene().getWindow();
         asetuksetStage.setTitle("Simulaation asetukset");
         TuloksetSivu.setVisible(false);
@@ -552,6 +554,7 @@ public class Kontrolleri {
 
     public void lopetaSaie() {
         ((Thread) moottori).interrupt();
+        timer.cancel();
         Stage asetuksetStage = (Stage) AsetuksetSivu.getScene().getWindow();
         asetuksetStage.setTitle("Simulaation asetukset");
         simulaatioSivu.setVisible(false);
@@ -764,7 +767,7 @@ public class Kontrolleri {
     }
 
     // Tyhjennä graaffien data
-    public void tyhjennaGraafit() {
+    public void tyhjennaChartit() {
         jononpituusChart.getData().clear();
         myohastyneetPie.getData().clear();
         jonotusaikaChart.getData().clear();
