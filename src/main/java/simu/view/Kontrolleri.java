@@ -1,6 +1,7 @@
 package simu.view;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -256,16 +257,16 @@ public class Kontrolleri {
     private Text LS;
 
     @FXML
-    private BarChart<?, ?> jononpituusChart;
+    private BarChart<String, Double> jononpituusChart;
 
     @FXML
-    private BarChart<?, ?> jonotusaikaChart;
+    private BarChart<String, Double> jonotusaikaChart;
 
     @FXML
-    private BarChart<?, ?> kayttoasteChart;
+    private BarChart<String, Double> kayttoasteChart;
 
     @FXML
-    private BarChart<?, ?> suoritustehoChart;
+    private BarChart<String, Double> suoritustehoChart;
 
     @FXML
     private PieChart myohastyneetPie;
@@ -275,7 +276,6 @@ public class Kontrolleri {
 
     @FXML
     private Text T2_myohastyneet_pros;
-
 
     private static IMoottori moottori;
 
@@ -694,7 +694,7 @@ public class Kontrolleri {
         LS.setText(String.format("%d kpl", lsTulos.getMaara()));
         TT.setText(String.format("%d kpl", ttTulos.getMaara()));
         PT.setText(String.format("%d kpl", ptTulos.getMaara()));
-    
+
         // Myöhästyneet prosentit
         double myohastyneetT1Prosentti = tulokset.getMyohastyneet_t1() / (tulokset.getMyohastyneet_t1() + tulokset.getMyohastyneet_t2()) * 100;
         double myohastyneetT2Prosentti = tulokset.getMyohastyneet_t2() / (tulokset.getMyohastyneet_t1() + tulokset.getMyohastyneet_t2()) * 100;
@@ -705,45 +705,45 @@ public class Kontrolleri {
         if (tulokset.getMyohastyneet_t2() > 0) {
             T2_myohastyneet_pros.setText(String.format("%.2f", myohastyneetT2Prosentti) + " %");
         }
-    
+
         // Chartit
         Platform.runLater(() -> {
-            XYChart.Series[] series = new XYChart.Series[5];
-            series[0] = createSeries("Lähtöselvitys", lsTulos.getJononpituus());
-            series[1] = createSeries("Passintarkastus", ptTulos.getJononpituus());
-            series[2] = createSeries("Turvatarkastus", ttTulos.getJononpituus());
-            series[3] = createSeries("T1", t1Tulos.getJononpituus());
-            series[4] = createSeries("T2", t2Tulos.getJononpituus());
-            jononpituusChart.getData().addAll(series);
-    
-            XYChart.Series[] series2 = new XYChart.Series[5];
-            series2[0] = createSeries("Lähtöselvitys", lsTulos.getJonotusaika());
-            series2[1] = createSeries("Passintarkastus", ptTulos.getJonotusaika());
-            series2[2] = createSeries("Turvatarkastus", ttTulos.getJonotusaika());
-            series2[3] = createSeries("T1", t1Tulos.getJonotusaika());
-            series2[4] = createSeries("T2", t2Tulos.getJonotusaika());
-            jonotusaikaChart.getData().addAll(series2);
-    
-            XYChart.Series[] series3 = new XYChart.Series[5];
-            series3[0] = createSeries("Lähtöselvitys", lsTulos.getSuoritusteho());
-            series3[1] = createSeries("Passintarkastus", ptTulos.getSuoritusteho());
-            series3[2] = createSeries("Turvatarkastus", ttTulos.getSuoritusteho());
-            series3[3] = createSeries("T1", t1Tulos.getSuoritusteho());
-            series3[4] = createSeries("T2", t2Tulos.getSuoritusteho());
-            suoritustehoChart.getData().addAll(series3);
-    
-            XYChart.Series[] series4 = new XYChart.Series[5];
-            series4[0] = createSeries("Lähtöselvitys", lsTulos.getKayttoaste());
-            series4[1] = createSeries("Passintarkastus", ptTulos.getKayttoaste());
-            series4[2] = createSeries("Turvatarkastus", ttTulos.getKayttoaste());
-            series4[3] = createSeries("T1", t1Tulos.getKayttoaste());
-            series4[4] = createSeries("T2", t2Tulos.getKayttoaste());
-            kayttoasteChart.getData().addAll(series4);
-    
+            List<XYChart.Series<String, Double>> seriesList1 = new ArrayList<>();
+            List<XYChart.Series<String, Double>> seriesList2 = new ArrayList<>();
+            List<XYChart.Series<String, Double>> seriesList3 = new ArrayList<>();
+            List<XYChart.Series<String, Double>> seriesList4 = new ArrayList<>();
+            // Jonojen pituudet
+            seriesList1.add(createSeries("Lähtöselvitys", lsTulos.getJononpituus()));
+            seriesList1.add(createSeries("Passintarkastus", ptTulos.getJononpituus()));
+            seriesList1.add(createSeries("Turvatarkastus", ttTulos.getJononpituus()));
+            seriesList1.add(createSeries("T1", t1Tulos.getJononpituus()));
+            seriesList1.add(createSeries("T2", t2Tulos.getJononpituus()));
+            jononpituusChart.getData().addAll(seriesList1);
+            // Jonotusajat
+            seriesList2.add(createSeries("Lähtöselvitys", lsTulos.getJonotusaika()));
+            seriesList2.add(createSeries("Passintarkastus", ptTulos.getJonotusaika()));
+            seriesList2.add(createSeries("Turvatarkastus", ttTulos.getJonotusaika()));
+            seriesList2.add(createSeries("T1", t1Tulos.getJonotusaika()));
+            seriesList2.add(createSeries("T2", t2Tulos.getJonotusaika()));
+            jonotusaikaChart.getData().addAll(seriesList2);
+            // Suoritustehot
+            seriesList3.add(createSeries("Lähtöselvitys", lsTulos.getSuoritusteho()));
+            seriesList3.add(createSeries("Passintarkastus", ptTulos.getSuoritusteho()));
+            seriesList3.add(createSeries("Turvatarkastus", ttTulos.getSuoritusteho()));
+            seriesList3.add(createSeries("T1", t1Tulos.getSuoritusteho()));
+            seriesList3.add(createSeries("T2", t2Tulos.getSuoritusteho()));
+            suoritustehoChart.getData().addAll(seriesList3);
+            // Käyttöasteet
+            seriesList4.add(createSeries("Lähtöselvitys", lsTulos.getKayttoaste()));
+            seriesList4.add(createSeries("Passintarkastus", ptTulos.getKayttoaste()));
+            seriesList4.add(createSeries("Turvatarkastus", ttTulos.getKayttoaste()));
+            seriesList4.add(createSeries("T1", t1Tulos.getKayttoaste()));
+            seriesList4.add(createSeries("T2", t2Tulos.getKayttoaste()));
+            kayttoasteChart.getData().addAll(seriesList4);
             // Pie chart
             myohastyneetPie.getData().add(new PieChart.Data("T1", myohastyneetT1Prosentti));
             myohastyneetPie.getData().add(new PieChart.Data("T2", myohastyneetT2Prosentti));
-    
+
             // Asetetaan värit
             for (PieChart.Data data : myohastyneetPie.getData()) {
                 if (data.getName().equals("T1")) {
@@ -754,7 +754,7 @@ public class Kontrolleri {
             }
         });
     }
-    
+
     // Luodaan uusi series bar chartteja varten
     private XYChart.Series<String, Double> createSeries(String name, double value) {
         XYChart.Series<String, Double> series = new XYChart.Series<>();
@@ -765,13 +765,13 @@ public class Kontrolleri {
 
     // Tyhjennä graaffien data
     public void tyhjennaGraafit() {
-            jononpituusChart.getData().clear();
-            myohastyneetPie.getData().clear();
-            jonotusaikaChart.getData().clear();
-            kayttoasteChart.getData().clear();
-            suoritustehoChart.getData().clear();
-            T1_myohastyneet_pros.setText("0");
-            T2_myohastyneet_pros.setText("0");
+        jononpituusChart.getData().clear();
+        myohastyneetPie.getData().clear();
+        jonotusaikaChart.getData().clear();
+        kayttoasteChart.getData().clear();
+        suoritustehoChart.getData().clear();
+        T1_myohastyneet_pros.setText("0");
+        T2_myohastyneet_pros.setText("0");
     }
 
     // Asetetaan tulokset näkymään viereseen Vboxiin kun valinta muuttuu
