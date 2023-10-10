@@ -1,7 +1,6 @@
 package simu.model;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 
 import simu.eduni.distributions.Normal;
 import simu.framework.Kello;
@@ -16,7 +15,7 @@ public class OmaMoottori extends Moottori {
 	private Saapumisprosessi saapumisprosessi;
 	private Palvelupiste[] palvelupisteet;
 	private boolean kaikkiAsiakkaatValmiit = false; // Lisätty lippu seuraamaan, ovatko kaikki asiakkaat valmiita
-	HashMap<Object, Object> tulokset;
+	private Tulokset tulokset;
 
 	public OmaMoottori(Kontrolleri kontrolleri) {
 		super(kontrolleri);
@@ -167,45 +166,46 @@ public class OmaMoottori extends Moottori {
 		}
 	}
 
-	// Asetetaan tulokset HashMapiin
+	// Asetetaan tulokset
 	@Override
 	public void asetaTulokset() {
-
-		HashMap<Object, Object> tuloksetMap = new HashMap<>();
-
-		Tulokset tulokset = new Tulokset(LocalDate.now(), getSimulointiaika(),
-				Asiakas.i, Asiakas.lennolleEhtineet, Asiakas.T1myohastyneet + Asiakas.T2myohastyneet,
-				Asiakas.T1myohastyneet,
-				Asiakas.T2myohastyneet);
-
-		tuloksetMap.put("SL", tulokset);
+		LSTulos lsTulos = null;
+		TTTulos ttTulos = null;
+		PTTulos ptTulos = null;
+		T1Tulos t1Tulos = null;
+		T2Tulos t2Tulos = null;
+		Tulokset simunTulokset = null;
 
 		for (Palvelupiste p : palvelupisteet) {
 
 			if (p.getNimi().equals("LS")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
-				tuloksetMap.put("LS",
-						new LSTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara()));
+				lsTulos = new LSTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara());
 			} else if (p.getNimi().equals("PT")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
-				tuloksetMap.put("PT",
-						new PTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara()));
+				ptTulos =
+						new PTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara());
 			} else if (p.getNimi().equals("TT")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
-				tuloksetMap.put("TT",
-						new TTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara()));
+				ttTulos =
+						new TTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara());
 			} else if (p.getNimi().equals("T1")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
-				tuloksetMap.put("T1",
-						new T1Tulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
+				t1Tulos =
+						new T1Tulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus());
 			} else if (p.getNimi().equals("T2")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
-				tuloksetMap.put("T2",
-						new T2Tulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus()));
+				t2Tulos =
+						new T2Tulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus());
 			}
 
+				simunTulokset = new Tulokset(LocalDate.now(), getSimulointiaika(),
+				Asiakas.i, Asiakas.lennolleEhtineet, Asiakas.T1myohastyneet + Asiakas.T2myohastyneet,
+				Asiakas.T1myohastyneet,
+				Asiakas.T2myohastyneet, lsTulos, ttTulos, ptTulos, t1Tulos, t2Tulos);
+
 		}
-		this.tulokset = tuloksetMap;
+		this.tulokset = simunTulokset;
 	}
 
 	// Tallennetaan tulokset tietokantaan
@@ -214,7 +214,7 @@ public class OmaMoottori extends Moottori {
 	}
 
 	// Tuloksien getteri käyttöliitymää varten
-	public HashMap<Object, Object> getTulokset() {
+	public Tulokset getTulokset() {
 		return tulokset;
 	}
 }

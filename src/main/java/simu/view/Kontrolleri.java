@@ -2,7 +2,6 @@ package simu.view;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -454,7 +453,7 @@ public class Kontrolleri {
                 // Check the condition
                 if (Kello.getInstance().getAika() >= simulointiAika) {
                     // Update the UI on the JavaFX application thread
-                    asetaTallennetutTulokset(((OmaMoottori) moottori).getTulokset());
+                    asetaTulokset(((OmaMoottori) moottori).getTulokset());
                     Platform.runLater(() -> {
                         Stage tuloksetStage = (Stage) TuloksetSivu.getScene().getWindow();
                         tuloksetStage.setTitle("Tulokset");
@@ -496,8 +495,7 @@ public class Kontrolleri {
     private void naytaTarkemmatTiedot(ActionEvent event) {
         try {
             Tulokset valittuTulos = tuloksetLista.getSelectionModel().getSelectedItem();
-            HashMap<Object, Object> tarkemmatTiedot = tuloksetDao.lataaTarkemmatTiedot(valittuTulos.getId());
-            asetaTallennetutTulokset(tarkemmatTiedot);
+            asetaTulokset(valittuTulos);
             Stage tuloksetStage = (Stage) TuloksetSivu.getScene().getWindow();
             tuloksetStage.setTitle("Tarkemmat tiedot");
             TuloksetSivu.setVisible(true);
@@ -659,22 +657,20 @@ public class Kontrolleri {
     }
 
     // Asetetaan tallennetut tulokset näkymään tulokset sivulle
-    private void asetaTallennetutTulokset(HashMap<Object, Object> tuloksetMap) {
-        Tulokset slTulos = (Tulokset) tuloksetMap.get("SL");
-        LSTulos lsTulos = (LSTulos) tuloksetMap.get("LS");
-        PTTulos ptTulos = (PTTulos) tuloksetMap.get("PT");
-        TTTulos ttTulos = (TTTulos) tuloksetMap.get("TT");
-        T1Tulos t1Tulos = (T1Tulos) tuloksetMap.get("T1");
-        T2Tulos t2Tulos = (T2Tulos) tuloksetMap.get("T2");
-
-        pvm.setText(slTulos.getPaivamaara().toString());
-        kokonaisAika.setText(
-                String.format("%d h %02d min", (int) (slTulos.getAika() / 60), (int) (slTulos.getAika() % 60)));
-        kaikkiAsiakkaat.setText(slTulos.getAsiakkaat() + " kpl");
-        ehtineet.setText(slTulos.getLennolle_ehtineet() + " kpl");
-        myohastyneet.setText(slTulos.getMyohastyneet_t1() + slTulos.getMyohastyneet_t2() + " kpl");
-        myohastyneetT1.setText(slTulos.getMyohastyneet_t1() + " kpl");
-        myohastyneetT2.setText(slTulos.getMyohastyneet_t2() + " kpl");
+    private void asetaTulokset(Tulokset tulokset) {
+        LSTulos lsTulos = tulokset.getLSTulos();
+        PTTulos ptTulos = tulokset.getPTTulos();
+        TTTulos ttTulos = tulokset.getTTTulos();
+        T1Tulos t1Tulos = tulokset.getT1Tulos();
+        T2Tulos t2Tulos = tulokset.getT2Tulos();
+    
+        pvm.setText(tulokset.getPaivamaara().toString());
+        kokonaisAika.setText(String.format("%d h %02d min", (int) (tulokset.getAika() / 60), (int) (tulokset.getAika() % 60)));
+        kaikkiAsiakkaat.setText(tulokset.getAsiakkaat() + " kpl");
+        ehtineet.setText(tulokset.getLennolle_ehtineet() + " kpl");
+        myohastyneet.setText(tulokset.getMyohastyneet_t1() + tulokset.getMyohastyneet_t2() + " kpl");
+        myohastyneetT1.setText(tulokset.getMyohastyneet_t1() + " kpl");
+        myohastyneetT2.setText(tulokset.getMyohastyneet_t2() + " kpl");
         LSsuoritusteho.setText(String.format("%.2f", lsTulos.getSuoritusteho()) + " kpl/h");
         PTSuoritusteho.setText(String.format("%.2f", ptTulos.getSuoritusteho()) + " kpl/h");
         TTSuoritusteho.setText(String.format("%.2f", ttTulos.getSuoritusteho()) + " kpl/h");
@@ -700,15 +696,13 @@ public class Kontrolleri {
         PT.setText(String.format("%d kpl", ptTulos.getMaara()));
 
         // Myöhästyneet prosentit
-        double myohastyneetT1Prosentti = slTulos.getMyohastyneet_t1()
-                / (slTulos.getMyohastyneet_t1() + slTulos.getMyohastyneet_t2()) * 100;
-        double myohastyneetT2Prosentti = slTulos.getMyohastyneet_t2()
-                / (slTulos.getMyohastyneet_t1() + slTulos.getMyohastyneet_t2()) * 100;
-
-        if (slTulos.getMyohastyneet_t1() > 0) {
+        double myohastyneetT1Prosentti = tulokset.getMyohastyneet_t1() / (tulokset.getMyohastyneet_t1() + tulokset.getMyohastyneet_t2()) * 100;
+        double myohastyneetT2Prosentti = tulokset.getMyohastyneet_t2() / (tulokset.getMyohastyneet_t1() + tulokset.getMyohastyneet_t2()) * 100;
+    
+        if (tulokset.getMyohastyneet_t1() > 0) {
             T1_myohastyneet_pros.setText(String.format("%.2f", myohastyneetT1Prosentti) + " %");
         }
-        if (slTulos.getMyohastyneet_t2() > 0) {
+        if (tulokset.getMyohastyneet_t2() > 0) {
             T2_myohastyneet_pros.setText(String.format("%.2f", myohastyneetT2Prosentti) + " %");
         }
 
