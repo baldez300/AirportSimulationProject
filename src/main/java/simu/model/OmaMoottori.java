@@ -180,29 +180,28 @@ public class OmaMoottori extends Moottori {
 
 			if (p.getNimi().equals("LS")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
-				lsTulos = new LSTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara());
+				lsTulos = new LSTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(),
+						p.getMaara());
 			} else if (p.getNimi().equals("PT")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
-				ptTulos =
-						new PTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara());
+				ptTulos = new PTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(),
+						p.getMaara());
 			} else if (p.getNimi().equals("TT")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
-				ttTulos =
-						new TTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(), p.getMaara());
+				ttTulos = new TTTulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus(),
+						p.getMaara());
 			} else if (p.getNimi().equals("T1")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
-				t1Tulos =
-						new T1Tulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus());
+				t1Tulos = new T1Tulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus());
 			} else if (p.getNimi().equals("T2")) {
 				p.asetaPalvelupisteenTulokset(p, getSimulointiaika());
-				t2Tulos =
-						new T2Tulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus());
+				t2Tulos = new T2Tulos(p.getKayttoaste(), p.getSuoritusteho(), p.getJonotusaika(), p.getJononPituus());
 			}
 
-				simunTulokset = new Tulokset(LocalDate.now(), getSimulointiaika(),
-				Asiakas.i, Asiakas.lennolleEhtineet, Asiakas.T1myohastyneet + Asiakas.T2myohastyneet,
-				Asiakas.T1myohastyneet,
-				Asiakas.T2myohastyneet, lsTulos, ttTulos, ptTulos, t1Tulos, t2Tulos);
+			simunTulokset = new Tulokset(LocalDate.now(), getSimulointiaika(),
+					Asiakas.i, Asiakas.lennolleEhtineet, Asiakas.T1myohastyneet + Asiakas.T2myohastyneet,
+					Asiakas.T1myohastyneet,
+					Asiakas.T2myohastyneet, lsTulos, ttTulos, ptTulos, t1Tulos, t2Tulos);
 
 		}
 		this.tulokset = simunTulokset;
