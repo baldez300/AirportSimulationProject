@@ -5,8 +5,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import simu.model.Asiakas;
 import simu.model.Palvelupiste;
+import simu.framework.Kello;
 
 public class Visualisointi {
 
@@ -40,6 +43,12 @@ public class Visualisointi {
 				// Piirretään taustakuva
 				gc.drawImage(taustakuva, 0, 0, taustakuvaLeveys, taustakuvaKorkeus, 0, 0, canvas.getWidth(),
 						canvas.getHeight());
+				// Piireteään kellonaika
+				gc.setFont(Font.font("Arial", FontWeight.BOLD, 36)); // Fonttikoko 36
+				gc.setFill(Color.BLACK); // Fontin väri musta
+				String s = String.format("%d", (int)Kello.getAika()); // Aika muotoillaan kokonaisluvuksi
+				gc.fillText("Ajastin ",20,50);
+				gc.fillText(s,50,100);
 				// Haetaan palvelupisteet
 				Palvelupiste[] palvelupisteet = kontrolleri.getPalvelupisteet();
 
