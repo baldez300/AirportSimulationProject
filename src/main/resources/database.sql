@@ -39,6 +39,15 @@ CREATE TABLE t2(
     suoritusteho DOUBLE,
     PRIMARY KEY (id)
 );
+CREATE TABLE turvatarkastus(
+    id INT NOT NULL AUTO_INCREMENT,
+    jononpituus DOUBLE,
+    jonotusaika DOUBLE,
+    kayttoaste DOUBLE,
+    suoritusteho DOUBLE,
+    maara INTEGER,
+    PRIMARY KEY (id)
+);
 CREATE TABLE tulokset(
     tulokset_id INT NOT NULL AUTO_INCREMENT,
     aika DOUBLE,
@@ -48,14 +57,15 @@ CREATE TABLE tulokset(
     myohastyneet_t1 DOUBLE,
     myohastyneet_t2 DOUBLE,
     paivamaara DATE,
-    PRIMARY KEY (tulokset_id)
-);
-CREATE TABLE turvatarkastus(
-    id INT NOT NULL AUTO_INCREMENT,
-    jononpituus DOUBLE,
-    jonotusaika DOUBLE,
-    kayttoaste DOUBLE,
-    suoritusteho DOUBLE,
-    maara INTEGER,
-    PRIMARY KEY (id)
+    PRIMARY KEY (tulokset_id),
+    lsTulos_id INTEGER,
+    ptTulos_id INTEGER,
+    t1Tulos_id INTEGER,      
+    t2Tulos_id INTEGER,
+    ttTulos_id INTEGER,
+    FOREIGN KEY (lsTulos_id) REFERENCES lahtoselvitys(id),
+    FOREIGN KEY (ttTulos_id) REFERENCES turvatarkastus(id),
+    FOREIGN KEY (ptTulos_id) REFERENCES passintarkastus(id),
+    FOREIGN KEY (t1Tulos_id) REFERENCES t1(id),
+    FOREIGN KEY (t2Tulos_id) REFERENCES t2(id)
 );
