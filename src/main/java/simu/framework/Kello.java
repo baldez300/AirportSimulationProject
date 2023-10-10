@@ -2,7 +2,7 @@ package simu.framework;
 
 public class Kello {
 
-	private static double aika;
+	private double aika;
 	private static Kello instanssi;
 	
 	private Kello(){
@@ -20,7 +20,7 @@ public class Kello {
 		this.aika = aika;
 	}
 
-	public static double getAika(){
+	public double getAika(){
 		return aika;
 	}
 }
