@@ -47,7 +47,7 @@ public class Visualisointi {
 				// Piireteään kellonaika
 				gc.setFont(Font.font("Arial", FontWeight.BOLD, 28)); // Fonttikoko 28
 				gc.setFill(Color.BLACK); // Fontin väri musta
-				String s = String.format("%d", (int)Kello.getInstance().getAika()); // Aika muotoillaan kokonaisluvuksi
+				String s = String.format("%05d", (int)Kello.getInstance().getAika()); // Aika muotoillaan kokonaisluvuksi
 				gc.fillText("Aika: ",10,50);
 				gc.fillText(s,30,80);
 				
