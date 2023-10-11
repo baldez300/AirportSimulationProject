@@ -20,7 +20,7 @@ public class SQLconnection {
     }
 
     public static void testaaTietokantaYhteys() {
-            emf = Persistence.createEntityManagerFactory("CompanyMariaDbUnit");
-            em = emf.createEntityManager();
+            EntityManagerFactory emf_tester = Persistence.createEntityManagerFactory("CompanyMariaDbUnit");
+            emf_tester.close();
     }
 }
