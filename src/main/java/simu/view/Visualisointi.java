@@ -48,7 +48,8 @@ public class Visualisointi {
 				gc.setFont(Font.font("Arial", FontWeight.BOLD, 28)); // Fonttikoko 28
 				gc.setFill(Color.BLACK); // Fontin väri musta
 				String s = String.format("%d", (int)Kello.getInstance().getAika()); // Aika muotoillaan kokonaisluvuksi
-				gc.fillText("Aika: " + s,10,50);
+				gc.fillText("Aika: ",10,50);
+				gc.fillText(s,30,80);
 				
 				// Haetaan palvelupisteet
 				Palvelupiste[] palvelupisteet = kontrolleri.getPalvelupisteet();
