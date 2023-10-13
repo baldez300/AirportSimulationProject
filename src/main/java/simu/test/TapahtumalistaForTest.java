@@ -10,22 +10,22 @@ public class TapahtumalistaForTest {
 	/** Tapahtumalista */
 	private PriorityQueue<Tapahtuma> lista = new PriorityQueue<Tapahtuma>();
 
-	/** Tapahtumalista Test - luokan Konstruktori */
+	/** Tapahtuman poisto tapahtumalistasta*/
 	public Tapahtuma poista(){
 		return lista.remove();
 	}
 
-	/** Metodo joka lisaa tapahtuman listaan */
+	/** Metodi joka lisaa tapahtuman listaan */
 	public void lisaa(Tapahtuma t){
 		lista.add(t);
 	}
 
-	/** Metodo joka palauttaa listan seuraavan tapahtuman ajan */
+	/** Metodi joka palauttaa listan seuraavan tapahtuman ajan */
 	public double getSeuraavanAika(){
 		return lista.peek().getAika();
 	}
 
-	/** Metodo joka palauttaa listan seuraavan tapahtuman */
+	/** Metodi joka palauttaa listan seuraavan tapahtuman */
 	public Tapahtuma getSeuraava(){
 		return lista.peek();
 	}
