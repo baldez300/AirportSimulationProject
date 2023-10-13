@@ -57,6 +57,7 @@ public class OmaMoottori extends Moottori {
 	public Palvelupiste[] getPalvelupisteet() {
 		return palvelupisteet;
 	}
+
 	/** Alustaa simulaation
 	 * {@inheritDoc} */
 	@Override
@@ -64,9 +65,9 @@ public class OmaMoottori extends Moottori {
 		saapumisprosessi.generoiSeuraava(); // Asetetaan ensimmainen saapuminen jarjestelmaan
 	}
 
-	@Override
 	/** Suorittaa tapahtuman
 	 * {@inheritDoc} */
+	@Override
 	protected void suoritaTapahtuma(Tapahtuma t) {
 		Asiakas a;
 		switch ((TapahtumanTyyppi) t.getTyyppi()) {
@@ -130,8 +131,9 @@ public class OmaMoottori extends Moottori {
 		}
 	}
 
+	/** Yrittaa aloittaa palvelun
+	 * {@inheritDoc}*/
 	@Override
-	/** Yrittaa aloittaa palvelun */
 	protected void yritaCTapahtumat() {
 		for (Palvelupiste p : palvelupisteet) {
 			if (!p.onVarattu() && p.onJonossa()) {
@@ -140,8 +142,9 @@ public class OmaMoottori extends Moottori {
 		}
 	}
 
+	/** Tarkistaa, onko kaikki asiakkaat valmiita
+	 * {@inheritDoc} */
 	@Override
-	/** Tarkistaa, onko kaikki asiakkaat valmiita */
 	protected void tulokset() {
 
 		System.out.println("\nSimulointi paattyi kello " + Kello.getInstance().getAika());
@@ -179,8 +182,9 @@ public class OmaMoottori extends Moottori {
 	}
 
 	// Asetetaan tulokset
+	/** Asettaa tulokset
+	 * {@inheritDoc}*/
 	@Override
-	/** Asettaa tulokset */
 	public void asetaTulokset() {
 		LSTulos lsTulos = null;
 		TTTulos ttTulos = null;
