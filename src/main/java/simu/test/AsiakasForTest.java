@@ -5,12 +5,27 @@ import simu.model.TapahtumanTyyppi;
 
 /** Test luokka Asiakas-luokan testaamiseen */
 public class AsiakasForTest {
-	/** Luokkan attribuutit */
+	/** Tapahtuman tyyppi */
 	private TapahtumanTyyppi tyyppi;
-	private double saapumisaika, poistumisaika, width, height;
+	/** Asiakkaan saapumisaika */
+	private double saapumisaika;
+	/** Asiakkaan poistumisaika */
+	private double poistumisaika;
+	/** Asiakkaan leveys */
+	private double width;
+	/** Asiakkaan korkeus */
+	private double height;
+	/** Asiakkaan id */
 	private int id;
+	/** Lippu, joka maarittaa onko asiakas ulkomaanlennon asiakas */
 	private boolean ulkomaanlento; // Uusi kentta, maarittaa onko asiakas ulkomaanlennon asiakas
-	public static int lennolleEhtineet = 0, T1myohastyneet = 0, T2myohastyneet = 0;
+	/** Ehtineet lennolle */
+	public static int lennolleEhtineet = 0;
+	/** Kotimaan Myohastyneet */
+	public static int T1myohastyneet = 0;
+	/** Ulkomaan Myohastyneet */
+	public static int T2myohastyneet = 0;
+	/** Palvellut asiakkaat */
 	public static int i = 0;
 
 	/** Luokan konstruktori */
