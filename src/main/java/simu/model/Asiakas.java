@@ -59,24 +59,24 @@ public class Asiakas {
 	 * @see simu.model.Asiakas
 	 * */
 	public static int lennolleEhtineet = 0,
-			/**
-			 *  Kotimaan myohastyneet asiakkaat
-			 * @see simu.model.Asiakas
-			 * */
+	/**
+	 *  Kotimaan myohastyneet asiakkaat
+	 * @see simu.model.Asiakas
+	 * */
 			T1myohastyneet = 0,
-			/**
-			 *  Ulkomaan myohastyneet asiakkaat
-			 * @see simu.model.Asiakas
-			 * */
+	/**
+	 *  Ulkomaan myohastyneet asiakkaat
+	 * @see simu.model.Asiakas
+	 * */
 			T2myohastyneet = 0;
 	/** Palvellut asiakkaat
 	 * @see simu.model.Asiakas
 	 * */
 	public static int i = 0,
-			/**
-			 *  Luotujen matkustajien määrä
-			 * @see simu.model.Asiakas
-			 * */
+	/**
+	 *  Luotujen matkustajien määrä
+	 * @see simu.model.Asiakas
+	 * */
 			j = 0;
 
 	/** Konstruktori
