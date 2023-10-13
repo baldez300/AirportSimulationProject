@@ -2,9 +2,9 @@ package simu.datasource;
 
 import jakarta.persistence.*;
 /**
- * SQLconnection class
+ * SQLconnection Luokka
  *
- * This class is used to create a connection to the database
+ * Luokka luo yhteyden tietokantaan
  *
  * @version 1.0 3 Dec 2020
  * @Author Outi Somi, Jari Korhonen
@@ -13,25 +13,25 @@ import jakarta.persistence.*;
 public class SQLconnection {
 
     /**
-     * emf and em variables
+     * emf and em muuttujat
      *
-     * These variables are used to create a connection to the database
+     * Nämä muuttujat luovat yhteyden tietokantaan
      *
      */
     private static EntityManagerFactory emf = null;
 
     /**
-     * em variable
+     * em muutuja
      *
-     * This variable is used to create a connection to the database
+     * Tämä muuttuja luo yhteyden tietokantaan
      *
      */
     private static EntityManager em = null;
 
     /**
-     * getInstance method
+     * getInstance metodi
      *
-     * This method is used to create a connection to the database
+     * Tämä metodi luo yhteyden tietokantaan
      *
      * @return em
      */
@@ -48,9 +48,9 @@ public class SQLconnection {
     }
 
     /**
-     * close method
+     * close metodi
      *
-     * This method is used to close the connection to the database
+     * Tämä metodi sulkee yhteyden tietokantaan
      *
      */
     public static void testaaTietokantaYhteys() {
