@@ -14,11 +14,17 @@ import simu.framework.Kello;
 /** Luokka joka visualisoi simulaatiota */
 public class Visualisointi {
 
-	/** Luokan attribuutit */
+	/** GraphicsContext  */
 	private final GraphicsContext gc;
+	/** Canvas */
 	private final Canvas canvas;
+	/** Taustakuva */
 	private final Image taustakuva;
-	private final int taustakuvaLeveys = 1585, taustakuvaKorkeus = 996;
+	/** Taustakuvan leveys */
+	private final int taustakuvaLeveys = 1585;
+	/** Taustakuvan korkeus */
+	private final int taustakuvaKorkeus = 996;
+	/** Kontrolleri */
 	private final Kontrolleri kontrolleri;
 
 	/** Luokan konstruktori */
