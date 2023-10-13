@@ -57,10 +57,9 @@ public class OmaMoottori extends Moottori {
 	public Palvelupiste[] getPalvelupisteet() {
 		return palvelupisteet;
 	}
-
-	@Override
 	/** Alustaa simulaation
 	 * {@inheritDoc} */
+	@Override
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Asetetaan ensimmainen saapuminen jarjestelmaan
 	}
