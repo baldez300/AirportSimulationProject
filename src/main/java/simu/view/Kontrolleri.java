@@ -41,8 +41,9 @@ import javafx.util.converter.DoubleStringConverter;
 /** Kontrolleri-luokka, joka toimii kayttoliittyman ja sovelluslogiikan valissa */
 public class Kontrolleri {
     // Oletusarvot asetuksille jotta pysyvat muistissa
-    /** Luokan attribuutit */
+    /** Simulointiaika */
     private static double simulointiAika = 1000;
+    /** Simuloinnin viive */
     private static int simulointiViive = 100;
 
     @FXML
@@ -279,25 +280,32 @@ public class Kontrolleri {
     @FXML
     private Text T2_myohastyneet_pros;
 
+    /** Luokka, joka sisaltaa moottorin */
     private static IMoottori moottori;
 
+    /**Luokka, joka yhdistaa tietokantaan */
     private TuloksetDao tuloksetDao = new TuloksetDao();
 
+    /** Luokka joka visualisoi simulaation */
     private Visualisointi visualisointi;
 
     // Timer tarkistamaan onko simulointi loppunut ja avaamaan tulokset nakyman
+    /** Timer tarkistamaan onko simulointi loppunut ja avaamaan tulokset nakyman */
     private Timer timer;
 
     // Apumuuttujat
+    /** Lippu joka kertoo onko tietokanta yhteys */
     private boolean tietokantaYhteys;
+    /** Lippu joka kertoo onko tulos valittu */
     private boolean tulosValittu;
+    /** Lippu joka kertoo onko tallenna nappia painettu */
     private boolean painettu;
 
     // Asetetaan oletusarvot spinnereille
-    @FXML
     /**
      * Metodi, joka suoritetaan kun kayttoliittyma on ladattu
      */
+    @FXML
     void initialize() {
         // Alusta TextFormatter rajoittaaksesi syotteen numeerisiin arvoihin
         TextFormatter<Double> textFormatter = new TextFormatter<>(
@@ -427,10 +435,10 @@ public class Kontrolleri {
         AsetuksetSivu.setVisible(true);
     }
 
-    @FXML
     /**
      * Metodi, joka suoritetaan kun kayttaja painaa aloita nappia
      */
+    @FXML
     private void aloita(ActionEvent event) {
         // Resetoidaan kellon aika ja staattiset muuttujat
         Kello.getInstance().setAika(0);
@@ -497,11 +505,11 @@ public class Kontrolleri {
         }
     }
 
-    @FXML
-    // Haetaan tulokset tietokannasta ja asetetaan ne listaan
     /**
      * Metodi, joka suoritetaan kun kayttaja painaa edelliset tulokset nappia
      */
+    @FXML
+    // Haetaan tulokset tietokannasta ja asetetaan ne listaan
     private void naytaTulokset(ActionEvent event) {
         List<Tulokset> tulokset = tuloksetDao.lataaKaikki();
         tuloksetLista.getItems().clear();
@@ -514,9 +522,9 @@ public class Kontrolleri {
         tallennetut.setVisible(true);
     }
 
+    /** Metodo, joka suoritetaan kun kayttaja painaa tarkemmat tiedot nappia */
     @FXML
     // Haetaan tarkemmat tiedot tietokannasta valitun tuloksen id:n perusteella
-    /** Metodo, joka suoritetaan kun kayttaja painaa tarkemmat tiedot nappia */
     private void naytaTarkemmatTiedot(ActionEvent event) {
         try {
             Tulokset valittuTulos = tuloksetLista.getSelectionModel().getSelectedItem();
@@ -534,11 +542,10 @@ public class Kontrolleri {
         }
     }
 
-    @FXML
-
     /**
      * Metodi, joka suoritetaan kun kayttaja painaa poistu nappia
      */
+    @FXML
     private void palaaAsetuksiin(ActionEvent event) {
         Stage asetuksetStage = (Stage) AsetuksetSivu.getScene().getWindow();
         tulosValittu = false;
@@ -548,10 +555,10 @@ public class Kontrolleri {
         tallennaNappi.setVisible(true);
     }
 
-    @FXML
     /**
      * Metodi, joka suoritetaan kun kayttaja painaa poistu nappia
      */
+    @FXML
     private void palaaTallennettuihin(ActionEvent event) {
         // Tyhjennetaan kaikki graafit
         tyhjennaChartit();
@@ -561,21 +568,21 @@ public class Kontrolleri {
         tallennetut.setVisible(true);
     }
 
-    @FXML
-    // Tallennetaan tulokset tietokantaan
     /**
      * Metodi, joka suoritetaan kun kayttaja painaa tallenna nappia
      */
+    @FXML
+    // Tallennetaan tulokset tietokantaan
     private void tallenna(ActionEvent event) {
         painettu = true;
         tallennaNappi.setDisable(true);
         ((OmaMoottori) moottori).tallennaTulokset();
     }
 
-    @FXML
     /**
      * Metodi, joka suoritetaan kun kayttaja painaa uusi nappia
      */
+    @FXML
     private void uusiSimulointi(ActionEvent event) {
         ((Thread) moottori).interrupt();
         painettu = false;
