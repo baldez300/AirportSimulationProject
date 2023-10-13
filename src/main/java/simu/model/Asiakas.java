@@ -74,7 +74,7 @@ public class Asiakas {
 	 * */
 	public static int i = 0;
 	/**
-	 *  Luotujen matkustajien määrä
+	 *  Luotujen matkustajien maara
 	 * @see simu.model.Asiakas
 	 * */
 	public static int j = 0;
