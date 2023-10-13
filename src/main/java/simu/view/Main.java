@@ -1,7 +1,7 @@
 package simu.view;
 
 /**
- * Main-luokka, joka käynnistää simulaattorin.
+ * Main-luokka, joka kaynnistaa simulaattorin.
  *
  * @version 1.0 3.4.2021
  */

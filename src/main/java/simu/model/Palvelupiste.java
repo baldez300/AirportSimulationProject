@@ -24,7 +24,7 @@ public class Palvelupiste {
 	private final TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
 
 	// Laskutoimituksien tarvitsemat muuttujat
-	/** Palvelupisteessä palvellut asiakkaat */
+	/** Palvelupisteessa palvellut asiakkaat */
 	public static int palvellutAsiakkaatTotal = 0;
 	/** Palvelupisteen koordinatit */
 	private final int x, y;
@@ -34,17 +34,17 @@ public class Palvelupiste {
 			suoritusTeho = 0,
 			/** Palvelupisteen kokonaisjonotusaika */
 			kokonaisJonotusaika = 0,
-			/** Palvelupisteen kokonaisläpimenoaika */
+			/** Palvelupisteen kokonaislapimenoaika */
 			kokonaisLapimenoaika = 0,
 			/** Palvelupisteen jonon pituus */
 			jononPituus = 0,
-			/** Palvelupisteen käyttöaste */
+			/** Palvelupisteen kayttoaste */
 			kayttoaste = 0,
 			/** Palvelupisteen jonotusaika */
 			jonotusAika = 0;
-	/** Palvelupisteen pisteiden määrä */
+	/** Palvelupisteen pisteiden maara */
 	private int pisteidenMaara,
-			/** Palvelupisteessä palvellut asiakkaat */
+			/** Palvelupisteessa palvellut asiakkaat */
 			palvelupisteessaPalvellutAsiakkaat;
 
 	/** Palvelupisteen nimi */
@@ -71,9 +71,9 @@ public class Palvelupiste {
 		return jono;
 	}
 
-	/** Lisätään asiakas jonoon */
+	/** Lisataan asiakas jonoon */
 	public void lisaaJonoon(Asiakas a) { // Jonon 1. asiakas aina palvelussa
-		// Toteutetaan asiakkaan lisäys jonoon
+		// Toteutetaan asiakkaan lisays jonoon
 		a.setSaapumisaika(Kello.getInstance().getAika());
 		jono.add(a);
 	}
@@ -83,8 +83,8 @@ public class Palvelupiste {
 		this.varattu = false;
 		// lasketaan kokonaisLapimenoaika kun asiakas poistuu jonosta
 		kokonaisLapimenoaika += Kello.getInstance().getAika() - jono.peek().getSaapumisaika();
-		palvelupisteessaPalvellutAsiakkaat += 1; // pisteessä palvellut asiakkaat
-		palvellutAsiakkaatTotal += 1; // järjestelmässä palvellut asiakkaat
+		palvelupisteessaPalvellutAsiakkaat += 1; // pisteessa palvellut asiakkaat
+		palvellutAsiakkaatTotal += 1; // jarjestelmassa palvellut asiakkaat
 		jono.peek().setPoistumisaika(Kello.getInstance().getAika());
 		return jono.poll();
 	}
@@ -138,7 +138,7 @@ public class Palvelupiste {
 		return this.jononPituus;
 	}
 
-	/** Palauttaa palvelupisteen käyttöasteen */
+	/** Palauttaa palvelupisteen kayttoasteen */
 	public double getKayttoaste() {
 		return this.kayttoaste;
 	}
@@ -153,7 +153,7 @@ public class Palvelupiste {
 		return palvelupisteessaPalvellutAsiakkaat;
 	}
 
-	/** Palauttaa palvelupisteen kokonaisläpimenoajan */
+	/** Palauttaa palvelupisteen kokonaislapimenoajan */
 	public double getPalvelupisteenPalveluAika() {
 		return palvelupisteenPalveluAika;
 	}
@@ -166,8 +166,8 @@ public class Palvelupiste {
 	// Setterit
 	/** Asettaa palvelupisteen palveluajan */
 	public void setSuoritusteho(double simulointiAika) {
-		// Tästä tulee asiakasta / minuutissa. Muutetaan asiakasta / tunti kertomalla
-		// 60:llä
+		// Tasta tulee asiakasta / minuutissa. Muutetaan asiakasta / tunti kertomalla
+		// 60:lla
 		this.suoritusTeho = (palvelupisteessaPalvellutAsiakkaat / simulointiAika) * 60;
 	}
 
@@ -179,7 +179,7 @@ public class Palvelupiste {
 			this.jononPituus = 0;
 	}
 
-	/** Asettaa palvelupisteen käyttöasteen */
+	/** Asettaa palvelupisteen kayttoasteen */
 	public void setKayttoaste(double simulointiAika) {
 		this.kayttoaste = (palvelupisteenPalveluAika / simulointiAika) * 100;
 	}
@@ -203,8 +203,8 @@ public class Palvelupiste {
 		return jono.size() != 0;
 	}
 
-	// Lennolta myöhästyneiden poisto jonosta
-	/** Poistaa lennolta myöhästyneet asiakkaat jonosta */
+	// Lennolta myohastyneiden poisto jonosta
+	/** Poistaa lennolta myohastyneet asiakkaat jonosta */
 	public void removeAsiakasARR1() {
 		if (!jono.isEmpty()) {
 			if (jono.peek().isUlkomaanlento())
@@ -224,7 +224,7 @@ public class Palvelupiste {
 		}
 	}
 
-	/** Poistaa kotimaan lennoilta myöhästyneet asiakkaat jonosta */
+	/** Poistaa kotimaan lennoilta myohastyneet asiakkaat jonosta */
 	public void removeAsiakasARR2() {
 		if (!jono.isEmpty()) {
 			if (!jono.peek().isUlkomaanlento())
@@ -252,15 +252,15 @@ public class Palvelupiste {
 		p.setSuoritusteho(simulointiAika);
 	}
 
-	// Piirretään infoa palvelupisteiden päälle
-	/** Piirtää palvelupisteiden päälle infoa */
+	// Piirretaan infoa palvelupisteiden paalle
+	/** Piirtaa palvelupisteiden paalle infoa */
 	public void piirra(GraphicsContext gc) {
 		gc.setFont(javafx.scene.text.Font.font("Verdana", 15));
 		if (this.nimi.equals("LS"))
-			gc.strokeText("Pisteiden määrä: " + this.pisteidenMaara, this.x + 315, this.y + 60);
+			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x + 315, this.y + 60);
 		else if (this.nimi.equals("PT"))
-			gc.strokeText("Pisteiden määrä: " + this.pisteidenMaara, this.x + 200, this.y + 45);
+			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x + 200, this.y + 45);
 		else if (this.nimi.equals("TT"))
-			gc.strokeText("Pisteiden määrä: " + this.pisteidenMaara, this.x - 385, this.y + 60);
+			gc.strokeText("Pisteiden maara: " + this.pisteidenMaara, this.x - 385, this.y + 60);
 	}
 }

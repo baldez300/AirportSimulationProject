@@ -1,36 +1,36 @@
 package simu.view;
 
-/** Interface, joka määrittelee Simulaattorin käyttöliittymän
+/** Interface, joka maarittelee Simulaattorin kayttoliittyman
  *
- *  Käyttöliittymä tarjoaa kontrollerille syötteitä, joita se välittää Moottorille
- *  Käyttöliittymä tarjoaa Moottorin tuloksia, joita kontrolleri välittää käyttöliittymälle
- *  Käyttöliittymä tarjoaa Moottorin visualisoinnin, jota kontrolleri välittää käyttöliittymälle
+ *  Kayttoliittyma tarjoaa kontrollerille syotteita, joita se valittaa Moottorille
+ *  Kayttoliittyma tarjoaa Moottorin tuloksia, joita kontrolleri valittaa kayttoliittymalle
+ *  Kayttoliittyma tarjoaa Moottorin visualisoinnin, jota kontrolleri valittaa kayttoliittymalle
  *
- *  Käyttöliittymä on toteutettu JavaFX:llä
+ *  Kayttoliittyma on toteutettu JavaFX:lla
  *
 
  */
 public interface ISimulaattorinUI {
 	
-	// Kontrolleri tarvitsee syötteitä, jotka se välittää Moottorille
-	/** Kontrolleri välittää Moottorille käyttäjän syöttämän simulaatioajan
+	// Kontrolleri tarvitsee syotteita, jotka se valittaa Moottorille
+	/** Kontrolleri valittaa Moottorille kayttajan syottaman simulaatioajan
 	 *
      */
 	public double getAika();
 
-	/** Kontrolleri välittää Moottorille käyttäjän syöttämän viiveen
+	/** Kontrolleri valittaa Moottorille kayttajan syottaman viiveen
 	 *
 	 */
 	public long getViive();
 	
-	//Kontrolleri antaa käyttöliittymälle tuloksia, joita Moottori tuottaa
-	/** Moottori välittää käyttöliittymälle tuloksia, joita kontrolleri välittää Moottorilta
+	//Kontrolleri antaa kayttoliittymalle tuloksia, joita Moottori tuottaa
+	/** Moottori valittaa kayttoliittymalle tuloksia, joita kontrolleri valittaa Moottorilta
 	 *
 	 */
 	public void setLoppuaika(double aika);
 	
 	// Moottori tarvitusee
-	/** Moottori välittää käyttöliittymälle visualisoinnin, jota kontrolleri välittää Moottorilta
+	/** Moottori valittaa kayttoliittymalle visualisoinnin, jota kontrolleri valittaa Moottorilta
 	 *
 	 */
 	public IVisualisointi getVisualisointi();

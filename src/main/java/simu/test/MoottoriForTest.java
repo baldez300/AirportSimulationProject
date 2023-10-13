@@ -59,7 +59,7 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 
 		running = true;
 
-		alustukset(); // luodaan mm. ensimmäinen tapahtuma
+		alustukset(); // luodaan mm. ensimmainen tapahtuma
 
 		while (simuloidaan() && !Thread.interrupted()) {
 
@@ -83,11 +83,11 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 
 			System.out.println("Ei seuraavia tapahtumia.. ");
 
-			System.out.println("Ulkomaille ja sisälle lähtevät lennot ovat lähteneet..");
+			System.out.println("Ulkomaille ja sisalle lahtevat lennot ovat lahteneet..");
 
 			System.out.println("Genetoidaan seuraavia lentoja.. jatketaan simulointia..");
 
-			// Generoidaan uudet lennot ja niiden yhteydessä myös uudet tapahtumat
+			// Generoidaan uudet lennot ja niiden yhteydessa myos uudet tapahtumat
 			alustukset();
 
 		}
@@ -114,11 +114,11 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 	}
 
 	/** Metodi suorittaa tapahtumat*/
-	protected abstract void suoritaTapahtuma(Tapahtuma t); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+	protected abstract void suoritaTapahtuma(Tapahtuma t); // Maaritellaan simu.model-pakkauksessa Moottorin aliluokassa
 
-	/** Metodi yrittää suorittaa C tapahtumat*/
-	protected abstract void yritaCTapahtumat(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+	/** Metodi yrittaa suorittaa C tapahtumat*/
+	protected abstract void yritaCTapahtumat(); // Maaritellaan simu.model-pakkauksessa Moottorin aliluokassa
 
 	/** Metodi alustaa tapahtumat*/
-	protected abstract void alustukset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+	protected abstract void alustukset(); // Maaritellaan simu.model-pakkauksessa Moottorin aliluokassa
 }

@@ -27,17 +27,17 @@ public class SaapumisprosessiForTest {
 	/** Metodi generoi seuraavat tapahtumat */
 	public void generoiSeuraava() {
 		
-		// Lähtöaika ulkomaalennoille
+		// Lahtoaika ulkomaalennoille
 		double ulkoLahtoAika = Kello.getInstance().getAika() + new Normal(this.ulkoLahtoAika, 5).sample();
 
-		// Lähtöaika sisälennoille
+		// Lahtoaika sisalennoille
 		double lahtoAika = ulkoLahtoAika + this.lentojenVali; //new Normal(this.lentojenVali, 5).sample() ;
 
 		// Luodaan tapahtuma "Ulkomaan lento"
 		Tapahtuma tUlko = new Tapahtuma(tyyppi, ulkoLahtoAika, true);
 		tapahtumalista.lisaa(tUlko);
 
-		// Luodaan tapahtuma "Sisämaan lento"
+		// Luodaan tapahtuma "Sisamaan lento"
 		Tapahtuma tSisa = new Tapahtuma(SISA, lahtoAika, false);
 		tapahtumalista.lisaa(tSisa);
 
@@ -47,7 +47,7 @@ public class SaapumisprosessiForTest {
 			tapahtumalista.lisaa(t1);
 		}
 
-		// Luodaan 10 tapahtumaa "Saapuva asiakas sisälennolle"
+		// Luodaan 10 tapahtumaa "Saapuva asiakas sisalennolle"
 		for (int i=0; i<10; i++) {
 			Tapahtuma t2 = new Tapahtuma(ARR2, lahtoAika - (new Normal(240, 15).sample()), false);
 			tapahtumalista.lisaa(t2);

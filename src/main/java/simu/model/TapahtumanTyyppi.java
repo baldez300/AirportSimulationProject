@@ -2,13 +2,13 @@ package simu.model;
 
 import simu.framework.ITapahtumanTyyppi;
 
-/*  ARR1 = Saapuva asiakas ulkomaalle, ARR2 = Saapuva asiakas sisälennolle, DEP1 = Lähtöselvitys poistuminen, DEP2 = Turvatarkastus poistuminen
-	DEP3 = Passintarkistus poistuminen, DEP4 = Lähtöportti kotimaa, DEP5 = Lähtöportti ulkomaa,
+/*  ARR1 = Saapuva asiakas ulkomaalle, ARR2 = Saapuva asiakas sisalennolle, DEP1 = Lahtoselvitys poistuminen, DEP2 = Turvatarkastus poistuminen
+	DEP3 = Passintarkistus poistuminen, DEP4 = Lahtoportti kotimaa, DEP5 = Lahtoportti ulkomaa,
 	ULKO = Ulkomaanlento, SISA = Kotimaanlento
 */
 
 /**
- * TapahtumanTyyppi enum määrittelee tapahtumien tyypit
+ * TapahtumanTyyppi enum maarittelee tapahtumien tyypit
  *
  * @see simu.framework.ITapahtumanTyyppi
  */
@@ -30,7 +30,7 @@ public enum TapahtumanTyyppi implements ITapahtumanTyyppi{
 	 */
 	ARR2,
 	/**
-	 * Lähtöselvitys poistuminen
+	 * Lahtoselvitys poistuminen
 	 */
 	DEP1,
 	/**
@@ -42,11 +42,11 @@ public enum TapahtumanTyyppi implements ITapahtumanTyyppi{
 	 */
 	DEP3,
 	/**
-	 * Lähtöportti kotimaa
+	 * Lahtoportti kotimaa
 	 */
 	DEP4,
 	/**
-	 * Lähtöportti ulkomaa
+	 * Lahtoportti ulkomaa
 	 */
 	DEP5;
 }

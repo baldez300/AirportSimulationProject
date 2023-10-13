@@ -11,14 +11,14 @@ import jakarta.persistence.JoinColumn;
 @Entity
 @Table(name = "turvatarkastus")
 /**
- * TTTulos-luokka sisältää turvatarkastuksen tulokset
+ * TTTulos-luokka sisaltaa turvatarkastuksen tulokset
  *
  * @param id           turvatarkastuksen id
- * @param kayttoaste   turvatarkastuksen käyttöaste
+ * @param kayttoaste   turvatarkastuksen kayttoaste
  * @param suoritusteho turvatarkastuksen suoritusteho
  * @param jonotusaika  turvatarkastuksen jonotusaika
  * @param jononpituus  turvatarkastuksen jononpituus
- * @param maara        turvatarkastuksen määrä
+ * @param maara        turvatarkastuksen maara
  */
 public class TTTulos {
     @Id
@@ -31,7 +31,7 @@ public class TTTulos {
     private int id;
     @Column(name = "kayttoaste")
     /**
-     * turvatarkastuksen käyttöaste
+     * turvatarkastuksen kayttoaste
      */
     private double kayttoaste;
     @Column(name = "suoritusteho")
@@ -51,18 +51,18 @@ public class TTTulos {
     private double jononpituus;
     @Column(name = "maara")
     /**
-     * turvatarkastuksen määrä
+     * turvatarkastuksen maara
      */
     private int maara;
 
     /**
      * TTTulos-luokan konstruktori
      *
-     * @param kayttoaste   turvatarkastuksen käyttöaste
+     * @param kayttoaste   turvatarkastuksen kayttoaste
      * @param suoritusteho turvatarkastuksen suoritusteho
      * @param jonotusaika  turvatarkastuksen jonotusaika
      * @param jononpituus  turvatarkastuksen jononpituus
-     * @param maara        turvatarkastuksen määrä
+     * @param maara        turvatarkastuksen maara
      */
     public TTTulos(double kayttoaste, double suoritusteho, double jonotusaika, double jononpituus, int maara) {
         this.kayttoaste = kayttoaste;
@@ -89,9 +89,9 @@ public class TTTulos {
     }
 
     /**
-     * Asettaa turvatarkastuksen käyttöasteen
+     * Asettaa turvatarkastuksen kayttoasteen
      *
-     * @param kayttoaste turvatarkastuksen käyttöaste
+     * @param kayttoaste turvatarkastuksen kayttoaste
      */
     public void setKayttoaste(double kayttoaste) {
         this.kayttoaste = kayttoaste;
@@ -125,9 +125,9 @@ public class TTTulos {
     }
 
     /**
-     * Asettaa turvatarkastuksen määrän
+     * Asettaa turvatarkastuksen maaran
      *
-     * @param maara turvatarkastuksen määrä
+     * @param maara turvatarkastuksen maara
      */
     public void setMaara(int maara) {
         this.maara = maara;
@@ -144,9 +144,9 @@ public class TTTulos {
     }
 
     /**
-     * Palauttaa turvatarkastuksen käyttöasteen
+     * Palauttaa turvatarkastuksen kayttoasteen
      *
-     * @return turvatarkastuksen käyttöaste
+     * @return turvatarkastuksen kayttoaste
      */
     public double getKayttoaste() {
         return kayttoaste;
@@ -180,9 +180,9 @@ public class TTTulos {
     }
 
     /**
-     * Palauttaa turvatarkastuksen määrän
+     * Palauttaa turvatarkastuksen maaran
      *
-     * @return turvatarkastuksen määrä
+     * @return turvatarkastuksen maara
      */
     public int getMaara() {
         return maara;

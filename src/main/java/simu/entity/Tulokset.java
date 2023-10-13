@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "tulokset")
 /**
- * Tulokset-luokka sisältää tulokset tietokantataulun tiedot
+ * Tulokset-luokka sisaltaa tulokset tietokantataulun tiedot
  * @param id
  * @param paivamaara
  * @param aika
@@ -124,7 +124,7 @@ public class Tulokset {
     }
 
     /**
-     * Tulokset-luokan tyhjä konstruktori
+     * Tulokset-luokan tyhja konstruktori
      */
     public Tulokset() {
     }
@@ -295,7 +295,7 @@ public class Tulokset {
         return t2Tulos;
     }
 
-    // Override toString jotta saadaan ListViewiin paivamaara näkyviin Objectin sijaan
+    // Override toString jotta saadaan ListViewiin paivamaara nakyviin Objectin sijaan
     @Override
     /**
      * @return String

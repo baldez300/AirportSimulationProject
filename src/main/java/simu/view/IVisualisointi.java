@@ -5,7 +5,7 @@ package simu.view;
 public interface IVisualisointi {
 
 	/**
-	 * Metodi, joka päivittää näytön
+	 * Metodi, joka paivittaa nayton
 	 *
 	 */
 	public void tyhjennaNaytto();

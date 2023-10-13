@@ -45,20 +45,20 @@ public class Asiakas {
 	 * */
 	private int id;
 
-	/** Asiakkaiden läpimenoaikojen summa
+	/** Asiakkaiden lapimenoaikojen summa
 	 * @see simu.model.Asiakas
 	 * */
 	private static long sum = 0;
 	/** Asiakkaan ulkomaanlento
 	 * @see simu.model.Asiakas
 	 * */
-	private boolean ulkomaanlento; // Uusi kenttä, määrittää onko asiakas ulkomaanlennon asiakas
+	private boolean ulkomaanlento; // Uusi kentta, maarittaa onko asiakas ulkomaanlennon asiakas
 
-	/** Asiakkaan lähtöselvityksen myöhästyneet ja ehtineet asiakkaat
+	/** Asiakkaan lahtoselvityksen myohastyneet ja ehtineet asiakkaat
 	 * @see simu.model.Asiakas
 	 * */
 	public static int lennolleEhtineet = 0, T1myohastyneet = 0, T2myohastyneet = 0;
-	/** Tiläpäiset muutujat
+	/** Tilapaiset muutujat
 	 * @see simu.model.Asiakas
 	 * */
 	public static int i = 0, j = 0;
@@ -180,10 +180,10 @@ public class Asiakas {
 		Trace.out(Trace.Level.INFO, "Asiakas " + id + " viipyi: " + (poistumisaika - saapumisaika));
 		sum += (long) (poistumisaika - saapumisaika);
 		double keskiarvo = (double) sum / id;
-		System.out.println("Asiakkaiden läpimenoaikojen keskiarvo tähän asti " + keskiarvo);
+		System.out.println("Asiakkaiden lapimenoaikojen keskiarvo tahan asti " + keskiarvo);
 	}
 
-	/** Piirtää asiakkaan
+	/** Piirtaa asiakkaan
 	 *
 	 * @param gc GraphicsContext
 	 * @param destX Asiakkaan x-koordinaatti

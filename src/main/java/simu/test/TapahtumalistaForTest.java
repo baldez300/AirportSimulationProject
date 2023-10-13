@@ -15,7 +15,7 @@ public class TapahtumalistaForTest {
 		return lista.remove();
 	}
 
-	/** Metodo joka lisää tapahtuman listaan */
+	/** Metodo joka lisaa tapahtuman listaan */
 	public void lisaa(Tapahtuma t){
 		lista.add(t);
 	}

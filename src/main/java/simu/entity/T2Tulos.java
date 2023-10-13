@@ -11,7 +11,7 @@ import jakarta.persistence.JoinColumn;
 @Entity
 @Table(name = "t2")
 /**
- * T2Tulos-luokka sisältää T2-tulokset
+ * T2Tulos-luokka sisaltaa T2-tulokset
  */
 public class T2Tulos {
     @Id
@@ -24,7 +24,7 @@ public class T2Tulos {
     private int id;
     @Column(name = "kayttoaste")
     /**
-     * T2Tulos-luokan käyttöaste
+     * T2Tulos-luokan kayttoaste
      */
     private double kayttoaste;
     @Column(name = "suoritusteho")
@@ -46,7 +46,7 @@ public class T2Tulos {
 
     /**
      * T2Tulos-luokan konstruktori
-     * @param kayttoaste T2Tulos-luokan käyttöaste
+     * @param kayttoaste T2Tulos-luokan kayttoaste
      * @param suoritusteho T2Tulos-luokan suoritusteho
      * @param jonotusaika T2Tulos-luokan jonotusaika
      * @param jononpituus T2Tulos-luokan jononpituus
@@ -74,8 +74,8 @@ public class T2Tulos {
     }
 
     /**
-     * Asettaa T2Tulos-luokan käyttöasteen
-     * @param kayttoaste T2Tulos-luokan käyttöaste
+     * Asettaa T2Tulos-luokan kayttoasteen
+     * @param kayttoaste T2Tulos-luokan kayttoaste
      */
     public void setKayttoaste(double kayttoaste) {
         this.kayttoaste = kayttoaste;
@@ -115,8 +115,8 @@ public class T2Tulos {
     }
 
     /**
-     * Palauttaa T2Tulos-luokan käyttöasteen
-     * @return T2Tulos-luokan käyttöaste
+     * Palauttaa T2Tulos-luokan kayttoasteen
+     * @return T2Tulos-luokan kayttoaste
      */
     public double getKayttoaste() {
         return kayttoaste;

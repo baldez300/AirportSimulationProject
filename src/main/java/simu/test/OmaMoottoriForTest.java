@@ -8,8 +8,8 @@ import simu.model.TapahtumanTyyppi;
 
 // Luodaan OmaMoottoriForTest jotta ei tarvita GUI:ta testaukseen
 /**
- * OmaMoottoriForTest on MoottoriForTest-luokan aliluokka, joka sisältää
- * palvelupisteet ja saapumisprosessin. OmaMoottoriForTest-luokkaa käytetään
+ * OmaMoottoriForTest on MoottoriForTest-luokan aliluokka, joka sisaltaa
+ * palvelupisteet ja saapumisprosessin. OmaMoottoriForTest-luokkaa kaytetaan
  * testaukseen, jotta ei tarvita GUI:ta.
  *
  * @see MoottoriForTest
@@ -31,15 +31,15 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 
 		palvelupisteet = new PalvelupisteForTest[5];
 
-		// Lähtöselvitys
+		// Lahtoselvitys
 		palvelupisteet[0] = new PalvelupisteForTest(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.DEP1);
 		// Turvatarkastus
 		palvelupisteet[1] = new PalvelupisteForTest(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.DEP2);
 		// Passintarkistus
 		palvelupisteet[2] = new PalvelupisteForTest(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.DEP3);
-		// Lähtöportti kotimaanlennot
+		// Lahtoportti kotimaanlennot
 		palvelupisteet[3] = new PalvelupisteForTest(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.DEP4);
-		// Lähtöportti ulkomaanlennot
+		// Lahtoportti ulkomaanlennot
 		palvelupisteet[4] = new PalvelupisteForTest(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.DEP5);
 		// Saapumisprosessi
 		saapumisprosessi = new SaapumisprosessiForTest(tapahtumalista, TapahtumanTyyppi.ULKO, 60,
@@ -62,7 +62,7 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 	 * @see SaapumisprosessiForTest
 	 */
 	protected void alustukset() {
-		saapumisprosessi.generoiSeuraava(); // Asetetaan ensimmäinen saapuminen järjestelmään
+		saapumisprosessi.generoiSeuraava(); // Asetetaan ensimmainen saapuminen jarjestelmaan
 	}
 
 	@Override
@@ -127,7 +127,7 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 					palvelupiste.removeAsiakasARR2();
 					palvelupiste.eiVarattu();
 				}
-				// Poistetaan tapahtumalistan "Sisälentojen"-tapahtuma
+				// Poistetaan tapahtumalistan "Sisalentojen"-tapahtuma
 				tapahtumalista.removeKotimaanTapahtumat();
 				break;
 		}
@@ -135,7 +135,7 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 
 	@Override
 	/**
-	 * Yrittää aloittaa C tapahtumat.
+	 * Yrittaa aloittaa C tapahtumat.
 	 */
 	protected void yritaCTapahtumat() {
 		for (PalvelupisteForTest p : palvelupisteet) {

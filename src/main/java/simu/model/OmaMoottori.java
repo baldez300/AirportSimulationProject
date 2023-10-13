@@ -10,15 +10,15 @@ import simu.framework.Tapahtuma;
 import simu.view.Kontrolleri;
 import simu.entity.*;
 
-/** Moottori-luokka, joka sisältää simulaation päälogiikan */
+/** Moottori-luokka, joka sisaltaa simulaation paalogiikan */
 public class OmaMoottori extends Moottori {
 
-	/** Tapahtumalista, joka sisältää kaikki tapahtumat */
+	/** Tapahtumalista, joka sisaltaa kaikki tapahtumat */
 	private Saapumisprosessi saapumisprosessi;
 	/** Palvelupisteet, joissa tapahtuu palvelua */
 	private Palvelupiste[] palvelupisteet;
-	/** Tapahtumalista, joka sisältää kaikki tapahtumat */
-	private boolean kaikkiAsiakkaatValmiit = false; // Lisätty lippu seuraamaan, ovatko kaikki asiakkaat valmiita
+	/** Tapahtumalista, joka sisaltaa kaikki tapahtumat */
+	private boolean kaikkiAsiakkaatValmiit = false; // Lisatty lippu seuraamaan, ovatko kaikki asiakkaat valmiita
 	/** Tulokset */
 	private Tulokset tulokset;
 
@@ -28,7 +28,7 @@ public class OmaMoottori extends Moottori {
 
 		palvelupisteet = new Palvelupiste[5];
 
-		// Lähtöselvitys
+		// Lahtoselvitys
 		palvelupisteet[0] = new Palvelupiste(700, 533, "LS", kontrolleri.getLahtoselvitysMaara(),
 				new Normal(kontrolleri.getLSpalveluNopeus(), kontrolleri.getLahtoselvitysVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP1);
@@ -40,11 +40,11 @@ public class OmaMoottori extends Moottori {
 		palvelupisteet[2] = new Palvelupiste(880, 195, "PT", kontrolleri.getPassintarkastusMaara(),
 				new Normal(kontrolleri.getPTpalveluNopeus(), kontrolleri.getPassintarkastusVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP3);
-		// Lähtöportti kotimaanlennot
+		// Lahtoportti kotimaanlennot
 		palvelupisteet[3] = new Palvelupiste(300, 45, "T1", 1,
 				new Normal(kontrolleri.getKotimaaKA(), kontrolleri.getKotimaaVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP4);
-		// Lähtöportti ulkomaanlennot
+		// Lahtoportti ulkomaanlennot
 		palvelupisteet[4] = new Palvelupiste(830, 45, "T2", 1,
 				new Normal(kontrolleri.getUlkomaaKA(), kontrolleri.getUlkomaaVar()), tapahtumalista,
 				TapahtumanTyyppi.DEP5);
@@ -61,7 +61,7 @@ public class OmaMoottori extends Moottori {
 	@Override
 	/** Alustaa simulaation */
 	protected void alustukset() {
-		saapumisprosessi.generoiSeuraava(); // Asetetaan ensimmäinen saapuminen järjestelmään
+		saapumisprosessi.generoiSeuraava(); // Asetetaan ensimmainen saapuminen jarjestelmaan
 	}
 
 	@Override
@@ -123,14 +123,14 @@ public class OmaMoottori extends Moottori {
 				for (Palvelupiste palvelupiste : palvelupisteet) {
 					palvelupiste.removeAsiakasARR2();
 				}
-				// Poistetaan tapahtumalistan "Sisälentojen"-tapahtuma
+				// Poistetaan tapahtumalistan "Sisalentojen"-tapahtuma
 				tapahtumalista.removeKotimaanTapahtumat();
 				break;
 		}
 	}
 
 	@Override
-	/** Yrittää aloittaa palvelun */
+	/** Yrittaa aloittaa palvelun */
 	protected void yritaCTapahtumat() {
 		for (Palvelupiste p : palvelupisteet) {
 			if (!p.onVarattu() && p.onJonossa()) {
@@ -143,36 +143,36 @@ public class OmaMoottori extends Moottori {
 	/** Tarkistaa, onko kaikki asiakkaat valmiita */
 	protected void tulokset() {
 
-		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
+		System.out.println("\nSimulointi paattyi kello " + Kello.getInstance().getAika());
 
-		// Laske ja näytä mittareita jokaiselle Palvelupisteelle
+		// Laske ja nayta mittareita jokaiselle Palvelupisteelle
 		for (int i = 0; i < palvelupisteet.length; i++) {
 			Palvelupiste p = palvelupisteet[i];
 
-			// Laske ja näytä nykyisen Palvelupisteen mittarit
+			// Laske ja nayta nykyisen Palvelupisteen mittarit
 			System.out.println("Tulokset Palvelupisteelle " + p.getNimi() + ":");
 
-			// Laske ja näytä keskimääräinen odotusaika;
-			System.out.println("Keskimääräinen odotusaika: " + p.getJonotusaika());
+			// Laske ja nayta keskimaarainen odotusaika;
+			System.out.println("Keskimaarainen odotusaika: " + p.getJonotusaika());
 
-			// Laske ja näytä palvelun tehokkuus;
+			// Laske ja nayta palvelun tehokkuus;
 			System.out.println("Palvelutehokkuus: " + p.getSuoritusteho() + " %");
 
-			// Palvelupisteiden käyttöasteen laskeminen ja näyttö;
+			// Palvelupisteiden kayttoasteen laskeminen ja naytto;
 			System.out
-					.println("Palvelupisteen käyttöaste: " + p.getKayttoaste() + " %");
+					.println("Palvelupisteen kayttoaste: " + p.getKayttoaste() + " %");
 
-			// Lisämittareita voi tarvittaessa laskea täältä...
+			// Lisamittareita voi tarvittaessa laskea taalta...
 
 			System.out.println("Palvelupiste " + (i + 1) + " palvellut asiakkaat: "
 					+ palvelupisteet[i].getPalvelupisteessaPalvellutAsiakkaat());
 			System.out.println(
 					"Palvelupiste " + (i + 1) + " palveluaika: " + palvelupisteet[i].getPalvelupisteenPalveluAika());
-			System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
+			System.out.println("Simulointi paattyi kello " + Kello.getInstance().getAika());
 			if (kaikkiAsiakkaatValmiit) {
-				System.out.println("Kaikki asiakkaat ovat kulkeneet läpi.");
+				System.out.println("Kaikki asiakkaat ovat kulkeneet lapi.");
 			} else {
-				System.out.println("Kaikki asiakkaat eivät ole vielä kulkeneet läpi.");
+				System.out.println("Kaikki asiakkaat eivat ole viela kulkeneet lapi.");
 			}
 		}
 	}
@@ -225,7 +225,7 @@ public class OmaMoottori extends Moottori {
 		tuloksetDao.tallenna(this.tulokset);
 	}
 
-	// Tuloksien getteri käyttöliitymää varten
+	// Tuloksien getteri kayttoliitymaa varten
 	/** Palauttaa tulokset */
 	public Tulokset getTulokset() {
 		return tulokset;

@@ -37,9 +37,9 @@ public class PalvelupisteForTest {
 		return jono;
 	}
 
-	/** Metodi lisää asiakkaan jonoon */
+	/** Metodi lisaa asiakkaan jonoon */
 	public void lisaaJonoon(AsiakasForTest a) { // Jonon 1. asiakas aina palvelussa
-		// Toteutetaan asiakkaan lisäys jonoon
+		// Toteutetaan asiakkaan lisays jonoon
 		a.setSaapumisaika(Kello.getInstance().getAika());
 		jono.add(a);
 	}
@@ -49,8 +49,8 @@ public class PalvelupisteForTest {
 		varattu = false;
 		// lasketaan kokonaisLapimenoaika kun asiakas poistuu jonosta
 		kokonaisLapimenoaika += Kello.getInstance().getAika() - jono.peek().getSaapumisaika();
-		palvelupisteessaPalvellutAsiakkaat += 1; // pisteessä palvellut asiakkaat
-		palvellutAsiakkaatTotal += 1; // järjestelmässä palvellut asiakkaat
+		palvelupisteessaPalvellutAsiakkaat += 1; // pisteessa palvellut asiakkaat
+		palvellutAsiakkaatTotal += 1; // jarjestelmassa palvellut asiakkaat
 		return jono.poll();
 	}
 
@@ -75,7 +75,7 @@ public class PalvelupisteForTest {
 		}
 	}
 
-	/** Metodi poistaa jonosta myöhästyneet asiakkaat */
+	/** Metodi poistaa jonosta myohastyneet asiakkaat */
 	public void removeAsiakasARR1() {
 		if (!jono.isEmpty()) {
 			if (jono.peek().isUlkomaanlento())
@@ -92,7 +92,7 @@ public class PalvelupisteForTest {
 		}
 	}
 
-	/** Metodi poistaa jonosta myöhästyneet asiakkaat */
+	/** Metodi poistaa jonosta myohastyneet asiakkaat */
 	public void removeAsiakasARR2() {
 		if (!jono.isEmpty()) {
 			if (!jono.peek().isUlkomaanlento())
@@ -120,7 +120,7 @@ public class PalvelupisteForTest {
 		return this.jononPituus;
 	}
 
-	/** Metodi palauttaa palvelupisteen käyttöasteen */
+	/** Metodi palauttaa palvelupisteen kayttoasteen */
 	public double getKayttoaste() {
 		return this.kayttoaste;
 	}
@@ -143,8 +143,8 @@ public class PalvelupisteForTest {
 	// Setterit
 	/** Metodi asettaa palvelupisteen suoritustehon */
 	public void setSuoritusteho(double simulointiAika) {
-		// Tästä tulee asiakasta / minuutissa. Muutetaan asiakasta / tunti kertomalla
-		// 60:llä
+		// Tasta tulee asiakasta / minuutissa. Muutetaan asiakasta / tunti kertomalla
+		// 60:lla
 		this.suoritusTeho = (palvelupisteessaPalvellutAsiakkaat / simulointiAika) * 60;
 	}
 
@@ -156,7 +156,7 @@ public class PalvelupisteForTest {
 			this.jononPituus = 0;
 	}
 
-	/** Metodi asettaa palvelupisteen käyttöasteen */
+	/** Metodi asettaa palvelupisteen kayttoasteen */
 	public void setKayttoaste(double simulointiAika) {
 		this.kayttoaste = (palvelupisteenPalveluAika / simulointiAika) * 100;
 	}
@@ -180,7 +180,7 @@ public class PalvelupisteForTest {
 		varattu = false;
 	}
 
-	/** Metodi palauttaa onko palvelupisteessä asiakkaita */
+	/** Metodi palauttaa onko palvelupisteessa asiakkaita */
 	public boolean onJonossa() {
 		return jono.size() != 0;
 	}

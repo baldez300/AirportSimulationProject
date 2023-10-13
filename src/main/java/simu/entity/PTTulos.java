@@ -26,7 +26,7 @@ public class PTTulos {
     private int id;
     @Column(name = "kayttoaste")
     /**
-     * Passintarkastuksen käyttöaste.
+     * Passintarkastuksen kayttoaste.
      */
     private double kayttoaste;
     @Column(name = "suoritusteho")
@@ -46,18 +46,18 @@ public class PTTulos {
     private double jononpituus;
     @Column(name = "maara")
     /**
-     * Passintarkastuksen läpäisseiden matkustajien määrä.
+     * Passintarkastuksen lapaisseiden matkustajien maara.
      */
     private int maara;
 
     /**
      * Konstruktori.
      *
-     * @param kayttoaste Passintarkastuksen käyttöaste.
+     * @param kayttoaste Passintarkastuksen kayttoaste.
      * @param suoritusteho Passintarkastuksen suoritusteho.
      * @param jonotusaika Passintarkastuksen jonotusaika.
      * @param jononpituus Passintarkastuksen jononpituus.
-     * @param maara Passintarkastuksen läpäisseiden matkustajien määrä.
+     * @param maara Passintarkastuksen lapaisseiden matkustajien maara.
      */
     public PTTulos(double kayttoaste, double suoritusteho, double jonotusaika, double jononpituus, int maara) {
         this.kayttoaste = kayttoaste;
@@ -84,9 +84,9 @@ public class PTTulos {
     }
 
     /**
-     * Asettaa passintarkastuksen käyttöasteen.
+     * Asettaa passintarkastuksen kayttoasteen.
      *
-     * @param kayttoaste Passintarkastuksen käyttöaste.
+     * @param kayttoaste Passintarkastuksen kayttoaste.
      */
     public void setKayttoaste(double kayttoaste) {
         this.kayttoaste = kayttoaste;
@@ -120,9 +120,9 @@ public class PTTulos {
     }
 
     /**
-     * Asettaa passintarkastuksen läpäisseiden matkustajien määrän.
+     * Asettaa passintarkastuksen lapaisseiden matkustajien maaran.
      *
-     * @param maara Passintarkastuksen läpäisseiden matkustajien määrä.
+     * @param maara Passintarkastuksen lapaisseiden matkustajien maara.
      */
     public void setMaara(int maara) {
         this.maara = maara;
@@ -139,9 +139,9 @@ public class PTTulos {
     }
 
     /**
-     * Palauttaa passintarkastuksen käyttöasteen.
+     * Palauttaa passintarkastuksen kayttoasteen.
      *
-     * @return Passintarkastuksen käyttöaste.
+     * @return Passintarkastuksen kayttoaste.
      */
     public double getKayttoaste() {
         return kayttoaste;
@@ -175,9 +175,9 @@ public class PTTulos {
     }
 
     /**
-     * Palauttaa passintarkastuksen läpäisseiden matkustajien määrän.
+     * Palauttaa passintarkastuksen lapaisseiden matkustajien maaran.
      *
-     * @return Passintarkastuksen läpäisseiden matkustajien määrä.
+     * @return Passintarkastuksen lapaisseiden matkustajien maara.
      */
     public int getMaara() {
         return maara;

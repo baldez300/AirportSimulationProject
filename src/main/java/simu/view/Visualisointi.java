@@ -29,7 +29,7 @@ public class Visualisointi {
 		this.taustakuva = new Image("file:src/main/resources/ap_blueprint.png");
 	}
 
-	/** Metodi joka tyhjentää näytön */
+	/** Metodi joka tyhjentaa nayton */
 	public void tyhjennaNaytto() {
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
@@ -37,25 +37,25 @@ public class Visualisointi {
 
 	/** Metodi joka aloittaa visualisoinnin */
 	public void aloitaVisualisointi() {
-		// Tehdään visualisointi Timerilla
+		// Tehdaan visualisointi Timerilla
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
 			// long now tarkoittaa nanosekunteja joka annetaan metodille parametrina koska
-			// se on abstrakti metodi ja se pitää ylikirjoittaa
+			// se on abstrakti metodi ja se pitaa ylikirjoittaa
 			/**
-			 * Metodi joka piirtää kuvan näytölle
+			 * Metodi joka piirtaa kuvan naytolle
 			 * @param now
 			 */
 			public void handle(long now) {
 				viive(kontrolleri.getMoottorinViive());
 				tyhjennaNaytto();
-				// Piirretään taustakuva
+				// Piirretaan taustakuva
 				gc.drawImage(taustakuva, 0, 0, taustakuvaLeveys, taustakuvaKorkeus, 0, 0, canvas.getWidth(),
 						canvas.getHeight());
 
-				// Piireteään kellonaika
+				// Piireteaan kellonaika
 				gc.setFont(Font.font("Arial", FontWeight.BOLD, 28)); // Fonttikoko 28
-				gc.setFill(Color.BLACK); // Fontin väri musta
+				gc.setFill(Color.BLACK); // Fontin vari musta
 				String s = String.format("%05d", (int)Kello.getInstance().getAika()); // Aika muotoillaan kokonaisluvuksi
 				gc.fillText("Aika: ",10,50);
 				gc.fillText(s,30,80);
@@ -64,10 +64,10 @@ public class Visualisointi {
 				Palvelupiste[] palvelupisteet = kontrolleri.getPalvelupisteet();
 
 				for (Palvelupiste p : palvelupisteet) {
-					// Piirretään tietoa palvelupisteistä
+					// Piirretaan tietoa palvelupisteista
 					p.piirra(gc);
 
-					// Piirretään asiakkaat jonoihin ja riveihin
+					// Piirretaan asiakkaat jonoihin ja riveihin
 					int suunta = (p.getNimi().equals("LS") || p.getNimi().equals("PT")) ? -1
 							: 1;
 					int rivi = 0;
@@ -85,7 +85,7 @@ public class Visualisointi {
 						}
 					}
 				}
-				// Jos moottori thread on pysäytetty, pysäytetään myös visualisointi
+				// Jos moottori thread on pysaytetty, pysaytetaan myos visualisointi
 				if (!kontrolleri.onHengissa())
 					this.stop();
 			}
@@ -93,7 +93,7 @@ public class Visualisointi {
 		timer.start();
 	}
 
-	/** Metodi joka viivästää simulaatiota */
+	/** Metodi joka viivastaa simulaatiota */
 		private void viive(long aika) { // UUSI
 		try {
 			Thread.sleep(aika);

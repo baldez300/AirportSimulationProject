@@ -7,14 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-/** Luokka, joka käynnistää simulaattorin graafisen käyttöliittymän.
- *  Luokka on simulaattorin käynnistävä luokka.
+/** Luokka, joka kaynnistaa simulaattorin graafisen kayttoliittyman.
+ *  Luokka on simulaattorin kaynnistava luokka.
  */
 public class SimulaattorinGUI extends Application {
 
     @Override
-    /** Metodi, joka käynnistää simulaattorin graafisen käyttöliittymän.
-     *  @param stage Stage-olio, joka on simulaattorin graafisen käyttöliittymän ikkuna.
+    /** Metodi, joka kaynnistaa simulaattorin graafisen kayttoliittyman.
+     *  @param stage Stage-olio, joka on simulaattorin graafisen kayttoliittyman ikkuna.
      */
     public void start(Stage stage) {
         try {

@@ -12,7 +12,7 @@ import jakarta.persistence.JoinColumn;
 @Table(name = "lahtoselvitys")
 
 /**
- * Luokka sisältää lähtöselvityksen tulokset
+ * Luokka sisaltaa lahtoselvityksen tulokset
  *
  * @see simu.model.Simulaatio
  */
@@ -27,7 +27,7 @@ public class LSTulos {
     private int id;
     @Column(name = "kayttoaste")
     /**
-     * Käyttöaste
+     * Kayttoaste
      */
     private double kayttoaste;
     @Column(name = "suoritusteho")
@@ -47,18 +47,18 @@ public class LSTulos {
     private double jononpituus;
     @Column(name = "maara")
     /**
-     * Lähtöselvityksessä käsiteltyjen asiakkaiden määrä
+     * Lahtoselvityksessa kasiteltyjen asiakkaiden maara
      */
     private int maara;
 
     /**
      * Konstruktori
      *
-     * @param kayttoaste Käyttöaste
+     * @param kayttoaste Kayttoaste
      * @param suoritusteho Suoritusteho
      * @param jonotusaika Jonotusaika
      * @param jononpituus Jononpituus
-     * @param maara Lähtöselvityksessä käsiteltyjen asiakkaiden määrä
+     * @param maara Lahtoselvityksessa kasiteltyjen asiakkaiden maara
      */
     public LSTulos(double kayttoaste, double suoritusteho, double jonotusaika, double jononpituus, int maara) {
         this.kayttoaste = kayttoaste;
@@ -85,9 +85,9 @@ public class LSTulos {
     }
 
     /**
-     * Asettaa käyttöasteen
+     * Asettaa kayttoasteen
      *
-     * @param kayttoaste Käyttöaste
+     * @param kayttoaste Kayttoaste
      */
     public void setKayttoaste(double kayttoaste) {
         this.kayttoaste = kayttoaste;
@@ -121,9 +121,9 @@ public class LSTulos {
     }
 
     /**
-     * Asettaa lähtöselvityksessä käsiteltyjen asiakkaiden määrän
+     * Asettaa lahtoselvityksessa kasiteltyjen asiakkaiden maaran
      *
-     * @param maara Lähtöselvityksessä käsiteltyjen asiakkaiden määrä
+     * @param maara Lahtoselvityksessa kasiteltyjen asiakkaiden maara
      */
     public void setMaara(int maara) {
         this.maara = maara;
@@ -140,9 +140,9 @@ public class LSTulos {
     }
 
     /**
-     * Palauttaa käyttöasteen
+     * Palauttaa kayttoasteen
      *
-     * @return Käyttöaste
+     * @return Kayttoaste
      */
     public double getKayttoaste() {
         return kayttoaste;
@@ -176,9 +176,9 @@ public class LSTulos {
     }
 
     /**
-     * Palauttaa lähtöselvityksessä käsiteltyjen asiakkaiden määrän
+     * Palauttaa lahtoselvityksessa kasiteltyjen asiakkaiden maaran
      *
-     * @return Lähtöselvityksessä käsiteltyjen asiakkaiden määrä
+     * @return Lahtoselvityksessa kasiteltyjen asiakkaiden maara
      */
     public int getMaara() {
         return maara;

@@ -38,9 +38,9 @@ import simu.model.OmaMoottori;
 import simu.model.Palvelupiste;
 import javafx.util.converter.DoubleStringConverter;
 
-/** Kontrolleri-luokka, joka toimii käyttöliittymän ja sovelluslogiikan välissä */
+/** Kontrolleri-luokka, joka toimii kayttoliittyman ja sovelluslogiikan valissa */
 public class Kontrolleri {
-    // Oletusarvot asetuksille jotta pysyvät muistissa
+    // Oletusarvot asetuksille jotta pysyvat muistissa
     /** Luokan attribuutit */
     private static double simulointiAika = 1000;
     private static int simulointiViive = 100;
@@ -285,7 +285,7 @@ public class Kontrolleri {
 
     private Visualisointi visualisointi;
 
-    // Timer tarkistamaan onko simulointi loppunut ja avaamaan tulokset näkymän
+    // Timer tarkistamaan onko simulointi loppunut ja avaamaan tulokset nakyman
     private Timer timer;
 
     // Apumuuttujat
@@ -296,19 +296,19 @@ public class Kontrolleri {
     // Asetetaan oletusarvot spinnereille
     @FXML
     /**
-     * Metodi, joka suoritetaan kun käyttöliittymä on ladattu
+     * Metodi, joka suoritetaan kun kayttoliittyma on ladattu
      */
     void initialize() {
-        // Alusta TextFormatter rajoittaaksesi syötteen numeerisiin arvoihin
+        // Alusta TextFormatter rajoittaaksesi syotteen numeerisiin arvoihin
         TextFormatter<Double> textFormatter = new TextFormatter<>(
                 new DoubleStringConverter(),
-                0.0, // Oletusarvo (voidään muuttaa tämän halutuksi oletusarvoksi)
+                0.0, // Oletusarvo (voidaan muuttaa taman halutuksi oletusarvoksi)
                 change -> {
                     String newText = change.getControlNewText();
                     if (isValidDouble(newText)) {
                         return change;
                     } else {
-                        return null; // Hylkää muutos, jos se ei ole kelvollinen tupla
+                        return null; // Hylkaa muutos, jos se ei ole kelvollinen tupla
                     }
                 });
 
@@ -370,13 +370,13 @@ public class Kontrolleri {
         lentojenVali.setValueFactory(lentojenValiSpinner);
         lentojenVali2.setValueFactory(lentojenVali2Spinner);
 
-        // Asetetaan graafien x-akselin arvot näkymättömiksi
+        // Asetetaan graafien x-akselin arvot nakymattomiksi
         jononpituusChart.getXAxis().setTickLabelsVisible(false);
         jonotusaikaChart.getXAxis().setTickLabelsVisible(false);
         kayttoasteChart.getXAxis().setTickLabelsVisible(false);
         suoritustehoChart.getXAxis().setTickLabelsVisible(false);
 
-        // Asetetaan päivämäärä
+        // Asetetaan paivamaara
         pvm.setText(LocalDate.now().toString());
 
         hidastaNappi.setOnAction(e -> {
@@ -392,14 +392,14 @@ public class Kontrolleri {
         });
 
         /*
-         * Asetataan Tuloksetlistalle kuuntelija joka päivittää tiedot kun valinta
+         * Asetataan Tuloksetlistalle kuuntelija joka paivittaa tiedot kun valinta
          * muuttuu
          */
         tuloksetLista.getSelectionModel().selectedItemProperty().addListener(this::valintaMuuttui);
 
         visualisointi = new Visualisointi(this, contentCanvas);
 
-        // Tarkistetaan tietokanta yhteys 3 sekunnin välein
+        // Tarkistetaan tietokanta yhteys 3 sekunnin valein
         Timer tietokantaTimer = new Timer();
         tietokantaTimer.schedule(new TimerTask() {
             @Override
@@ -420,7 +420,7 @@ public class Kontrolleri {
             }
         }, 0, 3000);
 
-        // Asetetaan kaikki muut sivut näkymättömiksi paitsi asetukset
+        // Asetetaan kaikki muut sivut nakymattomiksi paitsi asetukset
         simulaatioSivu.setVisible(false);
         TuloksetSivu.setVisible(false);
         tallennetut.setVisible(false);
@@ -429,7 +429,7 @@ public class Kontrolleri {
 
     @FXML
     /**
-     * Metodi, joka suoritetaan kun käyttäjä painaa aloita nappia
+     * Metodi, joka suoritetaan kun kayttaja painaa aloita nappia
      */
     private void aloita(ActionEvent event) {
         // Resetoidaan kellon aika ja staattiset muuttujat
@@ -458,7 +458,7 @@ public class Kontrolleri {
         });
 
         // Timer tarkistamaan onko simulointi loppunut
-        // Jos on niin siirtyy tulokset näkymään
+        // Jos on niin siirtyy tulokset nakymaan
         if (timer != null) timer.cancel();
         timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -500,7 +500,7 @@ public class Kontrolleri {
     @FXML
     // Haetaan tulokset tietokannasta ja asetetaan ne listaan
     /**
-     * Metodi, joka suoritetaan kun käyttäjä painaa edelliset tulokset nappia
+     * Metodi, joka suoritetaan kun kayttaja painaa edelliset tulokset nappia
      */
     private void naytaTulokset(ActionEvent event) {
         List<Tulokset> tulokset = tuloksetDao.lataaKaikki();
@@ -516,7 +516,7 @@ public class Kontrolleri {
 
     @FXML
     // Haetaan tarkemmat tiedot tietokannasta valitun tuloksen id:n perusteella
-    /** Metodo, joka suoritetaan kun käyttäjä painaa tarkemmat tiedot nappia */
+    /** Metodo, joka suoritetaan kun kayttaja painaa tarkemmat tiedot nappia */
     private void naytaTarkemmatTiedot(ActionEvent event) {
         try {
             Tulokset valittuTulos = tuloksetLista.getSelectionModel().getSelectedItem();
@@ -537,7 +537,7 @@ public class Kontrolleri {
     @FXML
 
     /**
-     * Metodi, joka suoritetaan kun käyttäjä painaa poistu nappia
+     * Metodi, joka suoritetaan kun kayttaja painaa poistu nappia
      */
     private void palaaAsetuksiin(ActionEvent event) {
         Stage asetuksetStage = (Stage) AsetuksetSivu.getScene().getWindow();
@@ -550,10 +550,10 @@ public class Kontrolleri {
 
     @FXML
     /**
-     * Metodi, joka suoritetaan kun käyttäjä painaa poistu nappia
+     * Metodi, joka suoritetaan kun kayttaja painaa poistu nappia
      */
     private void palaaTallennettuihin(ActionEvent event) {
-        // Tyhjennetään kaikki graafit
+        // Tyhjennetaan kaikki graafit
         tyhjennaChartit();
         Stage tallennetutStage = (Stage) tallennetut.getScene().getWindow();
         tallennetutStage.setTitle("Tallennetut tulokset");
@@ -564,7 +564,7 @@ public class Kontrolleri {
     @FXML
     // Tallennetaan tulokset tietokantaan
     /**
-     * Metodi, joka suoritetaan kun käyttäjä painaa tallenna nappia
+     * Metodi, joka suoritetaan kun kayttaja painaa tallenna nappia
      */
     private void tallenna(ActionEvent event) {
         painettu = true;
@@ -574,12 +574,12 @@ public class Kontrolleri {
 
     @FXML
     /**
-     * Metodi, joka suoritetaan kun käyttäjä painaa uusi nappia
+     * Metodi, joka suoritetaan kun kayttaja painaa uusi nappia
      */
     private void uusiSimulointi(ActionEvent event) {
         ((Thread) moottori).interrupt();
         painettu = false;
-        // Tyhjennetään kaikki chartit
+        // Tyhjennetaan kaikki chartit
         tyhjennaChartit();
         Stage asetuksetStage = (Stage) AsetuksetSivu.getScene().getWindow();
         asetuksetStage.setTitle("Simulaation asetukset");
@@ -588,7 +588,7 @@ public class Kontrolleri {
         tallennaNappi.setDisable(false);
     }
 
-    /** Metodi, joka suoritetaan kun käyttäjä painaa poistu nappia */
+    /** Metodi, joka suoritetaan kun kayttaja painaa poistu nappia */
     public void lopetaSaie() {
         ((Thread) moottori).interrupt();
         timer.cancel();
@@ -625,43 +625,43 @@ public class Kontrolleri {
     // Getters for settings
 
     /*
-     * Tämä palauttaa lähtöselvityksen keskiarvon jaettuna pisteiden määrällä
-     * joka on keskimääräinen palvelunopeus
+     * Tama palauttaa lahtoselvityksen keskiarvon jaettuna pisteiden maaralla
+     * joka on keskimaarainen palvelunopeus
      */
     /**
-     * Metodi, joka palauttaa lähtöselvityksen keskiarvon jaettuna pisteiden määrällä joka on keskimääräinen palvelunopeus
-     * @return palauttaa lähtöselvityksen keskiarvon jaettuna pisteiden määrällä joka on keskimääräinen palvelunopeus
+     * Metodi, joka palauttaa lahtoselvityksen keskiarvon jaettuna pisteiden maaralla joka on keskimaarainen palvelunopeus
+     * @return palauttaa lahtoselvityksen keskiarvon jaettuna pisteiden maaralla joka on keskimaarainen palvelunopeus
      */
     public int getLSpalveluNopeus() {
         return lahtoselvitysKA.getValue() / lahtoselvitysMaara.getValue();
     }
 
     /**
-     * Metodi, joka palauttaa lähtöselvityksen pisteiden määrän
-     * @return palauttaa lähtöselvityksen pisteiden määrän
+     * Metodi, joka palauttaa lahtoselvityksen pisteiden maaran
+     * @return palauttaa lahtoselvityksen pisteiden maaran
      */
     public int getLahtoselvitysMaara() {
         return lahtoselvitysMaara.getValue();
     }
 
     /**
-     * Metodi, joka palauttaa lähtöselvityksen vaihtelun
-     * @return palauttaa lähtöselvityksen vaihtelun
+     * Metodi, joka palauttaa lahtoselvityksen vaihtelun
+     * @return palauttaa lahtoselvityksen vaihtelun
      */
     public int getLahtoselvitysVar() {
         return lahtoselvitysVar.getValue();
     }
 
-    /** Metodi palauttaa passintarkastuksen keskiarvon jaettuna pisteiden määrällä joka on keskimääräinen palvelunopeus
-     * @return palauttaa passintarkastuksen keskiarvon jaettuna pisteiden määrällä joka on keskimääräinen palvelunopeus
+    /** Metodi palauttaa passintarkastuksen keskiarvon jaettuna pisteiden maaralla joka on keskimaarainen palvelunopeus
+     * @return palauttaa passintarkastuksen keskiarvon jaettuna pisteiden maaralla joka on keskimaarainen palvelunopeus
      */
     public int getPTpalveluNopeus() {
         return passintarkastusKA.getValue() / passintarkastusMaara.getValue();
     }
 
     /**
-     * Metodi, joka palauttaa passintarkastuksen pisteiden määrän
-     * @return palauttaa passintarkastuksen pisteiden määrän
+     * Metodi, joka palauttaa passintarkastuksen pisteiden maaran
+     * @return palauttaa passintarkastuksen pisteiden maaran
      */
     public int getPassintarkastusMaara() {
         return passintarkastusMaara.getValue();
@@ -676,15 +676,15 @@ public class Kontrolleri {
     }
 
     /**
-     * Metodi, joka palauttaa turvatarkastuksen keskiarvon jaettuna pisteiden määrällä joka on keskimääräinen palvelunopeus
-     * @return palauttaa turvatarkastuksen keskiarvon jaettuna pisteiden määrällä joka on keskimääräinen palvelunopeus
+     * Metodi, joka palauttaa turvatarkastuksen keskiarvon jaettuna pisteiden maaralla joka on keskimaarainen palvelunopeus
+     * @return palauttaa turvatarkastuksen keskiarvon jaettuna pisteiden maaralla joka on keskimaarainen palvelunopeus
      */
     public int getTTpalveluNopeus() {
         return turvatarkastusKA.getValue() / turvatarkastusMaara.getValue();
     }
 
-    /** Metodi palauttaa turvatarkastuksen pisteiden määrän
-     * @return palauttaa turvatarkastuksen pisteiden määrän
+    /** Metodi palauttaa turvatarkastuksen pisteiden maaran
+     * @return palauttaa turvatarkastuksen pisteiden maaran
      */
     public int getTurvatarkastusMaara() {
         return turvatarkastusMaara.getValue();
@@ -698,44 +698,44 @@ public class Kontrolleri {
         return turvatarkastusVar.getValue();
     }
 
-    /** Metodi palauttaa kotimaan lähtöportin vaihtelun
-     * @return palauttaa kotimaan lähtöportin vaihtelun
+    /** Metodi palauttaa kotimaan lahtoportin vaihtelun
+     * @return palauttaa kotimaan lahtoportin vaihtelun
      */
     public int getKotimaaVar() {
         return kotimaaVar.getValue();
     }
 
-    /** Metodi palauttaa kotimaan lähtoportin keskiarvon palveluaika
-     *  @return palauttaa kotimaan lähtoportin keskiarvon palveluaika
+    /** Metodi palauttaa kotimaan lahtoportin keskiarvon palveluaika
+     *  @return palauttaa kotimaan lahtoportin keskiarvon palveluaika
      *  */
     public int getKotimaaKA() {
         return kotimaaKA.getValue();
     }
-    /** Metodi palauttaa ulkomaan lähtöportin vaihtelun
-     * @return palauttaa ulkomaan lähtöportin vaihtelun
+    /** Metodi palauttaa ulkomaan lahtoportin vaihtelun
+     * @return palauttaa ulkomaan lahtoportin vaihtelun
      */
     public int getUlkomaaVar() {
         return ulkomaaVar.getValue();
     }
 
-    /** Metodi palauttaa ulkomaan lähtoportin keskiarvon palveluaika
-     *  @return palauttaa ulkomaan lähtoportin keskiarvon palveluaika
+    /** Metodi palauttaa ulkomaan lahtoportin keskiarvon palveluaika
+     *  @return palauttaa ulkomaan lahtoportin keskiarvon palveluaika
      *  */
     public int getUlkomaaKA() {
         return ulkomaaKA.getValue();
     }
 
     /**
-     * Metodi, joka palauttaa lentojen välisen ajan
-     * @return palauttaa lentojen välisen ajan
+     * Metodi, joka palauttaa lentojen valisen ajan
+     * @return palauttaa lentojen valisen ajan
      */
     public int getLentojenVali() {
         return lentojenVali.getValue();
     }
 
     /**
-     * Metodi, joka palauttaa lentojen välisen ajan
-     * @return palauttaa lentojen välisen ajan
+     * Metodi, joka palauttaa lentojen valisen ajan
+     * @return palauttaa lentojen valisen ajan
      */
     public int getLentojenVali2() {
         return lentojenVali2.getValue();
@@ -765,8 +765,8 @@ public class Kontrolleri {
         return ((OmaMoottori) moottori).getPalvelupisteet();
     }
 
-    /** Metodi tarkistaa onko simulaatio käynnissä
-     * @return palauttaa true jos simulaatio on käynnissä, muuten false
+    /** Metodi tarkistaa onko simulaatio kaynnissa
+     * @return palauttaa true jos simulaatio on kaynnissa, muuten false
      */
     protected boolean onHengissa() {
         return ((Moottori) moottori).isAlive();
@@ -779,9 +779,9 @@ public class Kontrolleri {
         return ((OmaMoottori) moottori).getViive();
     }
 
-    // Asetetaan tallennetut tulokset näkymään tulokset sivulle
+    // Asetetaan tallennetut tulokset nakymaan tulokset sivulle
     /**
-     * Metodi, joka asettaa tallennetut tulokset näkymään tulokset sivulle
+     * Metodi, joka asettaa tallennetut tulokset nakymaan tulokset sivulle
      * @param tulokset tulokset
      */
     private void asetaTulokset(Tulokset tulokset) {
@@ -822,7 +822,7 @@ public class Kontrolleri {
         TT.setText(String.format("%d kpl", ttTulos.getMaara()));
         PT.setText(String.format("%d kpl", ptTulos.getMaara()));
 
-        // Myöhästyneet prosentit
+        // Myohastyneet prosentit
         double myohastyneetT1Prosentti = tulokset.getMyohastyneet_t1() / (tulokset.getMyohastyneet_t1() + tulokset.getMyohastyneet_t2()) * 100;
         double myohastyneetT2Prosentti = tulokset.getMyohastyneet_t2() / (tulokset.getMyohastyneet_t1() + tulokset.getMyohastyneet_t2()) * 100;
     
@@ -840,28 +840,28 @@ public class Kontrolleri {
             List<XYChart.Series<String, Double>> seriesList3 = new ArrayList<>();
             List<XYChart.Series<String, Double>> seriesList4 = new ArrayList<>();
             // Jonojen pituudet
-            seriesList1.add(createSeries("Lähtöselvitys", lsTulos.getJononpituus()));
+            seriesList1.add(createSeries("Lahtoselvitys", lsTulos.getJononpituus()));
             seriesList1.add(createSeries("Passintarkastus", ptTulos.getJononpituus()));
             seriesList1.add(createSeries("Turvatarkastus", ttTulos.getJononpituus()));
             seriesList1.add(createSeries("T1", t1Tulos.getJononpituus()));
             seriesList1.add(createSeries("T2", t2Tulos.getJononpituus()));
             jononpituusChart.getData().addAll(seriesList1);
             // Jonotusajat
-            seriesList2.add(createSeries("Lähtöselvitys", lsTulos.getJonotusaika()));
+            seriesList2.add(createSeries("Lahtoselvitys", lsTulos.getJonotusaika()));
             seriesList2.add(createSeries("Passintarkastus", ptTulos.getJonotusaika()));
             seriesList2.add(createSeries("Turvatarkastus", ttTulos.getJonotusaika()));
             seriesList2.add(createSeries("T1", t1Tulos.getJonotusaika()));
             seriesList2.add(createSeries("T2", t2Tulos.getJonotusaika()));
             jonotusaikaChart.getData().addAll(seriesList2);
             // Suoritustehot
-            seriesList3.add(createSeries("Lähtöselvitys", lsTulos.getSuoritusteho()));
+            seriesList3.add(createSeries("Lahtoselvitys", lsTulos.getSuoritusteho()));
             seriesList3.add(createSeries("Passintarkastus", ptTulos.getSuoritusteho()));
             seriesList3.add(createSeries("Turvatarkastus", ttTulos.getSuoritusteho()));
             seriesList3.add(createSeries("T1", t1Tulos.getSuoritusteho()));
             seriesList3.add(createSeries("T2", t2Tulos.getSuoritusteho()));
             suoritustehoChart.getData().addAll(seriesList3);
-            // Käyttöasteet
-            seriesList4.add(createSeries("Lähtöselvitys", lsTulos.getKayttoaste()));
+            // Kayttoasteet
+            seriesList4.add(createSeries("Lahtoselvitys", lsTulos.getKayttoaste()));
             seriesList4.add(createSeries("Passintarkastus", ptTulos.getKayttoaste()));
             seriesList4.add(createSeries("Turvatarkastus", ttTulos.getKayttoaste()));
             seriesList4.add(createSeries("T1", t1Tulos.getKayttoaste()));
@@ -871,7 +871,7 @@ public class Kontrolleri {
             myohastyneetPie.getData().add(new PieChart.Data("T1", myohastyneetT1Prosentti));
             myohastyneetPie.getData().add(new PieChart.Data("T2", myohastyneetT2Prosentti));
 
-            // Asetetaan värit
+            // Asetetaan varit
             for (PieChart.Data data : myohastyneetPie.getData()) {
                 if (data.getName().equals("T1")) {
                     data.getNode().setStyle("-fx-pie-color: red;");
@@ -896,9 +896,9 @@ public class Kontrolleri {
         return series;
     }
 
-    // Tyhjennä graaffien data
+    // Tyhjenna graaffien data
     /**
-     * Metodi, joka tyhjentää graaffien data
+     * Metodi, joka tyhjentaa graaffien data
      */
     public void tyhjennaChartit() {
         jononpituusChart.getData().clear();
@@ -910,14 +910,14 @@ public class Kontrolleri {
         T2_myohastyneet_pros.setText("0");
     }
 
-    // Asetetaan tulokset näkymään viereseen Vboxiin kun valinta muuttuu
-    /** Metodi asettaa tulokset näkymään viereseen Vboxiin kun valinta muuttuu
+    // Asetetaan tulokset nakymaan viereseen Vboxiin kun valinta muuttuu
+    /** Metodi asettaa tulokset nakymaan viereseen Vboxiin kun valinta muuttuu
      * @param observable observable
      * @param oldValue vanha arvo
      * @param newValue uusi arvo
      */
     private void valintaMuuttui(ObservableValue<? extends Tulokset> observable, Tulokset oldValue, Tulokset newValue) {
-        // Asennetaan tulokset näkymään
+        // Asennetaan tulokset nakymaan
         if (newValue != null) {
             tulosValittu = true;
             TkokonaisAika.setText(

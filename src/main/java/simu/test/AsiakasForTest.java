@@ -9,7 +9,7 @@ public class AsiakasForTest {
 	private TapahtumanTyyppi tyyppi;
 	private double saapumisaika, poistumisaika, width, height;
 	private int id;
-	private boolean ulkomaanlento; // Uusi kenttä, määrittää onko asiakas ulkomaanlennon asiakas
+	private boolean ulkomaanlento; // Uusi kentta, maarittaa onko asiakas ulkomaanlennon asiakas
 	public static int lennolleEhtineet = 0, T1myohastyneet = 0, T2myohastyneet = 0;
 	public static int i = 0;
 

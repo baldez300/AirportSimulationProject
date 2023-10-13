@@ -11,7 +11,7 @@ import jakarta.persistence.JoinColumn;
 @Entity
 @Table(name = "t1")
 /**
- * T1Tulos-luokka sisältää tietokantataulun t1 tulokset
+ * T1Tulos-luokka sisaltaa tietokantataulun t1 tulokset
  */
 public class T1Tulos {
     @Id
