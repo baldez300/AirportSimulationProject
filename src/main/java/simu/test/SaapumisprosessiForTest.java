@@ -9,11 +9,16 @@ import static simu.model.TapahtumanTyyppi.*;
 
 /** Saapumisprosessin test -luokka */
 public class SaapumisprosessiForTest {
-	/** Saamupisprosessin test -luokan muutujat */
+	/** Tapahtumalista */
 	private TapahtumalistaForTest tapahtumalista;
+	/** Tapahtuman tyyppi */
 	private ITapahtumanTyyppi tyyppi;
 
-	private double ulkoLahtoAika, lentojenVali;
+	/** Ulkomaan lentojen lahtoaika */
+	private double ulkoLahtoAika;
+
+	/** Lentojen vali */
+	private double lentojenVali;
 
 	/** Saapumisprosessin test -luokan konstruktori */
 	public SaapumisprosessiForTest(TapahtumalistaForTest tl, ITapahtumanTyyppi tyyppi, double ulkoLahtoAika, double lentojenVali) {
