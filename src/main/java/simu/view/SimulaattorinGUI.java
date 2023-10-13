@@ -12,10 +12,10 @@ import java.io.IOException;
  */
 public class SimulaattorinGUI extends Application {
 
-    @Override
     /** Metodi, joka kaynnistaa simulaattorin graafisen kayttoliittyman.
      *  @param stage Stage-olio, joka on simulaattorin graafisen kayttoliittyman ikkuna.
      */
+    @Override
     public void start(Stage stage) {
         try {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/simulaattori.fxml"));
