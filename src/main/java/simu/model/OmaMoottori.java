@@ -59,13 +59,15 @@ public class OmaMoottori extends Moottori {
 	}
 
 	@Override
-	/** Alustaa simulaation */
+	/** Alustaa simulaation
+	 * {@inheritDoc} */
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Asetetaan ensimmainen saapuminen jarjestelmaan
 	}
 
 	@Override
-	/** Suorittaa tapahtuman */
+	/** Suorittaa tapahtuman
+	 * {@inheritDoc} */
 	protected void suoritaTapahtuma(Tapahtuma t) {
 		Asiakas a;
 		switch ((TapahtumanTyyppi) t.getTyyppi()) {
