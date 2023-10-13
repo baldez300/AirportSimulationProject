@@ -17,8 +17,9 @@ import simu.model.TapahtumanTyyppi;
  * @see SaapumisprosessiForTest
  */
 public class OmaMoottoriForTest extends MoottoriForTest {
-	/** Omamoottorin luokan muuttujat */
+	/** Saapumisprosessi */
 	private SaapumisprosessiForTest saapumisprosessi;
+	/** Palvelupisteet */
 	private PalvelupisteForTest[] palvelupisteet;
 
 	/**
@@ -55,22 +56,22 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 		return palvelupisteet;
 	}
 
-	@Override
 	/**
 	 * Alustaa sapumisprosessi.
 	 *
 	 * @see SaapumisprosessiForTest
 	 */
+	@Override
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Asetetaan ensimmainen saapuminen jarjestelmaan
 	}
 
-	@Override
 	/**
 	 * Suorittaa tapahtuman.
 	 *
 	 * @param t tapahtuma
 	 */
+	@Override
 	protected void suoritaTapahtuma(Tapahtuma t) {
 		AsiakasForTest a;
 		switch ((TapahtumanTyyppi) t.getTyyppi()) {
@@ -133,10 +134,10 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 		}
 	}
 
-	@Override
 	/**
 	 * Yrittaa aloittaa C tapahtumat.
 	 */
+	@Override
 	protected void yritaCTapahtumat() {
 		for (PalvelupisteForTest p : palvelupisteet) {
 			if (!p.onVarattu() && p.onJonossa()) {
