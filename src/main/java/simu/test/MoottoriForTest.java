@@ -9,15 +9,20 @@ import simu.framework.Tapahtuma;
 /** Moottorin test luokka*/
 public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 
-	/** MoottorinTest luokan muuttujat*/
+	/** Simulointiaika*/
 	private double simulointiaika = 0;
+	/** Viive*/
 	private long viive = 0;
+	/** Lippu joka nayttaa onko simulointi kaynnissa*/
 	public boolean running = false;
 
+	/** Kello*/
 	private Kello kello;
 
+	/** Tapahtumalista*/
 	protected TapahtumalistaForTest tapahtumalista;
 
+	/** TuloksetDao*/
 	public TuloksetDao tuloksetDao;
 
 	/** MoottorinTest luokan konstruktori*/
@@ -42,14 +47,15 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 		return simulointiaika;
 	}
 
-	@Override // UUSI
 	/** Metodi asettaa viiveen*/
+	@Override // UUSI
 	public void setViive(long viive) {
 		this.viive = viive;
 	}
 
-	@Override // UUSI
 	/** Metodi palauttaa viiveen*/
+	@Override // UUSI
+
 	public long getViive() {
 		return viive;
 	}
