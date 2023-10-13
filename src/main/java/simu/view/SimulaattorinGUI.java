@@ -7,9 +7,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+/** Luokka, joka käynnistää simulaattorin graafisen käyttöliittymän.
+ *  Luokka on simulaattorin käynnistävä luokka.
+ */
 public class SimulaattorinGUI extends Application {
 
     @Override
+    /** Metodi, joka käynnistää simulaattorin graafisen käyttöliittymän.
+     *  @param stage Stage-olio, joka on simulaattorin graafisen käyttöliittymän ikkuna.
+     */
     public void start(Stage stage) {
         try {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/simulaattori.fxml"));

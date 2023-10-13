@@ -38,8 +38,10 @@ import simu.model.OmaMoottori;
 import simu.model.Palvelupiste;
 import javafx.util.converter.DoubleStringConverter;
 
+/** Kontrolleri-luokka, joka toimii käyttöliittymän ja sovelluslogiikan välissä */
 public class Kontrolleri {
     // Oletusarvot asetuksille jotta pysyvät muistissa
+    /** Luokan attribuutit */
     private static double simulointiAika = 1000;
     private static int simulointiViive = 100;
 
@@ -293,6 +295,9 @@ public class Kontrolleri {
 
     // Asetetaan oletusarvot spinnereille
     @FXML
+    /**
+     * Metodi, joka suoritetaan kun käyttöliittymä on ladattu
+     */
     void initialize() {
         // Alusta TextFormatter rajoittaaksesi syötteen numeerisiin arvoihin
         TextFormatter<Double> textFormatter = new TextFormatter<>(
@@ -398,6 +403,9 @@ public class Kontrolleri {
         Timer tietokantaTimer = new Timer();
         tietokantaTimer.schedule(new TimerTask() {
             @Override
+            /**
+             * Metodi, joka suoritetaan kun tietokanta yhteys on muuttunut
+             */
             public void run() {
                 testaaTietokantaYhteys();
                 if (!painettu && tietokantaYhteys)
@@ -420,6 +428,9 @@ public class Kontrolleri {
     }
 
     @FXML
+    /**
+     * Metodi, joka suoritetaan kun käyttäjä painaa aloita nappia
+     */
     private void aloita(ActionEvent event) {
         // Resetoidaan kellon aika ja staattiset muuttujat
         Kello.getInstance().setAika(0);
@@ -452,6 +463,9 @@ public class Kontrolleri {
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
+            /**
+             * Metodi, joka suoritetaan kun timer on suoritettu
+             */
             public void run() {
                 // Jos simulointi on loppunut, asetetaan tulokset
                 if (Kello.getInstance().getAika() >= simulointiAika) {
@@ -469,6 +483,11 @@ public class Kontrolleri {
     }
 
     // Tarkistetaan onko merkkijono numero
+    /**
+     * Metodi, joka tarkistaa onko merkkijono numero
+     * @param str merkkijono
+     * @return palauttaa true jos on numero, muuten false
+     */
     private boolean isValidDouble(String str) {
         try {
             Double.parseDouble(str);
@@ -480,6 +499,9 @@ public class Kontrolleri {
 
     @FXML
     // Haetaan tulokset tietokannasta ja asetetaan ne listaan
+    /**
+     * Metodi, joka suoritetaan kun käyttäjä painaa edelliset tulokset nappia
+     */
     private void naytaTulokset(ActionEvent event) {
         List<Tulokset> tulokset = tuloksetDao.lataaKaikki();
         tuloksetLista.getItems().clear();
@@ -494,6 +516,7 @@ public class Kontrolleri {
 
     @FXML
     // Haetaan tarkemmat tiedot tietokannasta valitun tuloksen id:n perusteella
+    /** Metodo, joka suoritetaan kun käyttäjä painaa tarkemmat tiedot nappia */
     private void naytaTarkemmatTiedot(ActionEvent event) {
         try {
             Tulokset valittuTulos = tuloksetLista.getSelectionModel().getSelectedItem();
@@ -512,6 +535,10 @@ public class Kontrolleri {
     }
 
     @FXML
+
+    /**
+     * Metodi, joka suoritetaan kun käyttäjä painaa poistu nappia
+     */
     private void palaaAsetuksiin(ActionEvent event) {
         Stage asetuksetStage = (Stage) AsetuksetSivu.getScene().getWindow();
         tulosValittu = false;
@@ -522,6 +549,9 @@ public class Kontrolleri {
     }
 
     @FXML
+    /**
+     * Metodi, joka suoritetaan kun käyttäjä painaa poistu nappia
+     */
     private void palaaTallennettuihin(ActionEvent event) {
         // Tyhjennetään kaikki graafit
         tyhjennaChartit();
@@ -533,6 +563,9 @@ public class Kontrolleri {
 
     @FXML
     // Tallennetaan tulokset tietokantaan
+    /**
+     * Metodi, joka suoritetaan kun käyttäjä painaa tallenna nappia
+     */
     private void tallenna(ActionEvent event) {
         painettu = true;
         tallennaNappi.setDisable(true);
@@ -540,6 +573,9 @@ public class Kontrolleri {
     }
 
     @FXML
+    /**
+     * Metodi, joka suoritetaan kun käyttäjä painaa uusi nappia
+     */
     private void uusiSimulointi(ActionEvent event) {
         ((Thread) moottori).interrupt();
         painettu = false;
@@ -552,6 +588,7 @@ public class Kontrolleri {
         tallennaNappi.setDisable(false);
     }
 
+    /** Metodi, joka suoritetaan kun käyttäjä painaa poistu nappia */
     public void lopetaSaie() {
         ((Thread) moottori).interrupt();
         timer.cancel();
@@ -561,14 +598,26 @@ public class Kontrolleri {
         AsetuksetSivu.setVisible(true);
     }
 
+    /**
+     * Metodi, joka hidasaa simulaatiota
+
+     */
     protected void hidasta() {
         moottori.setViive((long) (moottori.getViive() * 1.10));
     }
 
+    /**
+     * Metodi, joka nopeuttaa simulaatiota
+
+     */
     protected void nopeuta() {
         moottori.setViive((long) (moottori.getViive() * 0.9));
     }
 
+    /**
+     * Metodi, palauttaa Canvasin
+
+     */
     public Canvas getCanvas() {
         return contentCanvas;
     }
@@ -579,87 +628,162 @@ public class Kontrolleri {
      * Tämä palauttaa lähtöselvityksen keskiarvon jaettuna pisteiden määrällä
      * joka on keskimääräinen palvelunopeus
      */
+    /**
+     * Metodi, joka palauttaa lähtöselvityksen keskiarvon jaettuna pisteiden määrällä joka on keskimääräinen palvelunopeus
+     * @return palauttaa lähtöselvityksen keskiarvon jaettuna pisteiden määrällä joka on keskimääräinen palvelunopeus
+     */
     public int getLSpalveluNopeus() {
         return lahtoselvitysKA.getValue() / lahtoselvitysMaara.getValue();
     }
 
+    /**
+     * Metodi, joka palauttaa lähtöselvityksen pisteiden määrän
+     * @return palauttaa lähtöselvityksen pisteiden määrän
+     */
     public int getLahtoselvitysMaara() {
         return lahtoselvitysMaara.getValue();
     }
 
+    /**
+     * Metodi, joka palauttaa lähtöselvityksen vaihtelun
+     * @return palauttaa lähtöselvityksen vaihtelun
+     */
     public int getLahtoselvitysVar() {
         return lahtoselvitysVar.getValue();
     }
 
+    /** Metodi palauttaa passintarkastuksen keskiarvon jaettuna pisteiden määrällä joka on keskimääräinen palvelunopeus
+     * @return palauttaa passintarkastuksen keskiarvon jaettuna pisteiden määrällä joka on keskimääräinen palvelunopeus
+     */
     public int getPTpalveluNopeus() {
         return passintarkastusKA.getValue() / passintarkastusMaara.getValue();
     }
 
+    /**
+     * Metodi, joka palauttaa passintarkastuksen pisteiden määrän
+     * @return palauttaa passintarkastuksen pisteiden määrän
+     */
     public int getPassintarkastusMaara() {
         return passintarkastusMaara.getValue();
     }
 
+    /**
+     * Metodi, joka palauttaa passintarkastuksen vaihtelun
+     * @return palauttaa passintarkastuksen vaihtelun
+     */
     public int getPassintarkastusVar() {
         return passintarkastusVar.getValue();
     }
 
+    /**
+     * Metodi, joka palauttaa turvatarkastuksen keskiarvon jaettuna pisteiden määrällä joka on keskimääräinen palvelunopeus
+     * @return palauttaa turvatarkastuksen keskiarvon jaettuna pisteiden määrällä joka on keskimääräinen palvelunopeus
+     */
     public int getTTpalveluNopeus() {
         return turvatarkastusKA.getValue() / turvatarkastusMaara.getValue();
     }
 
+    /** Metodi palauttaa turvatarkastuksen pisteiden määrän
+     * @return palauttaa turvatarkastuksen pisteiden määrän
+     */
     public int getTurvatarkastusMaara() {
         return turvatarkastusMaara.getValue();
     }
 
+    /**
+     * Metodi, joka palauttaa turvatarkastuksen vaihtelun
+     * @return palauttaa turvatarkastuksen vaihtelun
+     */
     public int getTurvatarkastusVar() {
         return turvatarkastusVar.getValue();
     }
 
+    /** Metodi palauttaa kotimaan lähtöportin vaihtelun
+     * @return palauttaa kotimaan lähtöportin vaihtelun
+     */
     public int getKotimaaVar() {
         return kotimaaVar.getValue();
     }
 
+    /** Metodi palauttaa kotimaan lähtoportin keskiarvon palveluaika
+     *  @return palauttaa kotimaan lähtoportin keskiarvon palveluaika
+     *  */
     public int getKotimaaKA() {
         return kotimaaKA.getValue();
     }
-
+    /** Metodi palauttaa ulkomaan lähtöportin vaihtelun
+     * @return palauttaa ulkomaan lähtöportin vaihtelun
+     */
     public int getUlkomaaVar() {
         return ulkomaaVar.getValue();
     }
 
+    /** Metodi palauttaa ulkomaan lähtoportin keskiarvon palveluaika
+     *  @return palauttaa ulkomaan lähtoportin keskiarvon palveluaika
+     *  */
     public int getUlkomaaKA() {
         return ulkomaaKA.getValue();
     }
 
+    /**
+     * Metodi, joka palauttaa lentojen välisen ajan
+     * @return palauttaa lentojen välisen ajan
+     */
     public int getLentojenVali() {
         return lentojenVali.getValue();
     }
 
+    /**
+     * Metodi, joka palauttaa lentojen välisen ajan
+     * @return palauttaa lentojen välisen ajan
+     */
     public int getLentojenVali2() {
         return lentojenVali2.getValue();
     }
 
+    /**
+     * Metodi, joka palauttaa simuloinnin ajan
+     * @return palauttaa simuloinnin ajan
+     */
     public double getSimulointiAika() {
         return simulaationAika.getValue();
     }
 
+    /**
+     * Metodi, joka palauttaa simuloinnin viiveen
+     * @return palauttaa simuloinnin viiveen
+     */
     public int getSimulointiViive() {
         return simulaationViive.getValue();
     }
 
+    /**
+     * Metodi, joka palauttaa kaikki palvelupisteet
+     * @return palauttaa kaikki palvelupisteet
+     */
     protected Palvelupiste[] getPalvelupisteet() {
         return ((OmaMoottori) moottori).getPalvelupisteet();
     }
 
+    /** Metodi tarkistaa onko simulaatio käynnissä
+     * @return palauttaa true jos simulaatio on käynnissä, muuten false
+     */
     protected boolean onHengissa() {
         return ((Moottori) moottori).isAlive();
     }
 
+    /** Metodi palauttaa moottorin viiveen
+     * @return palauttaa moottorin viiveen
+     */
     protected long getMoottorinViive() {
         return ((OmaMoottori) moottori).getViive();
     }
 
     // Asetetaan tallennetut tulokset näkymään tulokset sivulle
+    /**
+     * Metodi, joka asettaa tallennetut tulokset näkymään tulokset sivulle
+     * @param tulokset tulokset
+     */
     private void asetaTulokset(Tulokset tulokset) {
         LSTulos lsTulos = tulokset.getLSTulos();
         PTTulos ptTulos = tulokset.getPTTulos();
@@ -759,6 +883,12 @@ public class Kontrolleri {
     }
 
     // Luodaan uusi series bar chartteja varten
+    /**
+     * Metodi, joka luo uuden series bar chartteja varten
+     * @param name nimi
+     * @param value arvo
+     * @return palauttaa uuden series bar chartteja varten
+     */
     private XYChart.Series<String, Double> createSeries(String name, double value) {
         XYChart.Series<String, Double> series = new XYChart.Series<>();
         series.setName(name);
@@ -767,6 +897,9 @@ public class Kontrolleri {
     }
 
     // Tyhjennä graaffien data
+    /**
+     * Metodi, joka tyhjentää graaffien data
+     */
     public void tyhjennaChartit() {
         jononpituusChart.getData().clear();
         myohastyneetPie.getData().clear();
@@ -778,6 +911,11 @@ public class Kontrolleri {
     }
 
     // Asetetaan tulokset näkymään viereseen Vboxiin kun valinta muuttuu
+    /** Metodi asettaa tulokset näkymään viereseen Vboxiin kun valinta muuttuu
+     * @param observable observable
+     * @param oldValue vanha arvo
+     * @param newValue uusi arvo
+     */
     private void valintaMuuttui(ObservableValue<? extends Tulokset> observable, Tulokset oldValue, Tulokset newValue) {
         // Asennetaan tulokset näkymään
         if (newValue != null) {
@@ -794,6 +932,9 @@ public class Kontrolleri {
     }
 
     // Resetoidaan staattiset muuttujat
+    /**
+     * Metodi, joka resetoi staattiset muuttujat
+     */
     private void resetoiStaattisetMuuttujat() {
         Asiakas.T1myohastyneet = 0;
         Asiakas.T2myohastyneet = 0;
@@ -802,6 +943,9 @@ public class Kontrolleri {
         Palvelupiste.palvellutAsiakkaatTotal = 0;
     }
 
+    /**
+     * Metodi, joka testaa tietokanta yhteyden
+     */
     private void testaaTietokantaYhteys() {
         try {
             SQLconnection.testaaTietokantaYhteys();

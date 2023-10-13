@@ -6,8 +6,10 @@ import simu.framework.Kello;
 import simu.framework.Tapahtuma;
 
 // Luodaan MoottoriForTest jotta ei tarvita GUI:ta testaukseen
+/** Moottorin test luokka*/
 public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 
+	/** MoottorinTest luokan muuttujat*/
 	private double simulointiaika = 0;
 	private long viive = 0;
 	public boolean running = false;
@@ -18,6 +20,7 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 
 	public TuloksetDao tuloksetDao;
 
+	/** MoottorinTest luokan konstruktori*/
 	public MoottoriForTest() {
 
 		this.tuloksetDao = new TuloksetDao();
@@ -28,24 +31,30 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 
 	}
 
+	// Setterit ja getterit
+	/** Metodi asettaa simulointiajan*/
 	public void setSimulointiaika(double aika) {
 		simulointiaika = aika;
 	}
 
+	/** Metodi palauttaa simulointiajan*/
 	public double getSimulointiaika() {
 		return simulointiaika;
 	}
 
 	@Override // UUSI
+	/** Metodi asettaa viiveen*/
 	public void setViive(long viive) {
 		this.viive = viive;
 	}
 
 	@Override // UUSI
+	/** Metodi palauttaa viiveen*/
 	public long getViive() {
 		return viive;
 	}
 
+	/** Metodi palauttaa tapahtumalistan*/
 	public void run() {
 
 		running = true;
@@ -64,6 +73,7 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 		}
 	}
 
+	/** Metodi suorittaa B tapahtumat*/
 	public void suoritaBTapahtumat() {
 		try {
 			while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
@@ -83,25 +93,32 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 		}
 	}
 
+	/** Metodi palauttaa nykyisen ajan*/
 	private double nykyaika() {
 		return tapahtumalista.getSeuraavanAika();
 	}
 
+	/** Metodi palauttaa true jos simuloidaan*/
 	private boolean simuloidaan() {
 		return kello.getAika() < simulointiaika;
 	}
 
+	/** Metodi palauttaa true jos running on true*/
 	public boolean isRunning() {
 		return running;
 	}
 
+	/** Metodi asettaa runningin*/
 	public void setRunning(boolean value) {
 		running = value;
 	}
 
+	/** Metodi suorittaa tapahtumat*/
 	protected abstract void suoritaTapahtuma(Tapahtuma t); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
+	/** Metodi yrittää suorittaa C tapahtumat*/
 	protected abstract void yritaCTapahtumat(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
+	/** Metodi alustaa tapahtumat*/
 	protected abstract void alustukset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 }

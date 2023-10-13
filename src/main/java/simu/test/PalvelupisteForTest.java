@@ -9,8 +9,10 @@ import simu.eduni.distributions.ContinuousGenerator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+/** Palvelupisteen test -luokka */
 public class PalvelupisteForTest {
 
+	/** Palvelupisteen muuttujat */
 	private final LinkedList<AsiakasForTest> jono = new LinkedList<>(); // Tietorakennetoteutus
 	private final ContinuousGenerator generator;
 	private final TapahtumalistaForTest tapahtumalista;
@@ -23,22 +25,26 @@ public class PalvelupisteForTest {
 	private int palvelupisteessaPalvellutAsiakkaat;
 	private boolean varattu = false;
 
+	/** Palvelupisteen konstruktori */
 	public PalvelupisteForTest(ContinuousGenerator generator, TapahtumalistaForTest tapahtumalista, TapahtumanTyyppi tyyppi) {
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
 		this.skeduloitavanTapahtumanTyyppi = tyyppi;
 	}
 
+	/** Metodi palauttaa asiakaiden jonon */
 	public LinkedList<AsiakasForTest> getAsiakasJono() {
 		return jono;
 	}
 
+	/** Metodi lisää asiakkaan jonoon */
 	public void lisaaJonoon(AsiakasForTest a) { // Jonon 1. asiakas aina palvelussa
 		// Toteutetaan asiakkaan lisäys jonoon
 		a.setSaapumisaika(Kello.getInstance().getAika());
 		jono.add(a);
 	}
 
+	/** Metodi poistaa asiakkaan jonosta */
 	public AsiakasForTest otaJonosta() { // Poistetaan palvelussa ollut
 		varattu = false;
 		// lasketaan kokonaisLapimenoaika kun asiakas poistuu jonosta
@@ -48,6 +54,7 @@ public class PalvelupisteForTest {
 		return jono.poll();
 	}
 
+	/** Metodi aloittaa palvelun */
 	public void aloitaPalvelu() { // Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 
 		varattu = true;
@@ -68,6 +75,7 @@ public class PalvelupisteForTest {
 		}
 	}
 
+	/** Metodi poistaa jonosta myöhästyneet asiakkaat */
 	public void removeAsiakasARR1() {
 		if (!jono.isEmpty()) {
 			if (jono.peek().isUlkomaanlento())
@@ -84,6 +92,7 @@ public class PalvelupisteForTest {
 		}
 	}
 
+	/** Metodi poistaa jonosta myöhästyneet asiakkaat */
 	public void removeAsiakasARR2() {
 		if (!jono.isEmpty()) {
 			if (!jono.peek().isUlkomaanlento())
@@ -101,38 +110,45 @@ public class PalvelupisteForTest {
 	}
 
 	// Getterit
-
+	/** Metodi palauttaa palvelupisteen suoritustehon */
 	public double getSuoritusteho() {
 		return suoritusTeho;
 	}
 
+	/** Metodi palauttaa palvelupisteen jonon pituuden */
 	public double getJononPituus() {
 		return this.jononPituus;
 	}
 
+	/** Metodi palauttaa palvelupisteen käyttöasteen */
 	public double getKayttoaste() {
 		return this.kayttoaste;
 	}
 
+	/** Metodi palauttaa palvelupisteen jonotusajan */
 	public double getJonotusaika() {
 		return this.jonotusAika;
 	}
 
+	/** Metodi palauttaa palvelupisteen palvellut asiakkaat */
 	public double getPalvelupisteessaPalvellutAsiakkaat() {
 		return palvelupisteessaPalvellutAsiakkaat;
 	}
 
+	/** Metodi palauttaa palvelupisteen palveluaika */
 	public double getPalvelupisteenPalveluAika() {
 		return palvelupisteenPalveluAika;
 	}
 
 	// Setterit
+	/** Metodi asettaa palvelupisteen suoritustehon */
 	public void setSuoritusteho(double simulointiAika) {
 		// Tästä tulee asiakasta / minuutissa. Muutetaan asiakasta / tunti kertomalla
 		// 60:llä
 		this.suoritusTeho = (palvelupisteessaPalvellutAsiakkaat / simulointiAika) * 60;
 	}
 
+	/** Metodi asettaa palvelupisteen jonon pituuden */
 	public void setJononPituus(double simulointiAika) {
 		if (kokonaisLapimenoaika > 0)
 			this.jononPituus = kokonaisLapimenoaika / simulointiAika;
@@ -140,10 +156,12 @@ public class PalvelupisteForTest {
 			this.jononPituus = 0;
 	}
 
+	/** Metodi asettaa palvelupisteen käyttöasteen */
 	public void setKayttoaste(double simulointiAika) {
 		this.kayttoaste = (palvelupisteenPalveluAika / simulointiAika) * 100;
 	}
 
+	/** Metodi asettaa palvelupisteen jonotusajan */
 	public void setJonotusaika() {
 		if (kokonaisJonotusaika > 0)
 			this.jonotusAika = kokonaisJonotusaika / palvelupisteessaPalvellutAsiakkaat;
@@ -152,19 +170,23 @@ public class PalvelupisteForTest {
 	}
 
 	// Booleanit
+	/** Metodi palauttaa onko palvelupiste varattu */
 	public boolean onVarattu() {
 		return varattu;
 	}
 
+	/** Metodi asettaa palvelupisteen varatuksi */
 	public void eiVarattu() {
 		varattu = false;
 	}
 
+	/** Metodi palauttaa onko palvelupisteessä asiakkaita */
 	public boolean onJonossa() {
 		return jono.size() != 0;
 	}
 
 	// Asetetaan palvelupisteen tulokset palvelupisteen olion muuttujiin
+	/** Metodi asettaa palvelupisteen tulokset */
 	public void asetaPalvelupisteenTulokset(PalvelupisteForTest p, double simulointiAika) {
 		p.setJononPituus(simulointiAika);
 		p.setKayttoaste(simulointiAika);

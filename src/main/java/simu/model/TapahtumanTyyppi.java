@@ -7,6 +7,46 @@ import simu.framework.ITapahtumanTyyppi;
 	ULKO = Ulkomaanlento, SISA = Kotimaanlento
 */
 
+/**
+ * TapahtumanTyyppi enum määrittelee tapahtumien tyypit
+ *
+ * @see simu.framework.ITapahtumanTyyppi
+ */
 public enum TapahtumanTyyppi implements ITapahtumanTyyppi{
-	ULKO, SISA, ARR1, ARR2, DEP1, DEP2, DEP3, DEP4, DEP5;
+	/**
+	 *  ulkomaan lennolle tapahtuma
+	 */
+	ULKO,
+	/**
+	 * kotimaan lennolle tapahtuma
+	 */
+	SISA,
+	/**
+	 * Saapuva asiakas ulkomaan lennolle
+	 */
+	ARR1,
+	/**
+	 * Saapuva asiakas kotiomaan lennolle
+	 */
+	ARR2,
+	/**
+	 * Lähtöselvitys poistuminen
+	 */
+	DEP1,
+	/**
+	 * Turvatarkastus poistuminen
+	 */
+	DEP2,
+	/**
+	 * Passintarkistus poistuminen
+	 */
+	DEP3,
+	/**
+	 * Lähtöportti kotimaa
+	 */
+	DEP4,
+	/**
+	 * Lähtöportti ulkomaa
+	 */
+	DEP5;
 }

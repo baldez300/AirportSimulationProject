@@ -10,13 +10,19 @@ import simu.framework.Tapahtuma;
 import simu.view.Kontrolleri;
 import simu.entity.*;
 
+/** Moottori-luokka, joka sisältää simulaation päälogiikan */
 public class OmaMoottori extends Moottori {
 
+	/** Tapahtumalista, joka sisältää kaikki tapahtumat */
 	private Saapumisprosessi saapumisprosessi;
+	/** Palvelupisteet, joissa tapahtuu palvelua */
 	private Palvelupiste[] palvelupisteet;
+	/** Tapahtumalista, joka sisältää kaikki tapahtumat */
 	private boolean kaikkiAsiakkaatValmiit = false; // Lisätty lippu seuraamaan, ovatko kaikki asiakkaat valmiita
+	/** Tulokset */
 	private Tulokset tulokset;
 
+	/** Konstruktori, joka luo uuden moottorin */
 	public OmaMoottori(Kontrolleri kontrolleri) {
 		super(kontrolleri);
 
@@ -47,16 +53,19 @@ public class OmaMoottori extends Moottori {
 				kontrolleri.getLentojenVali2());
 	}
 
+	/** Palauttaa kaikki palvelupisteet */
 	public Palvelupiste[] getPalvelupisteet() {
 		return palvelupisteet;
 	}
 
 	@Override
+	/** Alustaa simulaation */
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Asetetaan ensimmäinen saapuminen järjestelmään
 	}
 
 	@Override
+	/** Suorittaa tapahtuman */
 	protected void suoritaTapahtuma(Tapahtuma t) {
 		Asiakas a;
 		switch ((TapahtumanTyyppi) t.getTyyppi()) {
@@ -121,6 +130,7 @@ public class OmaMoottori extends Moottori {
 	}
 
 	@Override
+	/** Yrittää aloittaa palvelun */
 	protected void yritaCTapahtumat() {
 		for (Palvelupiste p : palvelupisteet) {
 			if (!p.onVarattu() && p.onJonossa()) {
@@ -130,6 +140,7 @@ public class OmaMoottori extends Moottori {
 	}
 
 	@Override
+	/** Tarkistaa, onko kaikki asiakkaat valmiita */
 	protected void tulokset() {
 
 		System.out.println("\nSimulointi päättyi kello " + Kello.getInstance().getAika());
@@ -168,6 +179,7 @@ public class OmaMoottori extends Moottori {
 
 	// Asetetaan tulokset
 	@Override
+	/** Asettaa tulokset */
 	public void asetaTulokset() {
 		LSTulos lsTulos = null;
 		TTTulos ttTulos = null;
@@ -208,11 +220,13 @@ public class OmaMoottori extends Moottori {
 	}
 
 	// Tallennetaan tulokset tietokantaan
+	/** Tallentaa tulokset tietokantaan */
 	public void tallennaTulokset() {
 		tuloksetDao.tallenna(this.tulokset);
 	}
 
 	// Tuloksien getteri käyttöliitymää varten
+	/** Palauttaa tulokset */
 	public Tulokset getTulokset() {
 		return tulokset;
 	}

@@ -11,15 +11,17 @@ import simu.model.Asiakas;
 import simu.model.Palvelupiste;
 import simu.framework.Kello;
 
-
+/** Luokka joka visualisoi simulaatiota */
 public class Visualisointi {
 
+	/** Luokan attribuutit */
 	private final GraphicsContext gc;
 	private final Canvas canvas;
 	private final Image taustakuva;
 	private final int taustakuvaLeveys = 1585, taustakuvaKorkeus = 996;
 	private final Kontrolleri kontrolleri;
 
+	/** Luokan konstruktori */
 	public Visualisointi(Kontrolleri kontrolleri, Canvas canvas) {
 		this.kontrolleri = kontrolleri;
 		this.canvas = canvas;
@@ -27,17 +29,23 @@ public class Visualisointi {
 		this.taustakuva = new Image("file:src/main/resources/ap_blueprint.png");
 	}
 
+	/** Metodi joka tyhjentää näytön */
 	public void tyhjennaNaytto() {
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
 	}
 
+	/** Metodi joka aloittaa visualisoinnin */
 	public void aloitaVisualisointi() {
 		// Tehdään visualisointi Timerilla
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
 			// long now tarkoittaa nanosekunteja joka annetaan metodille parametrina koska
 			// se on abstrakti metodi ja se pitää ylikirjoittaa
+			/**
+			 * Metodi joka piirtää kuvan näytölle
+			 * @param now
+			 */
 			public void handle(long now) {
 				viive(kontrolleri.getMoottorinViive());
 				tyhjennaNaytto();
@@ -85,6 +93,7 @@ public class Visualisointi {
 		timer.start();
 	}
 
+	/** Metodi joka viivästää simulaatiota */
 		private void viive(long aika) { // UUSI
 		try {
 			Thread.sleep(aika);

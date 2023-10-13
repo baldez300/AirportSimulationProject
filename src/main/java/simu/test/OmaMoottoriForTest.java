@@ -7,10 +7,26 @@ import simu.model.Asiakas;
 import simu.model.TapahtumanTyyppi;
 
 // Luodaan OmaMoottoriForTest jotta ei tarvita GUI:ta testaukseen
+/**
+ * OmaMoottoriForTest on MoottoriForTest-luokan aliluokka, joka sisältää
+ * palvelupisteet ja saapumisprosessin. OmaMoottoriForTest-luokkaa käytetään
+ * testaukseen, jotta ei tarvita GUI:ta.
+ *
+ * @see MoottoriForTest
+ * @see PalvelupisteForTest
+ * @see SaapumisprosessiForTest
+ */
 public class OmaMoottoriForTest extends MoottoriForTest {
+	/** Omamoottorin luokan muuttujat */
 	private SaapumisprosessiForTest saapumisprosessi;
 	private PalvelupisteForTest[] palvelupisteet;
 
+	/**
+	 * Omamoottorin konstruktori, joka luo palvelupisteet ja saapumisprosessin.
+	 *
+	 * @see PalvelupisteForTest
+	 * @see SaapumisprosessiForTest
+	 */
 	public OmaMoottoriForTest() {
 
 		palvelupisteet = new PalvelupisteForTest[5];
@@ -30,16 +46,31 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 				5);
 	}
 
+	/**
+	 * Palauttaa palvelupisteet.
+	 *
+	 * @return palvelupisteet
+	 */
 	public PalvelupisteForTest[] getPalvelupisteet() {
 		return palvelupisteet;
 	}
 
 	@Override
+	/**
+	 * Alustaa sapumisprosessi.
+	 *
+	 * @see SaapumisprosessiForTest
+	 */
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Asetetaan ensimmäinen saapuminen järjestelmään
 	}
 
 	@Override
+	/**
+	 * Suorittaa tapahtuman.
+	 *
+	 * @param t tapahtuma
+	 */
 	protected void suoritaTapahtuma(Tapahtuma t) {
 		AsiakasForTest a;
 		switch ((TapahtumanTyyppi) t.getTyyppi()) {
@@ -103,6 +134,9 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 	}
 
 	@Override
+	/**
+	 * Yrittää aloittaa C tapahtumat.
+	 */
 	protected void yritaCTapahtumat() {
 		for (PalvelupisteForTest p : palvelupisteet) {
 			if (!p.onVarattu() && p.onJonossa()) {

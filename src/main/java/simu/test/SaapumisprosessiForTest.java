@@ -7,12 +7,15 @@ import simu.framework.Tapahtuma;
 import static simu.model.TapahtumanTyyppi.ARR1;
 import static simu.model.TapahtumanTyyppi.*;
 
+/** Saapumisprosessin test -luokka */
 public class SaapumisprosessiForTest {
+	/** Saamupisprosessin test -luokan muutujat */
 	private TapahtumalistaForTest tapahtumalista;
 	private ITapahtumanTyyppi tyyppi;
 
 	private double ulkoLahtoAika, lentojenVali;
 
+	/** Saapumisprosessin test -luokan konstruktori */
 	public SaapumisprosessiForTest(TapahtumalistaForTest tl, ITapahtumanTyyppi tyyppi, double ulkoLahtoAika, double lentojenVali) {
 		//this.generaattori = g;
 		this.tapahtumalista = tl;
@@ -21,6 +24,7 @@ public class SaapumisprosessiForTest {
 		this.lentojenVali = lentojenVali;
 	}
 
+	/** Metodi generoi seuraavat tapahtumat */
 	public void generoiSeuraava() {
 		
 		// Lähtöaika ulkomaalennoille
