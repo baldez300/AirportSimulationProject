@@ -16,6 +16,7 @@ public class TuloksetDao implements IDao {
     /**
      * Tallentaa tulokset tietokantaan HashMapista
      * @param tulokset
+     * {@inheritDoc}
      */
     @Override
     // Tallentaa tulokset tietokantaan HashMapista
@@ -34,6 +35,7 @@ public class TuloksetDao implements IDao {
     /**
      * Lataa kaikki tulokset tietokannasta
      * @return List<Tulokset>
+     * {@inheritDoc}
      */
     @Override
     // Lataa kaikki tulokset tietokannasta

@@ -47,13 +47,15 @@ public abstract class MoottoriForTest  extends Thread  implements IMoottori   {
 		return simulointiaika;
 	}
 
-	/** Metodi asettaa viiveen*/
+	/** Metodi asettaa viiveen
+	 * {@inheritDoc}*/
 	@Override // UUSI
 	public void setViive(long viive) {
 		this.viive = viive;
 	}
 
-	/** Metodi palauttaa viiveen*/
+	/** Metodi palauttaa viiveen
+	 * {@inheritDoc}*/
 	@Override // UUSI
 
 	public long getViive() {

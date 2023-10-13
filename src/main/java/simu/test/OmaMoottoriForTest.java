@@ -58,7 +58,7 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 
 	/**
 	 * Alustaa sapumisprosessi.
-	 *
+	 *{@inheritDoc}
 	 * @see SaapumisprosessiForTest
 	 */
 	@Override
@@ -68,7 +68,7 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 
 	/**
 	 * Suorittaa tapahtuman.
-	 *
+	 *{@inheritDoc}
 	 * @param t tapahtuma
 	 */
 	@Override
@@ -135,11 +135,11 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 	}
 
 
-
-	@Override
 	/**
 	 * Yrittaa aloittaa C tapahtumat.
+	 * {@inheritDoc}
 	 */
+	@Override
 	protected void yritaCTapahtumat() {
 		for (PalvelupisteForTest p : palvelupisteet) {
 			if (!p.onVarattu() && p.onJonossa()) {

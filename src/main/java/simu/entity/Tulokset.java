@@ -132,81 +132,81 @@ public class Tulokset {
 
     //Setterit
 
-    /**
+    /** Asetetaan id
      * @param id
      */
     public void setId(int id) {
         this.id = id;
     }
 
-    /**
+    /** Asetetaan paivamaara
      * @param paivamaara
      */
     public void setPaivamaara(LocalDate paivamaara) {
         this.paivamaara =  Date.valueOf(paivamaara);
     }
 
-    /**
+    /** Asetetaan aika
      * @param aika
      */
     public void setAika(double aika) {
         this.aika = aika;
     }
-    /**
+    /** Asetetaan asiakkaiden maara
      * @param asiakkaat
      */
     public void setAsiakkaat(double asiakkaat) {
         this.asiakkaat = asiakkaat;
     }
-    /**
+    /** Asetetaan lennolle ehtineet
      * @param lennolle_ehtineet
      */
     public void setLennolle_ehtineet(double lennolle_ehtineet) {
         this.lennolle_ehtineet = lennolle_ehtineet;
     }
-    /**
+    /** Asetetaan lennolta myohastyneet
      * @param lennolta_myohastyneet
      */
     public void setLennolta_myohastyneet(double lennolta_myohastyneet) {
         this.lennolta_myohastyneet = lennolta_myohastyneet;
     }
-    /**
+    /** Asetetaan T1 palvelupisteen myohastynee
      * @param myohastyneet_t1
      */
     public void setMyohastyneet_t1(double myohastyneet_t1) {
         this.myohastyneet_t1 = myohastyneet_t1;
     }
-    /**
+    /** Asetetaan T2 palvelupisteen myohastyneet
      * @param myohastyneet_t2
      */
     public void setMyohastyneet_t2(double myohastyneet_t2) {
         this.myohastyneet_t2 = myohastyneet_t2;
     }
-    /**
+    /** Asetetaan Lahtoselvitys palvelupisteen tulos
      * @param lsTulos
      */
     public void setLSTulos(LSTulos lsTulos) {
         this.lsTulos = lsTulos;
     }
-    /**
+    /** Asetetaan Turvatarkstus palvelupisteen tulos
      * @param ttTulos
      */
     public void setTTTulos(TTTulos ttTulos) {
         this.ttTulos = ttTulos;
     }
-    /**
+    /** Asetetaan Passintarkastus palvelupisteen tulos
      * @param ptTulos
      */
     public void setPTTulos(PTTulos ptTulos) {
         this.ptTulos = ptTulos;
     }
-    /**
+    /** Asetetaan T1 palvelupisteen tulos
      * @param t1Tulos
      */
     public void setT1Tulos(T1Tulos t1Tulos) {
         this.t1Tulos = t1Tulos;
     }
-    /**
+    /** Asetetaan T2 palvelupisteen tulos
      * @param t2Tulos
      */
     public void setT2Tulos(T2Tulos t2Tulos) {
@@ -215,80 +215,80 @@ public class Tulokset {
 
     //Getterit
 
-    /**
+    /** Saadaan id
      * @return int
      */
     public int getId() {
         return id;
     }
 
-    /**
+    /** Saadaan paivamaara
      * @return LocalDate
      */
     public LocalDate getPaivamaara() {
         return paivamaara.toLocalDate();
     }
-    /**
+    /** Saadaan aika
      * @return double
      */
     public double getAika() {
         return aika;
     }
-    /**
+    /** Saadaan asiakkaiden maara
      * @return double
      */
     public double getAsiakkaat() {
         return asiakkaat;
     }
-    /**
+    /** Saadaan lennolle ehtineet
      * @return double
      */
     public double getLennolle_ehtineet() {
         return lennolle_ehtineet;
     }
-    /**
+    /** Saadaan lennolta myohastyneet
      * @return double
      */
     public double getLennolta_myohastyneet() {
         return lennolta_myohastyneet;
     }
-    /**
+    /** Saadaan T1 palvelupisteen myohastynee
      * @return double
      */
     public double getMyohastyneet_t1() {
         return myohastyneet_t1;
     }
-    /**
+    /** Saadaan T2 palvelupisteen myohastyneet
      * @return double
      */
     public double getMyohastyneet_t2() {
         return myohastyneet_t2;
     }
-    /**
+    /** Saadaan Lahtoselvitys palvelupisteen tulos
      * @return LSTulos
      */
     public LSTulos getLSTulos() {
         return lsTulos;
     }
-    /**
+    /** Saadaan Turvatarkstus palvelupisteen tulos
      * @return TTTulos
      */
     public TTTulos getTTTulos() {
         return ttTulos;
     }
-    /**
+    /** Saadaan Passintarkastus palvelupisteen tulos
      * @return PTTulos
      */
     public PTTulos getPTTulos() {
         return ptTulos;
     }
-    /**
+    /** Saadaan t1 palvelupisteen tulos
      * @return T1Tulos
      */
     public T1Tulos getT1Tulos() {
         return t1Tulos;
     }
-    /**
+    /** Saadaan T2 palvelupisteen tulos
      * @return T2Tulos
      */
     public T2Tulos getT2Tulos() {
@@ -296,10 +296,11 @@ public class Tulokset {
     }
 
     // Override toString jotta saadaan ListViewiin paivamaara nakyviin Objectin sijaan
-    @Override
-    /**
+    /** Metodilla saadaan paivamaara nakyviin ListViewiin
      * @return String
+     * {@inheritDoc}
      */
+    @Override
     public String toString() {
         return this.paivamaara.toString();
     }
