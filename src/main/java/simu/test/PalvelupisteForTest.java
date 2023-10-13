@@ -12,17 +12,35 @@ import java.util.LinkedList;
 /** Palvelupisteen test -luokka */
 public class PalvelupisteForTest {
 
-	/** Palvelupisteen muuttujat */
+	/** Palvelupisteide jono*/
 	private final LinkedList<AsiakasForTest> jono = new LinkedList<>(); // Tietorakennetoteutus
+	/** Palvelupisteen generoitu palveluaika */
 	private final ContinuousGenerator generator;
+	/** Tapahtumalista */
 	private final TapahtumalistaForTest tapahtumalista;
+	/** Tapahtuman skeduloitavan tapahtuman tyyppi */
 	private final TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
 
 	// Laskutoimituksien tarvitsemat muuttujat
+	/** Koko järjectelmän palvellut asiakkaat */
 	public static int palvellutAsiakkaatTotal = 0;
-	private double palvelupisteenPalveluAika = 0, suoritusTeho = 0, kokonaisJonotusaika = 0, kokonaisLapimenoaika = 0,
-			jononPituus = 0, kayttoaste = 0, jonotusAika = 0;
+	/** Palvelupisteen palveluaika */
+	private double palvelupisteenPalveluAika = 0;
+	/** Palvelupisteen suoritusteho */
+	private double suoritusTeho = 0;
+	/** Palvelupisteen kokonaisjonotusaika */
+	private double kokonaisJonotusaika = 0;
+	/** Palvelupisteen kokonaislapimenoaika */
+	private double kokonaisLapimenoaika = 0;
+	/** Palvelupisteen jonon pituus */
+	private double jononPituus = 0;
+	/** Palvelupisteen kayttoaste */
+	private double kayttoaste = 0;
+	/** Palvelupisteen jonotusaika */
+	private double jonotusAika = 0;
+	/** Palvelupisteen palvellut asiakkaat */
 	private int palvelupisteessaPalvellutAsiakkaat;
+	/** Lippu joka kertoo onko palvelupiste varattu */
 	private boolean varattu = false;
 
 	/** Palvelupisteen konstruktori */
