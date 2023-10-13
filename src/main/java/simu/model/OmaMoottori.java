@@ -13,11 +13,11 @@ import simu.entity.*;
 /** Moottori-luokka, joka sisaltaa simulaation paalogiikan */
 public class OmaMoottori extends Moottori {
 
-	/** Tapahtumalista, joka sisaltaa kaikki tapahtumat */
+	/** Saapumisprosessi */
 	private Saapumisprosessi saapumisprosessi;
 	/** Palvelupisteet, joissa tapahtuu palvelua */
 	private Palvelupiste[] palvelupisteet;
-	/** Tapahtumalista, joka sisaltaa kaikki tapahtumat */
+	/** Lippu, joka kertoo, ovatko kaikki asiakkaat valmiita */
 	private boolean kaikkiAsiakkaatValmiit = false; // Lisatty lippu seuraamaan, ovatko kaikki asiakkaat valmiita
 	/** Tulokset */
 	private Tulokset tulokset;

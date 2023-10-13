@@ -54,14 +54,30 @@ public class Asiakas {
 	 * */
 	private boolean ulkomaanlento; // Uusi kentta, maarittaa onko asiakas ulkomaanlennon asiakas
 
-	/** Asiakkaan lahtoselvityksen myohastyneet ja ehtineet asiakkaat
+	/**
+	 *  Ehtineet asiakkaat
 	 * @see simu.model.Asiakas
 	 * */
-	public static int lennolleEhtineet = 0, T1myohastyneet = 0, T2myohastyneet = 0;
-	/** Tilapaiset muutujat
+	public static int lennolleEhtineet = 0,
+			/**
+			 *  Kotimaan myohastyneet asiakkaat
+			 * @see simu.model.Asiakas
+			 * */
+			T1myohastyneet = 0,
+			/**
+			 *  Ulkomaan myohastyneet asiakkaat
+			 * @see simu.model.Asiakas
+			 * */
+			T2myohastyneet = 0;
+	/** Palvellut asiakkaat
 	 * @see simu.model.Asiakas
 	 * */
-	public static int i = 0, j = 0;
+	public static int i = 0,
+			/**
+			 *  Luotujen matkustajien määrä
+			 * @see simu.model.Asiakas
+			 * */
+			j = 0;
 
 	/** Konstruktori
 	 *
