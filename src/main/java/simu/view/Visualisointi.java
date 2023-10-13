@@ -11,6 +11,7 @@ import simu.model.Asiakas;
 import simu.model.Palvelupiste;
 import simu.framework.Kello;
 
+
 public class Visualisointi {
 
 	private final GraphicsContext gc;
