@@ -134,10 +134,12 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 		}
 	}
 
+
+
+	@Override
 	/**
 	 * Yrittaa aloittaa C tapahtumat.
 	 */
-	@Override
 	protected void yritaCTapahtumat() {
 		for (PalvelupisteForTest p : palvelupisteet) {
 			if (!p.onVarattu() && p.onJonossa()) {
@@ -145,5 +147,4 @@ public class OmaMoottoriForTest extends MoottoriForTest {
 			}
 		}
 	}
-
 }
