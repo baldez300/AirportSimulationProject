@@ -13,7 +13,7 @@ import simu.eduni.distributions.ContinuousGenerator;
 /** Plavelupiste luokka */
 public class Palvelupiste {
 
-	/** Palvelupiste luokan muuttujat */
+	/** Palvelupisteen jono */
 	private final LinkedList<Asiakas> jono = new LinkedList<>(); // Tietorakennetoteutus
 
 	/** Random generaattori */
@@ -26,26 +26,26 @@ public class Palvelupiste {
 	// Laskutoimituksien tarvitsemat muuttujat
 	/** Palvelupisteessa palvellut asiakkaat */
 	public static int palvellutAsiakkaatTotal = 0;
-	/** Palvelupisteen koordinatit */
+	/** Palvelupisteen koordinatit Canvas:lla*/
 	private final int x, y;
-	/** Palvelupisteen palveluaika */
-	private double palvelupisteenPalveluAika = 0,
+	/** Palvelupisteen palveluaika Canvas:lla*/
+	private double palvelupisteenPalveluAika = 0;
 			/** Palvelupisteen suoritusteho */
-			suoritusTeho = 0,
+	private double suoritusTeho = 0;
 			/** Palvelupisteen kokonaisjonotusaika */
-			kokonaisJonotusaika = 0,
+	private double kokonaisJonotusaika = 0;
 			/** Palvelupisteen kokonaislapimenoaika */
-			kokonaisLapimenoaika = 0,
+	private double kokonaisLapimenoaika = 0;
 			/** Palvelupisteen jonon pituus */
-			jononPituus = 0,
+	private double jononPituus = 0;
 			/** Palvelupisteen kayttoaste */
-			kayttoaste = 0,
+	private double kayttoaste = 0;
 			/** Palvelupisteen jonotusaika */
-			jonotusAika = 0;
+	private double jonotusAika = 0;
 	/** Palvelupisteen pisteiden maara */
-	private int pisteidenMaara,
+	private int pisteidenMaara;
 			/** Palvelupisteessa palvellut asiakkaat */
-			palvelupisteessaPalvellutAsiakkaat;
+	private int palvelupisteessaPalvellutAsiakkaat;
 
 	/** Palvelupisteen nimi */
 	private final String nimi;
