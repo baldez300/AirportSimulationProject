@@ -24,22 +24,22 @@ public class Asiakas {
 	 *
 	 * @see simu.model.Asiakas
 	 */
-	private double saapumisaika,
-			/** Asiakkaan poistumisaika
-			 *
-			 * @see simu.model.Asiakas
-			 */
-			poistumisaika,
-			/** Asiakkaan  leveys
-			 *
-			 * @see simu.model.Asiakas
-			 */
-			width,
-			/** Asiakkaan korkeus
-			 *
-			 * @see simu.model.Asiakas
-			 */
-			height;
+	private double saapumisaika;
+	/** Asiakkaan poistumisaika
+	 *
+	 * @see simu.model.Asiakas
+	 */
+	private double poistumisaika;
+	/** Asiakkaan  leveys
+	 *
+	 * @see simu.model.Asiakas
+	 */
+	private double width;
+	/** Asiakkaan korkeus
+	 *
+	 * @see simu.model.Asiakas
+	 */
+	private double height;
 	/** Asiakkaan id
 	 * @see simu.model.Asiakas
 	 * */
@@ -58,26 +58,26 @@ public class Asiakas {
 	 *  Ehtineet asiakkaat
 	 * @see simu.model.Asiakas
 	 * */
-	public static int lennolleEhtineet = 0,
+	public static int lennolleEhtineet = 0;
 	/**
 	 *  Kotimaan myohastyneet asiakkaat
 	 * @see simu.model.Asiakas
 	 * */
-			T1myohastyneet = 0,
+	public static int T1myohastyneet = 0;
 	/**
 	 *  Ulkomaan myohastyneet asiakkaat
 	 * @see simu.model.Asiakas
 	 * */
-			T2myohastyneet = 0;
+	public static int T2myohastyneet = 0;
 	/** Palvellut asiakkaat
 	 * @see simu.model.Asiakas
 	 * */
-	public static int i = 0,
+	public static int i = 0;
 	/**
 	 *  Luotujen matkustajien määrä
 	 * @see simu.model.Asiakas
 	 * */
-			j = 0;
+	public static int j = 0;
 
 	/** Konstruktori
 	 *
