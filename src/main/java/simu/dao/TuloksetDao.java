@@ -13,12 +13,12 @@ import jakarta.persistence.EntityManager;
  */
 public class TuloksetDao implements IDao {
 
-    @Override
-    // Tallentaa tulokset tietokantaan HashMapista
     /**
      * Tallentaa tulokset tietokantaan HashMapista
      * @param tulokset
      */
+    @Override
+    // Tallentaa tulokset tietokantaan HashMapista
     public void tallenna(Tulokset tulokset) {
         try {
             EntityManager em = SQLconnection.getInstance();
@@ -31,12 +31,12 @@ public class TuloksetDao implements IDao {
     }
 
 
-    @Override
-    // Lataa kaikki tulokset tietokannasta
     /**
      * Lataa kaikki tulokset tietokannasta
      * @return List<Tulokset>
      */
+    @Override
+    // Lataa kaikki tulokset tietokannasta
     public List<Tulokset> lataaKaikki() {
         EntityManager em = SQLconnection.getInstance();
         List<Tulokset> tulokset = em.createQuery("SELECT t FROM Tulokset t", Tulokset.class).getResultList();
