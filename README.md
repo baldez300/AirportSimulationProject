@@ -22,9 +22,9 @@ Simulaattorissa on viisi palvelupistettä: Lähtöselvitys, turvatarkastus, pass
 Vain ulkomaan lennon asiakkaat käyvät passintarkustuksessa ennen lähtöportille T2 menoa.  
 Simulaattorissa voidaan antaa käyttäjän syöttämät arvot palvelupisteiden määrille ja palveluajoille. Palveluajat generoidaan normaalin jakauman mukaan.  
 Tarkemmat ohjeet löytyvät simulaattorin asetukset sivulta.  
-Jos halutaan tallentaa simulaation tulokset, on ajettava src/main/resources kansiosta löytyvä database.sql, joka luo tietokannan ja taulut.   
-> ``` mysql -u root -p < database.sql ```
-> Simulaattori käynnistyy view-paketin Main-luokasta. 
+Jos halutaan tallentaa simulaation tulokset, on ajettava src/main/resources kansiosta löytyvä database.sql, joka luo tietokannan ja taulut:  
+> ` mysql -u root -p < database.sql `  
+Simulaattori käynnistyy view-paketin Main-luokasta. 
 
 ## Ohjelmoijat
 - Mamadou Balde
