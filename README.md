@@ -11,7 +11,7 @@ heidät poistetaan järjestelmästä ja merkitään myöhästyneiksi. Simulaatto
 Simulaattorilla voidaan simuloida lentokentän toimintaa ja saadaan tietoa palvelupisteiden kuormituksesta ja jonotusajoista.
 Tarkemmat ohjeet löytyvät simulaattorin asetukset sivulta.
 Jos halutaan tallentaa simulaation tulokset, on ajettava src/main/resources kansiosta löytyvä database.sql, joka luo tietokannan ja taulut.  
-``` mysql -u root -p < database.sql ```
+> ``` mysql -u root -p < database.sql ```  
 Simulaattori käynnistyy view-paketin Main-luokasta. 
 
 ## Ohjelmoijat
